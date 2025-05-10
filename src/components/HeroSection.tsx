@@ -6,22 +6,30 @@ import { Calendar } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative py-20 md:py-32 px-4 overflow-hidden">
+    <section className="relative py-24 md:py-36 px-4 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 gradient-bg -z-10"></div>
       
+      {/* Abstract shapes */}
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-coral/10 blur-3xl"></div>
+      <div className="absolute bottom-10 left-[5%] w-40 h-40 rounded-full bg-coral/20 blur-3xl"></div>
+      
       {/* Content */}
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Hi <br /><span className="text-coral">We grow your revenue</span> at the highest ROI.
-            </motion.h1>
+              <span className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full">
+                INTEGRATED DIGITAL MARKETING AGENCY
+              </span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                Hi <br /><span className="bg-gradient-to-r from-coral to-coral/80 bg-clip-text text-transparent">We grow your revenue</span> at the highest ROI.
+              </h1>
+            </motion.div>
             
             <motion.p 
               className="text-xl text-muted-foreground"
@@ -53,16 +61,14 @@ const HeroSection = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="aspect-video bg-secondary rounded-lg shadow-xl overflow-hidden">
-              <div className="w-full h-full bg-muted flex items-center justify-center">
+            <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
+              <div className="w-full h-full bg-muted/50 flex items-center justify-center">
                 <div className="text-center space-y-4">
-                  <div className="inline-flex items-center justify-center p-4 bg-coral rounded-full">
-                    <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16 8L8 16M8 8L16 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  <div className="inline-flex items-center justify-center p-5 bg-coral/20 rounded-full">
+                    <div className="text-3xl font-bold text-coral">GO SG</div>
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">GO SG Marketing</h3>
+                    <h3 className="text-xl font-semibold">Digital Marketing Experts</h3>
                     <p className="text-muted-foreground">Driving revenue growth through powerful campaigns</p>
                   </div>
                 </div>
@@ -70,8 +76,8 @@ const HeroSection = () => {
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -top-6 -right-6 w-12 h-12 bg-coral/20 rounded-full blur-xl"></div>
-            <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-coral/30 rounded-full blur-xl"></div>
+            <div className="absolute -top-6 -left-6 w-12 h-12 bg-coral/30 rounded-full blur-lg"></div>
+            <div className="absolute -bottom-8 -right-8 w-16 h-16 bg-coral/20 rounded-full blur-xl"></div>
           </motion.div>
         </div>
       </div>

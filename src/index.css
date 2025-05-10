@@ -74,6 +74,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
@@ -108,4 +109,41 @@
 
 .cta-button:hover:after {
   left: 100%;
+}
+
+/* New modern animations and effects */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* Card hover effects */
+.hover-card-effect {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-card-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(249, 78, 64, 0.1);
+}
+
+/* Text gradient animations */
+.gradient-text {
+  @apply bg-gradient-to-r from-coral to-coral/70 bg-clip-text text-transparent;
+  background-size: 200% 200%;
+}
+
+/* Section dividers */
+.divider {
+  height: 4px;
+  width: 60px;
+  @apply bg-gradient-to-r from-coral to-coral/50 rounded-full my-6;
 }

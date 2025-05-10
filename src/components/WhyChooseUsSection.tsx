@@ -48,7 +48,7 @@ const testimonials = [
 
 const WhyChooseUsSection = () => {
   return (
-    <section className="py-20 px-4 bg-secondary">
+    <section className="py-24 px-4 bg-gradient-to-b from-secondary/80 to-secondary">
       <div className="container mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -57,6 +57,9 @@ const WhyChooseUsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <span className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full">
+            WHY CHOOSE US
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Why GO SG</h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
             It's hard to grow especially working with novice agencies or managing variable in-house teams. 
@@ -65,7 +68,7 @@ const WhyChooseUsSection = () => {
             That means continuous results for your brand.
           </p>
           <div className="mt-8">
-            <Button asChild className="bg-coral hover:bg-coral/90 text-white">
+            <Button asChild className="bg-coral hover:bg-coral/90 text-white px-8 py-2.5 rounded-lg">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
@@ -81,9 +84,13 @@ const WhyChooseUsSection = () => {
             transition={{ duration: 0.6 }}
           >
             {reasons.map((reason, index) => (
-              <div 
-                key={index} 
-                className="bg-card rounded-lg p-6 shadow-sm border border-border"
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-coral/30 transition-all hover:shadow-md"
               >
                 <div className="flex items-start gap-4">
                   <CheckCircle className="text-coral h-6 w-6 flex-shrink-0 mt-1" />
@@ -92,7 +99,7 @@ const WhyChooseUsSection = () => {
                     <p className="text-muted-foreground">{reason.description}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
           
@@ -105,8 +112,12 @@ const WhyChooseUsSection = () => {
             transition={{ duration: 0.6 }}
           >
             {testimonials.map((testimonial, index) => (
-              <div 
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
                 className="bg-card rounded-lg p-8 shadow-sm border border-border relative"
               >
                 {/* Quote mark */}
@@ -117,7 +128,7 @@ const WhyChooseUsSection = () => {
                 <p className="text-lg mb-6 relative z-10">{testimonial.quote}</p>
                 
                 <div className="flex items-center">
-                  <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center text-lg font-semibold text-coral">
+                  <div className="h-12 w-12 rounded-full bg-coral/20 flex items-center justify-center text-lg font-semibold text-coral">
                     {testimonial.name.charAt(0)}
                   </div>
                   <div className="ml-4">
@@ -125,7 +136,7 @@ const WhyChooseUsSection = () => {
                     <p className="text-sm text-muted-foreground">{testimonial.role}, {testimonial.company}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>

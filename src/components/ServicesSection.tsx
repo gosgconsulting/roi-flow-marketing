@@ -8,7 +8,6 @@ import {
   MessageSquare 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const services = [
   {
@@ -52,10 +51,12 @@ const ServicesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+          <span className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full">
+            OUR SERVICES
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Marketing Solutions</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Comprehensive marketing solutions designed to deliver measurable results 
-            and accelerate your business growth.
+            Designed to deliver measurable results and accelerate your business growth.
           </p>
         </motion.div>
         
@@ -69,22 +70,25 @@ const ServicesSection = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="service-card"
             >
-              <Card className="h-full bg-card border-border hover:border-coral/50 transition-colors">
-                <CardHeader className="pb-4">
-                  <div className="mb-4">{service.icon}</div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="pb-4">
-                  <CardDescription className="text-muted-foreground">
+              <div className="h-full bg-card border border-border hover:border-coral/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-coral/5">
+                <div className="p-8">
+                  <div className="inline-flex items-center justify-center p-3 bg-coral/10 rounded-xl mb-6">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6">
                     {service.description}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10">
-                    <Link to={service.link}>{service.cta}</Link>
+                  </p>
+                  <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10 pl-0">
+                    <Link to={service.link} className="flex items-center">
+                      {service.cta}
+                      <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
                   </Button>
-                </CardFooter>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
