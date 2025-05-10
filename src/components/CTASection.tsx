@@ -35,7 +35,7 @@ const CTASection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button asChild className="relative overflow-hidden bg-brandPurple hover:bg-brandPurple/90 text-white px-8 py-6 text-lg group">
+            <Button asChild className="relative overflow-hidden bg-coral hover:bg-coral/90 text-white px-8 py-6 text-lg group">
               <Link to="/contact" className="flex items-center">
                 <Calendar className="mr-2 h-5 w-5" />
                 Get a Free Consultation

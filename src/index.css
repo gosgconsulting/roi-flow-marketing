@@ -37,6 +37,7 @@
     --brand-blue: 210 100% 50%;
     --brand-gold: 36 100% 65%; 
     --brand-purple: 270 70% 60%;
+    --coral: 5 88% 62%;
 
     --radius: 0.5rem;
   }
@@ -127,6 +128,16 @@
 
 .cta-button:hover:after {
   left: 100%;
+}
+
+/* CTA gradient buttons */
+.cta-gradient {
+  background: linear-gradient(to right, #F94E40, #F97316);
+  transition: all 0.3s ease;
+}
+
+.cta-gradient:hover {
+  background: linear-gradient(to right, #F97316, #F94E40);
 }
 
 /* Text gradient styles */

@@ -46,7 +46,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <Button asChild className="bg-brandPurple hover:bg-brandPurple/90 text-white cta-button px-8 py-6 text-lg">
+              <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button px-8 py-6 text-lg">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
                   Contact Us

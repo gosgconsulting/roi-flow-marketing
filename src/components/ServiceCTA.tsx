@@ -35,7 +35,7 @@ const ServiceCTA = ({ title, subtitle, buttonText, buttonLink }: ServiceCTAProps
           </p>
           
           <div className="pt-4">
-            <Button asChild className="bg-brandPurple hover:bg-brandPurple/90 text-white cta-button px-8 py-6 text-lg">
+            <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button px-8 py-6 text-lg">
               <Link to={buttonLink}>
                 {buttonText}
               </Link>
