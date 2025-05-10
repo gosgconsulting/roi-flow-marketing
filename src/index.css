@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -225,4 +226,32 @@
 
 .btn-purple {
   @apply bg-[#9370DB] hover:bg-[#8A2BE2] text-white;
+}
+
+/* Service benefit icon styles */
+.benefit-icon {
+  @apply p-3 rounded-full bg-brandPurple/10 text-brandPurple;
+}
+
+/* Service plans highlighting */
+.popular-plan {
+  @apply relative border-coral/50 dark:border-coral/50 shadow-xl shadow-coral/10;
+}
+
+.popular-badge {
+  @apply absolute -top-3 left-1/2 transform -translate-x-1/2 bg-coral text-white text-sm font-medium px-3 py-1 rounded-full;
+}
+
+/* Case study card styles */
+.case-study-card {
+  @apply rounded-xl overflow-hidden border border-border hover:border-coral/30 transition-all duration-300;
+}
+
+.case-study-result {
+  @apply text-lg font-semibold text-brandPurple;
+}
+
+/* Service headings with gradient */
+.service-heading {
+  @apply bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent;
 }
