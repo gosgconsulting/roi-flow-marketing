@@ -36,6 +36,9 @@ const Header = () => {
             <Link to="/services/dashboard" className="text-foreground hover:text-coral transition-colors">
               Social Media
             </Link>
+            <Link to="/services/reporting" className="text-foreground hover:text-coral transition-colors">
+              Reporting
+            </Link>
             <ThemeToggle />
             <Button asChild className="bg-coral hover:bg-coral/90 text-white">
               <Link to="/contact">Contact Us</Link>
@@ -115,6 +118,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Social Media
+              </Link>
+              <Link 
+                to="/services/reporting" 
+                className="text-foreground hover:text-coral transition-colors py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Reporting
               </Link>
               <Button asChild className="w-full bg-coral hover:bg-coral/90 text-white mt-2">
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>

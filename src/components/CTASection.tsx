@@ -8,9 +8,9 @@ const CTASection = () => {
   return (
     <section className="py-24 px-4 relative overflow-hidden">
       {/* Background decoration - improved contrast for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-deepBlue via-deepBlue to-deepBlue/95 -z-10"></div>
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-coral/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-coral/10 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-deepBlue to-deepBlue/80 -z-10"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-white/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-white/10 rounded-full blur-3xl"></div>
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
       
       <div className="container mx-auto relative z-10">
@@ -21,15 +21,15 @@ const CTASection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block py-1 px-3 mb-2 bg-coral/20 text-coral text-sm font-medium rounded-full">
+          <span className="inline-block py-1 px-3 mb-2 bg-white/20 text-white text-sm font-medium rounded-full">
             BOOST YOUR GROWTH
           </span>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Drive <span className="bg-gradient-to-r from-coral to-coral/80 bg-clip-text text-transparent">Revenue Growth</span> Through Powerful Campaigns
+            Drive <span className="text-coral">Revenue Growth</span> Through Powerful Campaigns
           </h2>
           
-          <p className="text-xl text-white/90">
+          <p className="text-xl text-white">
             Work with a marketing agency that helps you double your profits. 
             Increase your brand reach, get new customers and grow market share.
           </p>
