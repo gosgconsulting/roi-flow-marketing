@@ -9,7 +9,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientLogos from "@/components/ClientLogos";
-import StatsCounter from "@/components/StatsCounter";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import FAQAccordion from "@/components/FAQAccordion";
 
 const faqItems = [
@@ -51,7 +51,7 @@ const Index = () => {
         <HeroSection />
         <ClientLogos />
         <ServicesSection />
-        <StatsCounter />
+        <TestimonialsCarousel />
         <WhyChooseUsSection />
         <InsightsSection />
         <FAQAccordion 
