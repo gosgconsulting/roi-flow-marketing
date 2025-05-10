@@ -1,15 +1,8 @@
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useAnimation, useDragControls, PanInfo } from "framer-motion";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselPrevious, 
-  CarouselNext 
-} from "@/components/ui/carousel";
 
 interface Testimonial {
   quote: string;
@@ -27,22 +20,50 @@ interface ServiceTestimonialsProps {
 }
 
 const ServiceTestimonials = ({ title, subtitle, testimonials }: ServiceTestimonialsProps) => {
-  const [autoPlay, setAutoPlay] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const controls = useAnimation();
+  const dragControls = useDragControls();
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const [scrollWidth, setScrollWidth] = useState(0);
 
+  // Calculate scroll width when component mounts
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    
-    if (autoPlay) {
-      interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
+    if (containerRef.current) {
+      setScrollWidth(containerRef.current.scrollWidth - containerRef.current.clientWidth);
     }
-    
-    return () => {
-      clearInterval(interval);
-    };
-  }, [autoPlay, testimonials.length]);
+  }, []);
+
+  // Handle animation based on isPaused state and scrollWidth
+  useEffect(() => {
+    if (!isPaused && scrollWidth > 0) {
+      controls.start({
+        x: -scrollWidth,
+        transition: {
+          duration: 15, // Faster scrolling
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop"
+        }
+      });
+    } else {
+      // Stop the animation completely
+      controls.stop();
+    }
+  }, [isPaused, controls, scrollWidth]);
+
+  const handleDragStart = () => {
+    setIsPaused(true);
+  };
+
+  const handleDragEnd = (_: any, info: PanInfo) => {
+    const newPosition = currentPosition + info.offset.x;
+    setCurrentPosition(newPosition);
+    controls.start({
+      x: newPosition,
+      transition: { duration: 0.5, ease: "easeInOut" }
+    });
+  };
 
   return (
     <section className="py-20 px-4 bg-deepBlue relative overflow-hidden">
@@ -72,80 +93,83 @@ const ServiceTestimonials = ({ title, subtitle, testimonials }: ServiceTestimoni
           </p>
         </motion.div>
         
-        <Carousel
-          className="w-full max-w-5xl mx-auto"
-          onMouseEnter={() => setAutoPlay(false)}
-          onMouseLeave={() => setAutoPlay(true)}
+        <div 
+          className="overflow-hidden w-full"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          aria-label="Service testimonials carousel"
         >
-          <CarouselContent>
-            {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index}>
-                <motion.div 
-                  className="p-1"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="bg-card/10 hover:bg-card/20 backdrop-blur-md border border-white/10 rounded-xl p-8 h-full transition-all duration-300">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="flex items-center">
-                        <Avatar className="h-14 w-14 border-2 border-coral/30">
-                          {testimonial.image ? (
-                            <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                          ) : (
-                            <AvatarFallback className="bg-coral/20 text-coral text-lg">
-                              {testimonial.name.charAt(0)}
-                            </AvatarFallback>
-                          )}
-                        </Avatar>
-                        <div className="ml-4">
-                          <h4 className="font-semibold text-lg text-white">{testimonial.name}</h4>
-                          <p className="text-sm text-white/60">{testimonial.role}, {testimonial.company}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        {Array(5).fill(0).map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className="h-5 w-5 text-coral" 
-                            fill={i < (testimonial.rating || 5) ? "currentColor" : "none"} 
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <div className="absolute -top-3 -left-1 text-coral/20 text-6xl font-serif">
-                        "
-                      </div>
-                      <p className="text-xl mb-6 relative z-10 pt-4 text-white/90">{testimonial.quote}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="bg-coral/20 hover:bg-coral/40 text-white border-white/10" />
-          <CarouselNext className="bg-coral/20 hover:bg-coral/40 text-white border-white/10" />
-        </Carousel>
+          <div ref={containerRef} className="relative cursor-grab">
+            <motion.div 
+              className="flex gap-6 py-6 px-4 min-w-max"
+              animate={controls}
+              initial={{ x: 0 }}
+              drag="x"
+              dragControls={dragControls}
+              dragConstraints={{ left: -2000, right: 100 }}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              whileDrag={{ cursor: "grabbing" }}
+            >
+              {/* First set of testimonials */}
+              {testimonials.map((testimonial, index) => (
+                <TestimonialCard key={index} testimonial={testimonial} />
+              ))}
+              
+              {/* Duplicate set for seamless loop */}
+              {testimonials.map((testimonial, index) => (
+                <TestimonialCard key={`duplicate-${index}`} testimonial={testimonial} />
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+}
+
+const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
+  return (
+    <div className="bg-card/10 hover:bg-card/20 backdrop-blur-md border border-white/10 rounded-xl p-6 w-80 lg:w-96 flex flex-col">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <Avatar className="h-14 w-14 border-2 border-coral/30">
+            {testimonial.image ? (
+              <AvatarImage src={testimonial.image} alt={testimonial.name} />
+            ) : (
+              <AvatarFallback className="bg-coral/20 text-coral text-lg">
+                {testimonial.name.charAt(0)}
+              </AvatarFallback>
+            )}
+          </Avatar>
+          <div className="ml-4">
+            <h4 className="font-semibold text-lg text-white">{testimonial.name}</h4>
+            <p className="text-sm text-white/60">{testimonial.role}, {testimonial.company}</p>
+          </div>
+        </div>
         
-        {/* Indicator dots */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentIndex === index ? 'bg-coral' : 'bg-white/30'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
+        <div className="flex">
+          {Array(5).fill(0).map((_, i) => (
+            <Star 
+              key={i} 
+              className="h-5 w-5 text-coral" 
+              fill={i < (testimonial.rating || 5) ? "currentColor" : "none"} 
             />
           ))}
         </div>
       </div>
-    </section>
+      
+      <div className="relative">
+        <div className="absolute -top-3 -left-1 text-coral/20 text-6xl font-serif">
+          "
+        </div>
+        <p className="text-xl mb-6 relative z-10 pt-4 text-white/90">{testimonial.quote}</p>
+      </div>
+    </div>
   );
 };
 

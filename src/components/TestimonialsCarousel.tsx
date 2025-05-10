@@ -79,13 +79,22 @@ const TestimonialsCarousel = () => {
   const controls = useAnimation();
   const dragControls = useDragControls();
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [scrollWidth, setScrollWidth] = useState(0);
 
+  // Calculate scroll width when component mounts
   useEffect(() => {
-    if (!isPaused) {
+    if (containerRef.current) {
+      setScrollWidth(containerRef.current.scrollWidth - containerRef.current.clientWidth);
+    }
+  }, []);
+
+  // Handle animation based on isPaused state and scrollWidth
+  useEffect(() => {
+    if (!isPaused && scrollWidth > 0) {
       controls.start({
-        x: "-50%",
+        x: -scrollWidth,
         transition: {
-          duration: 25,
+          duration: 15, // Reduced from 25 to 15 seconds for faster scrolling
           ease: "linear",
           repeat: Infinity,
           repeatType: "loop"
@@ -95,7 +104,7 @@ const TestimonialsCarousel = () => {
       // Stop the animation completely at its current position
       controls.stop();
     }
-  }, [isPaused, controls]);
+  }, [isPaused, controls, scrollWidth]);
 
   const handleDragStart = () => {
     setIsPaused(true);
@@ -139,6 +148,7 @@ const TestimonialsCarousel = () => {
           className="overflow-x-hidden w-full"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          aria-label="Customer testimonials carousel"
         >
           <div ref={containerRef} className="relative cursor-grab">
             <motion.div 

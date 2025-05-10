@@ -35,7 +35,7 @@ const ClientLogos = () => {
         transition: {
           repeat: Infinity,
           repeatType: "loop",
-          duration: 30,
+          duration: 15, // Reduced from 30 to 15 seconds for faster scrolling
           ease: "linear"
         }
       });
@@ -60,7 +60,7 @@ const ClientLogos = () => {
 
   return (
     <section className="py-12 px-4 overflow-hidden bg-white relative">
-      {/* Background elements - light mode */}
+      {/* Light mode background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 -z-10"></div>
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
       
@@ -99,30 +99,26 @@ const ClientLogos = () => {
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: "grabbing" }}
         >
-          {/* First set of logos */}
+          {/* First set of logos - display images directly without containers */}
           {clients.map((client, index) => (
             <div
               key={index}
               className="flex-shrink-0"
             >
-              {client.logo ? (
+              {client.logo && (
                 <img src={client.logo} alt={client.name} className="h-12 md:h-16 object-contain" />
-              ) : (
-                <span className="text-lg font-medium text-gray-800">{client.name}</span>
               )}
             </div>
           ))}
 
-          {/* Duplicate set for seamless looping */}
+          {/* Duplicate set for seamless looping - display images directly without containers */}
           {clients.map((client, index) => (
             <div
               key={`duplicate-${index}`}
               className="flex-shrink-0"
             >
-              {client.logo ? (
+              {client.logo && (
                 <img src={client.logo} alt={client.name} className="h-12 md:h-16 object-contain" />
-              ) : (
-                <span className="text-lg font-medium text-gray-800">{client.name}</span>
               )}
             </div>
           ))}
