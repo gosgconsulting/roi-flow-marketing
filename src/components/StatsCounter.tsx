@@ -21,7 +21,11 @@ const StatsCounter = () => {
 
   return (
     <section className="py-20 px-4 bg-deepBlue relative overflow-hidden">
-      <div className="absolute left-0 top-1/3 w-full h-1 bg-coral/20"></div>
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-deepBlue via-deepBlue/95 to-deepBlue/90 -z-10"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+      <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-coral/5 blur-3xl"></div>
+      <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-coral/5 blur-3xl"></div>
       
       <div className="container mx-auto">
         <motion.div 
@@ -31,11 +35,21 @@ const StatsCounter = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-10">
-            <div className="h-1 w-8 bg-coral rounded-full"></div>
-            <h3 className="text-center text-2xl font-semibold text-white">Client Success</h3>
-            <div className="h-1 w-8 bg-coral rounded-full"></div>
+          <div className="flex items-center justify-center gap-4 mb-12">
+            <div className="h-1 w-10 bg-coral rounded-full"></div>
+            <h3 className="text-center text-2xl font-bold text-white">Not convinced yet?</h3>
+            <div className="h-1 w-10 bg-coral rounded-full"></div>
           </div>
+          
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-center mb-12 text-white"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Hear from our customers
+          </motion.h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {stats.map((stat, index) => (
@@ -44,17 +58,17 @@ const StatsCounter = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.15 }}
               >
-                <Card className="bg-card/20 hover:bg-card/30 backdrop-blur-sm border-white/10 h-full transition-all duration-300 hover:translate-y-[-5px] hover-card-effect">
+                <Card className="bg-card/10 hover:bg-card/20 backdrop-blur-md border-white/10 h-full transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg hover:shadow-coral/5">
                   <CardContent className="p-8 text-center">
                     <div className="flex justify-center mb-4">
-                      <CircleCheck className="h-8 w-8 text-coral" />
+                      <CircleCheck className="h-10 w-10 text-coral" />
                     </div>
-                    <div className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+                    <div className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-coral to-coral/70 bg-clip-text text-transparent">
                       {stat.value}
                     </div>
-                    <p className="text-center text-lg text-white/80">{stat.label}</p>
+                    <p className="text-center text-lg text-white/90">{stat.label}</p>
                   </CardContent>
                 </Card>
               </motion.div>
