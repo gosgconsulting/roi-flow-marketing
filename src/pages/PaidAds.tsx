@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,7 +10,7 @@ import ServiceTestimonials from "@/components/ServiceTestimonials";
 import ServiceCTA from "@/components/ServiceCTA";
 import ClientLogos from "@/components/ClientLogos";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { Target, Bullseye, LineChart, DollarSign, Users, BarChart } from "lucide-react";
+import { Target, LineChart, DollarSign, Users, BarChart } from "lucide-react";
 
 const features = [
   {
@@ -49,7 +48,7 @@ const benefits = [
   {
     title: "Precise Targeting",
     description: "Reach exactly the right audience with targeting options based on demographics, interests, behaviors, and search intent.",
-    icon: <Bullseye className="text-brandPurple h-6 w-6" />
+    icon: <Target className="text-brandPurple h-6 w-6" />
   },
   {
     title: "Measurable Results",
