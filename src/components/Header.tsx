@@ -16,7 +16,7 @@ const Header = () => {
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold text-coral">
-            ROI<span className="text-foreground">Agency</span>
+            GO <span className="text-foreground">SG</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -34,7 +34,7 @@ const Header = () => {
               Paid Ads
             </Link>
             <Link to="/services/dashboard" className="text-foreground hover:text-coral transition-colors">
-              Reporting
+              Social Media
             </Link>
             <ThemeToggle />
             <Button asChild className="bg-coral hover:bg-coral/90 text-white">
@@ -114,7 +114,7 @@ const Header = () => {
                 className="text-foreground hover:text-coral transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Reporting
+                Social Media
               </Link>
               <Button asChild className="w-full bg-coral hover:bg-coral/90 text-white mt-2">
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>

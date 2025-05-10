@@ -5,25 +5,25 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 
 const questions = [
-  "How can a well-designed website impact your business growth?",
-  "Are you leveraging SEO to its full potential?",
-  "What would a higher ROI mean for your brand's future?"
+  "What is a digital agency?",
+  "Why hire a professional digital marketing agency?",
+  "How can a digital agency help your business grow?"
 ];
 
 const insights = [
   {
-    title: "Startups",
-    description: "Integrated marketing solutions to scale efficiently with limited resources.",
+    title: "Affordable Websites",
+    description: "Get a professional website without breaking the bank – ready in under a month.",
     link: "/services/website-design"
   },
   {
-    title: "Entrepreneurs",
-    description: "High ROI strategies to maximize growth without wasting budget.",
+    title: "Humanised Content",
+    description: "Grow organic traffic with authentic content that passes AI detection tools.",
     link: "/services/seo"
   },
   {
-    title: "Brands",
-    description: "Centralized analytics for actionable insights and informed decisions.",
+    title: "Join Thriving Brands",
+    description: "Partner with us to scale your business through result-oriented digital marketing.",
     link: "/services/dashboard"
   }
 ];
@@ -42,7 +42,7 @@ const InsightsSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Thought-Provoking Questions
+              Common Questions
             </h2>
             
             <div className="space-y-8">
@@ -67,7 +67,7 @@ const InsightsSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Practical Insights
+              Our Solutions
             </h2>
             
             {insights.map((insight, index) => (

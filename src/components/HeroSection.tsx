@@ -20,7 +20,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Accelerate Your Growth with <span className="text-coral">High ROI</span> Marketing Solutions
+              Hi <br /><span className="text-coral">We grow your revenue</span> at the highest ROI.
             </motion.h1>
             
             <motion.p 
@@ -29,7 +29,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Integrated strategies for startups, entrepreneurs, and brands.
+              We provide integrated marketing solutions to SMEs and high-performing brands to help them achieve accelerated results via lead magnet and revenue growth solutions.
             </motion.p>
             
             <motion.div 
@@ -41,12 +41,7 @@ const HeroSection = () => {
               <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button px-8 py-6 text-lg">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
-                  Book a Meeting
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="border-coral text-coral hover:bg-coral/10 px-8 py-6 text-lg">
-                <Link to="/services/website-design">
-                  Explore Services
+                  Contact Us
                 </Link>
               </Button>
             </motion.div>
@@ -67,8 +62,8 @@ const HeroSection = () => {
                     </svg>
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">Marketing Strategy Dashboard</h3>
-                    <p className="text-muted-foreground">Interactive visualization of your growth metrics</p>
+                    <h3 className="text-xl font-semibold">GO SG Marketing</h3>
+                    <p className="text-muted-foreground">Driving revenue growth through powerful campaigns</p>
                   </div>
                 </div>
               </div>

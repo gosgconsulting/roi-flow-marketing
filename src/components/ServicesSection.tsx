@@ -5,7 +5,7 @@ import {
   Palette, 
   Search, 
   BarChart3, 
-  LineChart 
+  MessageSquare 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,29 +13,29 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 const services = [
   {
     title: "Website Design",
-    description: "Stunning, conversion-focused websites that drive business results.",
+    description: "Upgrade and enhance your business through top-notch website design.",
     icon: <Palette className="h-10 w-10 text-coral" />,
     link: "/services/website-design",
     cta: "Learn More"
   },
   {
-    title: "SEO",
-    description: "Organic growth strategies that improve your search visibility and rankings.",
+    title: "Humanised SEO",
+    description: "Boost Your search engine ranking to gain increased visibility where it matters most.",
     icon: <Search className="h-10 w-10 text-coral" />,
     link: "/services/seo",
     cta: "Learn More"
   },
   {
-    title: "Paid Ads",
-    description: "Targeted campaigns that maximize your return on ad spend across platforms.",
+    title: "Paid Advertising",
+    description: "Ad campaigns designed specifically to attract and convert your targeted customer.",
     icon: <BarChart3 className="h-10 w-10 text-coral" />,
     link: "/services/paid-ads",
     cta: "Learn More"
   },
   {
-    title: "Reporting Dashboard",
-    description: "Centralized analytics to track performance and make data-driven decisions.",
-    icon: <LineChart className="h-10 w-10 text-coral" />,
+    title: "Social Media",
+    description: "We make engaging content and plan for your channels.",
+    icon: <MessageSquare className="h-10 w-10 text-coral" />,
     link: "/services/dashboard",
     cta: "Learn More"
   }

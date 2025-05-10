@@ -1,46 +1,48 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const reasons = [
   {
-    title: "ROI-Driven Approach",
-    description: "We focus on strategies that deliver measurable returns on your investment."
+    title: "Expertise & Strategy",
+    description: "Access to expert knowledge and strategic planning for your marketing needs."
   },
   {
-    title: "Integrated Solutions",
-    description: "Our marketing services work together for maximum impact and efficiency."
+    title: "Ready-to-Deploy Teams",
+    description: "No need to manage in-house teams or deal with novice agencies."
   },
   {
-    title: "Data-Driven Decisions",
-    description: "We use analytics to guide strategy development and optimization."
+    title: "Continuous Results",
+    description: "We focus on delivering ongoing positive outcomes for your brand."
   },
   {
-    title: "Industry Expertise",
-    description: "Our team brings specialized knowledge across various business sectors."
+    title: "Revenue Growth",
+    description: "Our campaigns are designed to help you double your profits."
   },
   {
-    title: "Transparent Reporting",
-    description: "Get clear insights into campaign performance with our reporting dashboard."
+    title: "Increased Brand Reach",
+    description: "Expand your market share and attract new customers."
   },
   {
-    title: "Growth Partnership",
-    description: "We align our success with yours through collaborative long-term relationships."
+    title: "Time & Cost Efficiency",
+    description: "We deliver professional results quickly without breaking your budget."
   }
 ];
 
 const testimonials = [
   {
-    quote: "ROIAgency transformed our digital presence and increased our lead generation by 137% within just 3 months.",
-    name: "Sarah Johnson",
-    role: "Marketing Director",
-    company: "TechStart Inc."
+    quote: "90% of our clients reported positive results within the first month.",
+    name: "GO SG",
+    role: "Success Metrics",
+    company: "GO SG Consulting"
   },
   {
-    quote: "Their integrated approach to SEO and paid ads gave us the competitive edge we needed in a saturated market.",
-    name: "Michael Chen",
-    role: "Founder & CEO",
-    company: "GrowFast Solutions"
+    quote: "Smooy frozen yogurt gained 700 monthly organic traffic in 8 months only.",
+    name: "SEO Case Study",
+    role: "Organic Growth",
+    company: "Smooy"
   }
 ];
 
@@ -55,11 +57,18 @@ const WhyChooseUsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            We deliver results-focused marketing strategies that drive growth 
-            and provide clear return on investment.
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why GO SG</h2>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+            It's hard to grow especially working with novice agencies or managing variable in-house teams. 
+            We know your pain and this is why we have ready to deploy experiences digital teams so you don't have to. 
+            Having faced this frustration too many times, we started GO SG to become the digital agency we wish we could hire. 
+            That means continuous results for your brand.
           </p>
+          <div className="mt-8">
+            <Button asChild className="bg-coral hover:bg-coral/90 text-white">
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
         </motion.div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

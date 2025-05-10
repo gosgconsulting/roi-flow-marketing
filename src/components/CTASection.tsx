@@ -21,19 +21,19 @@ const CTASection = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            Ready to Transform Your <span className="text-coral">Marketing ROI</span>?
+            Drive <span className="text-coral">Revenue Growth</span> Through Powerful Campaigns
           </h2>
           
           <p className="text-xl text-muted-foreground">
-            Get in touch today and discover how our integrated marketing solutions 
-            can help accelerate your business growth.
+            Work with a marketing agency that helps you double your profits. 
+            Increase your brand reach, get new customers and grow market share.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button px-8 py-6 text-lg">
               <Link to="/contact" className="flex items-center">
                 <Calendar className="mr-2 h-5 w-5" />
-                Book a Meeting
+                Get a Free Consultation
               </Link>
             </Button>
             <Button asChild variant="outline" className="border-coral text-coral hover:bg-coral/10 px-8 py-6 text-lg">
@@ -45,7 +45,7 @@ const CTASection = () => {
           </div>
           
           <p className="text-sm text-muted-foreground pt-4">
-            No commitment required. Let's just chat about your goals and see if we're a good fit.
+            Boost revenue and build a standout brand with our digital marketing experts.
           </p>
         </motion.div>
       </div>
