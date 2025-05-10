@@ -43,10 +43,18 @@ const faqItems = [
 const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Set light mode as default
+    const savedTheme = localStorage.getItem("theme");
+    if (!savedTheme) {
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pt-16">
       <Header />
       <main className="flex-grow">
         <HeroSection />
