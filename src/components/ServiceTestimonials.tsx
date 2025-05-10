@@ -1,5 +1,8 @@
 
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface Testimonial {
   quote: string;
@@ -7,6 +10,7 @@ interface Testimonial {
   role: string;
   company: string;
   image?: string;
+  rating?: number;
 }
 
 interface ServiceTestimonialsProps {
@@ -17,7 +21,7 @@ interface ServiceTestimonialsProps {
 
 const ServiceTestimonials = ({ title, subtitle, testimonials }: ServiceTestimonialsProps) => {
   return (
-    <section className="py-20 px-4 bg-secondary">
+    <section className="py-20 px-4 bg-deepBlue">
       <div className="container mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -40,32 +44,45 @@ const ServiceTestimonials = ({ title, subtitle, testimonials }: ServiceTestimoni
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-card rounded-lg p-8 shadow-sm border border-border relative"
             >
-              {/* Quote mark */}
-              <div className="absolute top-6 right-6 text-coral/20 text-6xl font-serif">
-                "
-              </div>
-              
-              <p className="text-lg mb-6 relative z-10">{testimonial.quote}</p>
-              
-              <div className="flex items-center">
-                {testimonial.image ? (
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name}
-                    className="h-12 w-12 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center text-lg font-semibold text-coral">
-                    {testimonial.name.charAt(0)}
+              <Card className="bg-card/20 hover:bg-card/30 backdrop-blur-sm border-white/10 h-full transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center">
+                      <Avatar className="h-12 w-12 border-2 border-coral/30">
+                        {testimonial.image ? (
+                          <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                        ) : (
+                          <AvatarFallback className="bg-coral/20 text-coral">
+                            {testimonial.name.charAt(0)}
+                          </AvatarFallback>
+                        )}
+                      </Avatar>
+                      <div className="ml-4">
+                        <h4 className="font-semibold text-white">{testimonial.name}</h4>
+                        <p className="text-sm text-muted-foreground">{testimonial.role}, {testimonial.company}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex">
+                      {Array(5).fill(0).map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className="h-4 w-4 text-coral" 
+                          fill={i < (testimonial.rating || 5) ? "currentColor" : "none"} 
+                        />
+                      ))}
+                    </div>
                   </div>
-                )}
-                <div className="ml-4">
-                  <h4 className="font-semibold">{testimonial.name}</h4>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}, {testimonial.company}</p>
-                </div>
-              </div>
+                  
+                  <div className="relative">
+                    <div className="absolute -top-3 -left-1 text-coral/20 text-6xl font-serif">
+                      "
+                    </div>
+                    <p className="text-lg mb-6 relative z-10 pt-4">{testimonial.quote}</p>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>
