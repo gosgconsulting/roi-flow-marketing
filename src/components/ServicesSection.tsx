@@ -49,6 +49,9 @@ const services = [
   }
 ];
 
+// Only use the first 3 services by default
+const defaultServices = services.slice(0, 3);
+
 const ServicesSection = () => {
   return (
     <section className="py-20 px-4">
@@ -69,52 +72,37 @@ const ServicesSection = () => {
           </p>
         </motion.div>
         
-        <div className="relative">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {services.map((service, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="service-card"
-                  >
-                    <div className="h-full bg-card border border-border hover:border-coral/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-coral/5">
-                      <div className="p-8">
-                        <div className="inline-flex items-center justify-center p-3 bg-coral/10 rounded-xl mb-6">
-                          {service.icon}
-                        </div>
-                        <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                        <p className="text-muted-foreground mb-6">
-                          {service.description}
-                        </p>
-                        <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10 pl-0">
-                          <Link to={service.link} className="flex items-center">
-                            {service.cta}
-                            <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="hidden sm:block">
-              <CarouselPrevious className="absolute -left-12 top-1/2" />
-              <CarouselNext className="absolute -right-12 top-1/2" />
-            </div>
-          </Carousel>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {defaultServices.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="service-card"
+            >
+              <div className="h-full bg-card border border-border hover:border-coral/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-coral/5">
+                <div className="p-8">
+                  <div className="inline-flex items-center justify-center p-3 bg-coral/10 rounded-xl mb-6">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6">
+                    {service.description}
+                  </p>
+                  <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10 pl-0">
+                    <Link to={service.link} className="flex items-center">
+                      {service.cta}
+                      <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
