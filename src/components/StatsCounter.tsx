@@ -51,7 +51,7 @@ const StatsCounter = () => {
             </h2>
             
             <p className="text-gray-600 dark:text-gray-300 mb-8">
-              We deliver measurable outcomes through strategic digital marketing. 
+              At GO SG, we deliver measurable outcomes through strategic digital marketing. 
               Our clients consistently see significant improvements in key performance metrics, 
               driving sustainable business growth and online success.
             </p>

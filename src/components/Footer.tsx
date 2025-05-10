@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, Phone } from "lucide-react";
@@ -10,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">
-              <span className="text-coral">ROI</span>Agency
+              <span className="text-deepBlue">GO</span> <span className="text-coral">SG</span>
             </h3>
             <p className="text-gray-300 mb-4">
               Integrated marketing solutions for startups, entrepreneurs, and brands.
@@ -118,7 +117,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-          <p>© 2025 ROIAgency. All rights reserved.</p>
+          <p>© 2025 GO SG. All rights reserved.</p>
         </div>
       </div>
     </footer>

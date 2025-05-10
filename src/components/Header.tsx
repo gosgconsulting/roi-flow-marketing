@@ -15,8 +15,8 @@ const Header = () => {
     <header className="w-full py-4 px-4 md:px-8">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-coral">
-            GO <span className="text-foreground">SG</span>
+          <Link to="/" className="text-2xl font-bold">
+            <span className="text-deepBlue">GO</span> <span className="text-coral">SG</span>
           </Link>
 
           {/* Desktop Navigation */}

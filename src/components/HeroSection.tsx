@@ -37,7 +37,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              We provide integrated marketing solutions to SMEs and high-performing brands to help them achieve accelerated results via lead magnet and revenue growth solutions.
+              GO SG provides integrated marketing solutions to SMEs and high-performing brands to help them achieve accelerated results via lead magnet and revenue growth solutions.
             </motion.p>
             
             <motion.div 
@@ -64,8 +64,12 @@ const HeroSection = () => {
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
               <div className="w-full h-full bg-muted/50 flex items-center justify-center">
                 <div className="text-center space-y-4">
-                  <div className="inline-flex items-center justify-center p-5 bg-brandPurple/20 rounded-full">
-                    <div className="text-3xl font-bold text-brandPurple">GO SG</div>
+                  <div className="flex items-center justify-center">
+                    <img 
+                      src="/lovable-uploads/d2d7d623-f729-433e-b350-0e40b4a32b91.png" 
+                      alt="GO SG Logo" 
+                      className="h-32"
+                    />
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-xl font-semibold">Digital Marketing Experts</h3>
