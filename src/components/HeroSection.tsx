@@ -11,8 +11,8 @@ const HeroSection = () => {
       <div className="absolute inset-0 gradient-bg -z-10"></div>
       
       {/* Abstract shapes */}
-      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-coral/10 blur-3xl"></div>
-      <div className="absolute bottom-10 left-[5%] w-40 h-40 rounded-full bg-coral/20 blur-3xl"></div>
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-brandPurple/10 blur-3xl"></div>
+      <div className="absolute bottom-10 left-[5%] w-40 h-40 rounded-full bg-brandPurple/20 blur-3xl"></div>
       
       {/* Content */}
       <div className="container mx-auto">
@@ -23,11 +23,11 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full">
+              <span className="inline-block py-1 px-3 mb-4 bg-brandPurple/20 text-brandPurple text-sm font-medium rounded-full">
                 INTEGRATED DIGITAL MARKETING AGENCY
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi <br /><span className="bg-gradient-to-r from-coral to-coral/80 bg-clip-text text-transparent">We grow your revenue</span> at the highest ROI.
+                Hi <br /><span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">We grow your revenue</span> at the highest ROI.
               </h1>
             </motion.div>
             
@@ -46,7 +46,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button px-8 py-6 text-lg">
+              <Button asChild className="bg-brandPurple hover:bg-brandPurple/90 text-white cta-button px-8 py-6 text-lg">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
                   Contact Us
@@ -64,8 +64,8 @@ const HeroSection = () => {
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
               <div className="w-full h-full bg-muted/50 flex items-center justify-center">
                 <div className="text-center space-y-4">
-                  <div className="inline-flex items-center justify-center p-5 bg-coral/20 rounded-full">
-                    <div className="text-3xl font-bold text-coral">GO SG</div>
+                  <div className="inline-flex items-center justify-center p-5 bg-brandPurple/20 rounded-full">
+                    <div className="text-3xl font-bold text-brandPurple">GO SG</div>
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-xl font-semibold">Digital Marketing Experts</h3>
@@ -76,8 +76,8 @@ const HeroSection = () => {
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -top-6 -left-6 w-12 h-12 bg-coral/30 rounded-full blur-lg"></div>
-            <div className="absolute -bottom-8 -right-8 w-16 h-16 bg-coral/20 rounded-full blur-xl"></div>
+            <div className="absolute -top-6 -left-6 w-12 h-12 bg-brandPurple/30 rounded-full blur-lg"></div>
+            <div className="absolute -bottom-8 -right-8 w-16 h-16 bg-brandPurple/20 rounded-full blur-xl"></div>
           </motion.div>
         </div>
       </div>

@@ -74,9 +74,9 @@ const ClientLogos = () => {
           className="text-center text-xl md:text-2xl font-medium text-gray-800 mb-6"
         >
           <span className="text-gray-800 font-semibold">USED BY </span>
-          <span className="text-coral font-bold text-2xl">5,000,000+ </span>
+          <span className="text-brandPurple font-bold text-2xl">5,000,000+ </span>
           <span className="text-gray-800 font-semibold">CONTENT WRITERS, SEO EXPERTS AND AGENCIES. </span>
-          <span className="text-coral font-bold text-2xl">15,000+ </span>
+          <span className="text-brandPurple font-bold text-2xl">15,000+ </span>
           <span className="text-gray-800 font-semibold">5-STAR RATINGS.</span>
         </motion.h3>
       </div>

@@ -25,7 +25,7 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              {title}
+              <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">{title}</span>
             </h1>
             
             <p className="text-xl text-muted-foreground">
@@ -33,12 +33,12 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild className="bg-coral hover:bg-coral/90 text-white cta-button">
+              <Button asChild className="bg-brandPurple hover:bg-brandPurple/90 text-white cta-button">
                 <Link to="/contact" className="flex items-center">
                   Get a Quote
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-coral text-coral hover:bg-coral/10">
+              <Button asChild variant="outline" className="border-brandPurple text-brandPurple hover:bg-brandPurple/10">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
                   Book a Meeting
@@ -63,8 +63,8 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
               ) : (
                 <div className="w-full h-full bg-muted flex items-center justify-center">
                   <div className="text-center space-y-4">
-                    <div className="inline-flex items-center justify-center p-4 bg-coral/20 rounded-full">
-                      <svg className="w-10 h-10 text-coral" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div className="inline-flex items-center justify-center p-4 bg-brandPurple/20 rounded-full">
+                      <svg className="w-10 h-10 text-brandPurple" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
@@ -75,8 +75,8 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -top-6 -right-6 w-12 h-12 bg-coral/20 rounded-full blur-xl"></div>
-            <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-coral/30 rounded-full blur-xl"></div>
+            <div className="absolute -top-6 -right-6 w-12 h-12 bg-brandPurple/20 rounded-full blur-xl"></div>
+            <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-brandPurple/30 rounded-full blur-xl"></div>
           </motion.div>
         </div>
       </div>
