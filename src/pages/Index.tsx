@@ -4,13 +4,13 @@ import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import CTASection from "@/components/CTASection";
-import InsightsSection from "@/components/InsightsSection";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientLogos from "@/components/ClientLogos";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import FAQAccordion from "@/components/FAQAccordion";
+import StatsCounter from "@/components/StatsCounter";
 
 const faqItems = [
   {
@@ -51,9 +51,9 @@ const Index = () => {
         <HeroSection />
         <ClientLogos />
         <ServicesSection />
+        <StatsCounter />
         <TestimonialsCarousel />
         <WhyChooseUsSection />
-        <InsightsSection />
         <FAQAccordion 
           title="Frequently Asked Questions"
           items={faqItems}
