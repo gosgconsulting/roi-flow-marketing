@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, useAnimation, useDragControls, PanInfo } from "framer-motion";
+import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Testimonial {
@@ -77,6 +77,7 @@ const TestimonialsCarousel = () => {
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const dragControls = useDragControls();
   const [currentPosition, setCurrentPosition] = useState(0);
 
   useEffect(() => {
@@ -91,35 +92,22 @@ const TestimonialsCarousel = () => {
         }
       });
     } else {
-      // This stops the animation completely at its current position
+      // Stop the animation completely at its current position
       controls.stop();
     }
   }, [isPaused, controls]);
 
-  const handleNext = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      const newPosition = currentPosition - containerWidth / 3;
-      setCurrentPosition(newPosition);
-      controls.start({
-        x: newPosition,
-        transition: { duration: 0.5, ease: "easeInOut" }
-      });
-    }
+  const handleDragStart = () => {
+    setIsPaused(true);
   };
 
-  const handlePrev = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      const newPosition = currentPosition + containerWidth / 3;
-      // Don't scroll beyond the start
-      const clampedPosition = Math.min(newPosition, 0);
-      setCurrentPosition(clampedPosition);
-      controls.start({
-        x: clampedPosition,
-        transition: { duration: 0.5, ease: "easeInOut" }
-      });
-    }
+  const handleDragEnd = (_: any, info: PanInfo) => {
+    const newPosition = currentPosition + info.offset.x;
+    setCurrentPosition(newPosition);
+    controls.start({
+      x: newPosition,
+      transition: { duration: 0.5, ease: "easeInOut" }
+    });
   };
 
   return (
@@ -152,11 +140,17 @@ const TestimonialsCarousel = () => {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div ref={containerRef} className="relative">
+          <div ref={containerRef} className="relative cursor-grab">
             <motion.div 
               className="flex gap-6 py-6 px-8 min-w-max"
               animate={controls}
               initial={{ x: 0 }}
+              drag="x"
+              dragControls={dragControls}
+              dragConstraints={{ left: -2000, right: 100 }}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              whileDrag={{ cursor: "grabbing" }}
             >
               {/* First set of testimonials */}
               {testimonials.map((testimonial) => (
@@ -169,26 +163,6 @@ const TestimonialsCarousel = () => {
               ))}
             </motion.div>
           </div>
-        </div>
-        
-        {/* Navigation buttons */}
-        <div className={`absolute top-1/2 left-4 -translate-y-1/2 ${isPaused ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
-          <button 
-            onClick={handlePrev}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 text-white"
-            aria-label="Previous testimonials"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-        </div>
-        <div className={`absolute top-1/2 right-4 -translate-y-1/2 ${isPaused ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
-          <button 
-            onClick={handleNext}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 text-white"
-            aria-label="Next testimonials"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
         </div>
       </div>
     </section>
