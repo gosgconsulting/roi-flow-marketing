@@ -10,7 +10,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientLogos from "@/components/ClientLogos";
 import StatsCounter from "@/components/StatsCounter";
-import AwardsBadges from "@/components/AwardsBadges";
 import FAQAccordion from "@/components/FAQAccordion";
 
 const faqItems = [
@@ -55,7 +54,6 @@ const Index = () => {
         <StatsCounter />
         <WhyChooseUsSection />
         <InsightsSection />
-        <AwardsBadges />
         <FAQAccordion 
           title="Frequently Asked Questions"
           items={faqItems}

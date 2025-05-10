@@ -7,10 +7,10 @@ import { Calendar, ArrowRight } from "lucide-react";
 const CTASection = () => {
   return (
     <section className="py-24 px-4 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-deepBlue via-deepBlue/95 to-deepBlue/90 -z-10"></div>
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-coral/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-coral/20 rounded-full blur-3xl"></div>
+      {/* Background decoration - improved contrast for better readability */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-deepBlue via-deepBlue to-deepBlue/95 -z-10"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-coral/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-coral/10 rounded-full blur-3xl"></div>
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
       
       <div className="container mx-auto relative z-10">
@@ -25,11 +25,11 @@ const CTASection = () => {
             BOOST YOUR GROWTH
           </span>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
             Drive <span className="bg-gradient-to-r from-coral to-coral/80 bg-clip-text text-transparent">Revenue Growth</span> Through Powerful Campaigns
           </h2>
           
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-white/90">
             Work with a marketing agency that helps you double your profits. 
             Increase your brand reach, get new customers and grow market share.
           </p>
@@ -42,7 +42,7 @@ const CTASection = () => {
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="border-coral text-coral hover:bg-coral/10 px-8 py-6 text-lg">
+            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
               <Link to="/contact" className="flex items-center">
                 Contact Us
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -50,7 +50,7 @@ const CTASection = () => {
             </Button>
           </div>
           
-          <p className="text-sm text-muted-foreground pt-4">
+          <p className="text-sm text-white/80 pt-4">
             Boost revenue and build a standout brand with our digital marketing experts.
           </p>
         </motion.div>

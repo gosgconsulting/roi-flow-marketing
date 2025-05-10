@@ -1,18 +1,17 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Award } from "lucide-react";
 
 const ClientLogos = () => {
   const clients = [
-    { name: "Microsoft", logo: "" },
-    { name: "Google", logo: "" },
-    { name: "Amazon", logo: "" },
-    { name: "Apple", logo: "" },
-    { name: "Meta", logo: "" },
-    { name: "IBM", logo: "" },
-    { name: "Oracle", logo: "" },
-    { name: "Intel", logo: "" },
+    { name: "Microsoft", logo: "https://images.unsplash.com/photo-1642793758877-545b2e700d41?q=80&w=100&auto=format&fit=crop" },
+    { name: "Google", logo: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=100&auto=format&fit=crop" },
+    { name: "Amazon", logo: "https://images.unsplash.com/photo-1614854262340-ab1ca7d079c7?q=80&w=100&auto=format&fit=crop" },
+    { name: "Apple", logo: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=100&auto=format&fit=crop" },
+    { name: "Meta", logo: "https://images.unsplash.com/photo-1633675254053-d96c7668c3b8?q=80&w=100&auto=format&fit=crop" },
+    { name: "IBM", logo: "https://images.unsplash.com/photo-1642980054950-7f486e241f3b?q=80&w=100&auto=format&fit=crop" },
+    { name: "Oracle", logo: "https://images.unsplash.com/photo-1642155129703-869cf2a13e29?q=80&w=100&auto=format&fit=crop" },
+    { name: "Intel", logo: "https://images.unsplash.com/photo-1645429903862-f5f69532abbd?q=80&w=100&auto=format&fit=crop" },
   ];
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,21 +47,6 @@ const ClientLogos = () => {
         </motion.h3>
       </div>
       
-      {/* Award badges at the top */}
-      <div className="container mx-auto mb-10">
-        <div className="flex flex-wrap justify-center gap-5">
-          {[1, 2, 3, 4, 5].map((_, index) => (
-            <div 
-              key={index} 
-              className="bg-white/5 backdrop-blur-sm border border-white/10 p-3 rounded-lg flex items-center gap-2 hover:bg-white/10 transition-all"
-            >
-              <Award className="text-coral h-5 w-5" />
-              <span className="text-sm font-medium text-white">BEST SOFTWARE AWARDS 2024</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
       {/* Scrolling logos container */}
       <div className="overflow-hidden w-full">
         <motion.div
@@ -83,11 +67,11 @@ const ClientLogos = () => {
               key={index}
               className="flex-shrink-0 h-12 md:h-16"
             >
-              <div className="h-full py-2 px-6 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-white/20 backdrop-blur-sm">
+              <div className="h-full py-2 px-6 bg-white/10 hover:bg-white/15 rounded-lg flex items-center justify-center transition-all duration-300 border border-white/10 hover:border-white/20 backdrop-blur-sm">
                 {client.logo ? (
-                  <img src={client.logo} alt={client.name} className="h-8" />
+                  <img src={client.logo} alt={client.name} className="h-8 object-contain" />
                 ) : (
-                  <span className="text-lg font-medium">{client.name}</span>
+                  <span className="text-lg font-medium text-white/80">{client.name}</span>
                 )}
               </div>
             </div>
@@ -99,11 +83,11 @@ const ClientLogos = () => {
               key={`duplicate-${index}`}
               className="flex-shrink-0 h-12 md:h-16"
             >
-              <div className="h-full py-2 px-6 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-white/20 backdrop-blur-sm">
+              <div className="h-full py-2 px-6 bg-white/10 hover:bg-white/15 rounded-lg flex items-center justify-center transition-all duration-300 border border-white/10 hover:border-white/20 backdrop-blur-sm">
                 {client.logo ? (
-                  <img src={client.logo} alt={client.name} className="h-8" />
+                  <img src={client.logo} alt={client.name} className="h-8 object-contain" />
                 ) : (
-                  <span className="text-lg font-medium">{client.name}</span>
+                  <span className="text-lg font-medium text-white/80">{client.name}</span>
                 )}
               </div>
             </div>
