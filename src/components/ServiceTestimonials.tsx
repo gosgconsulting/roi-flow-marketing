@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { motion, useAnimation, useDragControls, PanInfo } from "framer-motion";
 import { Star } from "lucide-react";
@@ -158,7 +157,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
           {Array(5).fill(0).map((_, i) => (
             <Star 
               key={i} 
-              className="h-5 w-5 text-brandPurple" 
+              className="h-5 w-5 text-yellow-400" 
               fill={i < (testimonial.rating || 5) ? "currentColor" : "none"} 
             />
           ))}

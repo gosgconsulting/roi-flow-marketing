@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -69,6 +68,7 @@ export default {
 				brandBlue: 'hsl(var(--brand-blue))',
 				brandGold: 'hsl(var(--brand-gold))',
 				brandPurple: 'hsl(var(--brand-purple))',
+				starYellow: "#FACC15", // Adding star yellow color
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
