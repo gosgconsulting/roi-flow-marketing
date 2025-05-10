@@ -5,38 +5,6 @@
 
 @layer base {
   :root {
-    --background: 210 100% 12%;
-    --foreground: 0 0% 98%;
-
-    --card: 210 100% 10%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 210 100% 10%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 5 94% 62%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 210 100% 18%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 210 50% 25%;
-    --muted-foreground: 0 0% 83%;
-
-    --accent: 210 50% 25%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 210 50% 18%;
-    --input: 210 50% 18%;
-    --ring: 5 94% 62%;
-
-    --radius: 0.5rem;
-  }
-
-  .light {
     --background: 0 0% 96%;
     --foreground: 210 100% 12%;
 
@@ -64,6 +32,44 @@
     --border: 210 50% 85%;
     --input: 210 50% 85%;
     --ring: 5 94% 62%;
+
+    /* Additional brand colors */
+    --brand-teal: 174 80% 45%;
+    --brand-blue: 210 100% 50%;
+    --brand-gold: 36 100% 65%; 
+    --brand-purple: 270 70% 60%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 210 100% 12%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 100% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 210 100% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 5 94% 62%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 210 100% 18%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 50% 25%;
+    --muted-foreground: 0 0% 83%;
+
+    --accent: 210 50% 25%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 50% 18%;
+    --input: 210 50% 18%;
+    --ring: 5 94% 62%;
   }
 }
 
@@ -80,14 +86,18 @@
 
 /* Glass morphism effects */
 .glass-card {
-  @apply backdrop-blur-md bg-white/5 border border-white/10;
+  @apply backdrop-blur-md bg-white/80 dark:bg-white/5 border border-slate-200 dark:border-white/10;
 }
 
 .glass-card:hover {
-  @apply bg-white/10 border-white/20 shadow-lg shadow-coral/5;
+  @apply bg-white dark:bg-white/10 border-slate-300 dark:border-white/20 shadow-lg shadow-coral/5;
 }
 
 .gradient-bg {
+  background: linear-gradient(125deg, #f5f7fa 0%, #e6e9f0 100%);
+}
+
+.dark .gradient-bg {
   background: linear-gradient(125deg, rgba(0,33,61,1) 0%, rgba(0,46,85,1) 100%);
 }
 
@@ -150,6 +160,23 @@
   background-size: 200% 200%;
 }
 
+/* Brand gradient combinations */
+.gradient-primary {
+  @apply bg-gradient-to-r from-coral to-[#ff7e56] text-white;
+}
+
+.gradient-secondary {
+  @apply bg-gradient-to-r from-[#00a3c4] to-[#0080b9] text-white;
+}
+
+.gradient-accent {
+  @apply bg-gradient-to-r from-[#ffb347] to-[#ffcc33] text-gray-800;
+}
+
+.gradient-creative {
+  @apply bg-gradient-to-r from-[#9370DB] to-[#8A2BE2] text-white;
+}
+
 /* Section dividers */
 .divider {
   height: 4px;
@@ -159,16 +186,32 @@
 
 /* Testimonial card effects */
 .testimonial-card {
-  @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-xl p-6 transition-all duration-300;
+  @apply backdrop-blur-md bg-white/90 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-6 transition-all duration-300;
 }
 
 .testimonial-card:hover {
-  @apply bg-white/10 border-white/20 shadow-lg shadow-coral/10;
+  @apply bg-white dark:bg-white/10 border-slate-300 dark:border-white/20 shadow-lg shadow-coral/10;
   transform: translateY(-4px);
 }
 
 /* Client logo animations */
 .client-logo {
-  @apply py-2 px-4 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-white/60 hover:text-white/90 transition-all duration-300 border border-white/10 hover:border-white/20;
+  @apply py-2 px-4 bg-white/90 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 rounded-lg flex items-center justify-center text-gray-600 dark:text-white/60 hover:text-gray-800 dark:hover:text-white/90 transition-all duration-300 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20;
 }
 
+/* Button variations */
+.btn-teal {
+  @apply bg-[#00c2cb] hover:bg-[#00adb5] text-white;
+}
+
+.btn-blue {
+  @apply bg-[#0080b9] hover:bg-[#006a99] text-white;
+}
+
+.btn-gold {
+  @apply bg-[#ffb347] hover:bg-[#ffa31a] text-gray-800;
+}
+
+.btn-purple {
+  @apply bg-[#9370DB] hover:bg-[#8A2BE2] text-white;
+}

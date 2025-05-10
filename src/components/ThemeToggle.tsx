@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const ThemeToggle = ({ className }: { className?: string }) => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
@@ -16,7 +16,10 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") {
+    if (savedTheme === "dark") {
+      setIsDark(true);
+      document.documentElement.classList.remove("light");
+    } else {
       setIsDark(false);
       document.documentElement.classList.add("light");
     }

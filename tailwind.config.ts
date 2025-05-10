@@ -65,6 +65,10 @@ export default {
 				},
 				deepBlue: "#00213D",
 				coral: "#F94E40",
+				brandTeal: 'hsl(var(--brand-teal))',
+				brandBlue: 'hsl(var(--brand-blue))',
+				brandGold: 'hsl(var(--brand-gold))',
+				brandPurple: 'hsl(var(--brand-purple))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
