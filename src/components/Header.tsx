@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -39,15 +38,13 @@ const Header = () => {
             <Link to="/services/reporting" className="text-foreground hover:text-coral transition-colors">
               Reporting
             </Link>
-            <ThemeToggle />
             <Button asChild className="bg-coral hover:bg-coral/90 text-white">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </nav>
 
           {/* Mobile Navigation Toggle */}
-          <div className="flex items-center md:hidden space-x-4">
-            <ThemeToggle />
+          <div className="flex items-center md:hidden">
             <button 
               onClick={toggleMenu}
               className="text-foreground focus:outline-none"

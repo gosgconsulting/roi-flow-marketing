@@ -68,18 +68,75 @@ const HeroSection = () => {
                 className="w-full h-full object-cover"
               />
               
-              {/* Overlay with logo and text */}
-              <div className="absolute inset-0 bg-gradient-to-t from-deepBlue/70 to-transparent flex flex-col items-center justify-end p-6">
-                <div className="mb-4">
-                  <img 
-                    src="/lovable-uploads/d6e7a1ca-229a-4c34-83fc-e9bdf106b683.png" 
-                    alt="GO SG Logo" 
-                    className="h-16"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-white text-center">Digital Marketing Experts</h3>
-                <p className="text-white/80 text-center mt-2">Driving revenue growth through powerful campaigns</p>
-              </div>
+              {/* Animated floating elements */}
+              <motion.div 
+                className="absolute top-[15%] right-[15%] w-16 h-16 bg-brandPurple/80 rounded-full"
+                animate={{
+                  y: [0, -15, 0],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <motion.div 
+                className="absolute bottom-[20%] left-[15%] w-12 h-12 bg-coral/80 rounded-full"
+                animate={{
+                  y: [0, 15, 0],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+              />
+              
+              <motion.div 
+                className="absolute top-[30%] left-[20%] w-10 h-10 bg-brandTeal/80 rounded-full"
+                animate={{
+                  y: [0, -10, 0],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+              />
+              
+              {/* Chart-like graphic element */}
+              <motion.svg 
+                className="absolute bottom-[15%] right-[20%] w-32 h-24"
+                viewBox="0 0 100 60"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+              >
+                <motion.path
+                  d="M0,50 Q25,10 50,30 T100,10"
+                  fill="none"
+                  stroke="#9b87f5"
+                  strokeWidth="3"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, delay: 1 }}
+                />
+                <motion.path
+                  d="M0,50 Q35,40 65,20 T100,30"
+                  fill="none"
+                  stroke="#F94E40"
+                  strokeWidth="3"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, delay: 1.5 }}
+                />
+              </motion.svg>
             </div>
             
             {/* Decorative elements */}
