@@ -62,20 +62,23 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
-              <div className="w-full h-full bg-muted/50 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="flex items-center justify-center">
-                    <img 
-                      src="/lovable-uploads/d2d7d623-f729-433e-b350-0e40b4a32b91.png" 
-                      alt="GO SG Logo" 
-                      className="h-32"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">Digital Marketing Experts</h3>
-                    <p className="text-muted-foreground">Driving revenue growth through powerful campaigns</p>
-                  </div>
+              <img 
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80" 
+                alt="Digital Marketing Dashboard" 
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Overlay with logo and text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-deepBlue/70 to-transparent flex flex-col items-center justify-end p-6">
+                <div className="mb-4">
+                  <img 
+                    src="/lovable-uploads/d6e7a1ca-229a-4c34-83fc-e9bdf106b683.png" 
+                    alt="GO SG Logo" 
+                    className="h-16"
+                  />
                 </div>
+                <h3 className="text-xl font-semibold text-white text-center">Digital Marketing Experts</h3>
+                <p className="text-white/80 text-center mt-2">Driving revenue growth through powerful campaigns</p>
               </div>
             </div>
             
