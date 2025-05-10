@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
@@ -75,13 +74,7 @@ const testimonials: Testimonial[] = [
 
 const TestimonialsCarousel = () => {
   const [isPaused, setIsPaused] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Set animation based on hover state
-    setIsPaused(isHovered);
-  }, [isHovered]);
 
   return (
     <section className="py-20 relative overflow-hidden bg-deepBlue">
@@ -109,8 +102,8 @@ const TestimonialsCarousel = () => {
 
       <div 
         className="overflow-x-hidden w-full"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
         <div ref={containerRef} className="relative">
           <motion.div 
@@ -120,7 +113,7 @@ const TestimonialsCarousel = () => {
             }}
             transition={{
               x: {
-                duration: 40,
+                duration: 25, // Faster animation (reduced from 40)
                 ease: "linear",
                 repeat: Infinity,
                 repeatType: "loop"
