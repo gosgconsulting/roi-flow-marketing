@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -60,61 +59,6 @@ const benefits = [
     title: "Data-Driven Decisions",
     description: "Make strategic decisions based on comprehensive analytics and reporting that show exactly where your traffic is coming from.",
     icon: <BarChart3 className="text-brandPurple h-6 w-6" />
-  }
-];
-
-const plans = [
-  {
-    name: "Essential",
-    price: "From $999/mo",
-    description: "Perfect for small businesses getting started with SEO",
-    features: [
-      { name: "Technical SEO Audit", included: true },
-      { name: "Keyword Research", included: true },
-      { name: "On-Page Optimization", included: true },
-      { name: "Content Optimization", included: true },
-      { name: "Local SEO Setup", included: true },
-      { name: "Link Building", included: false },
-      { name: "Weekly Reporting", included: false },
-      { name: "Dedicated SEO Manager", included: false }
-    ],
-    cta: "Get Started",
-    link: "/contact"
-  },
-  {
-    name: "Professional",
-    price: "From $1,999/mo",
-    description: "Ideal for growing businesses wanting to expand their reach",
-    popular: true,
-    features: [
-      { name: "Technical SEO Audit", included: true },
-      { name: "Keyword Research", included: true },
-      { name: "On-Page Optimization", included: true },
-      { name: "Content Optimization", included: true },
-      { name: "Local SEO Setup", included: true },
-      { name: "Link Building", included: true },
-      { name: "Weekly Reporting", included: true },
-      { name: "Dedicated SEO Manager", included: false }
-    ],
-    cta: "Most Popular",
-    link: "/contact"
-  },
-  {
-    name: "Enterprise",
-    price: "From $3,999/mo",
-    description: "Comprehensive SEO solution for established businesses",
-    features: [
-      { name: "Technical SEO Audit", included: true },
-      { name: "Keyword Research", included: true },
-      { name: "On-Page Optimization", included: true },
-      { name: "Content Optimization", included: true },
-      { name: "Local SEO Setup", included: true },
-      { name: "Link Building", included: true },
-      { name: "Weekly Reporting", included: true },
-      { name: "Dedicated SEO Manager", included: true }
-    ],
-    cta: "Contact Us",
-    link: "/contact"
   }
 ];
 
@@ -181,11 +125,6 @@ const SEO = () => {
           title="Our SEO Services"
           subtitle="We use proven SEO techniques to improve your search rankings and increase organic traffic."
           features={features}
-        />
-        <ServicePlans 
-          title="Choose Your SEO Package"
-          subtitle="Flexible plans designed to meet your business goals and budget."
-          plans={plans}
         />
         <ServiceCaseStudies
           title="Success Stories"

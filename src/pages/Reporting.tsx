@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -62,61 +61,6 @@ const benefits = [
   }
 ];
 
-const plans = [
-  {
-    name: "Basic",
-    price: "From $499/mo",
-    description: "Essential reporting for small businesses",
-    features: [
-      { name: "Monthly Reports", included: true },
-      { name: "Key Metrics Dashboard", included: true },
-      { name: "Google Analytics Integration", included: true },
-      { name: "Google Ads Integration", included: true },
-      { name: "Email Reports", included: true },
-      { name: "Custom Dashboards", included: false },
-      { name: "Multi-Channel Attribution", included: false },
-      { name: "Competitor Analysis", included: false }
-    ],
-    cta: "Get Started",
-    link: "/contact"
-  },
-  {
-    name: "Professional",
-    price: "From $999/mo",
-    description: "Comprehensive reporting for growing businesses",
-    popular: true,
-    features: [
-      { name: "Weekly Reports", included: true },
-      { name: "Advanced Dashboards", included: true },
-      { name: "Google Analytics Integration", included: true },
-      { name: "All Marketing Platform Integrations", included: true },
-      { name: "Email Reports", included: true },
-      { name: "Custom Dashboards", included: true },
-      { name: "Multi-Channel Attribution", included: true },
-      { name: "Competitor Analysis", included: false }
-    ],
-    cta: "Most Popular",
-    link: "/contact"
-  },
-  {
-    name: "Enterprise",
-    price: "From $1,999/mo",
-    description: "Advanced analytics for large organizations",
-    features: [
-      { name: "Real-Time Reporting", included: true },
-      { name: "Custom Enterprise Dashboards", included: true },
-      { name: "Complete Data Integration", included: true },
-      { name: "All Platform Integrations", included: true },
-      { name: "Automated Reports", included: true },
-      { name: "Unlimited Custom Dashboards", included: true },
-      { name: "Advanced Attribution Modeling", included: true },
-      { name: "Competitor & Market Analysis", included: true }
-    ],
-    cta: "Contact Us",
-    link: "/contact"
-  }
-];
-
 const testimonials = [
   {
     quote: "The reporting tools provided by GO SG gave us unprecedented visibility into our marketing performance. We were able to optimize our campaigns and increase ROI by 47%.",
@@ -175,11 +119,6 @@ const Reporting = () => {
             </div>
           </div>
         </div>
-        <ServicePlans 
-          title="Reporting Packages"
-          subtitle="Choose the level of reporting and analytics that matches your business needs."
-          plans={plans}
-        />
         <ServiceTestimonials 
           title="Success Stories"
           subtitle="See how our reporting solutions have helped businesses gain clarity and improve performance."

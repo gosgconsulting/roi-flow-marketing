@@ -62,61 +62,6 @@ const benefits = [
   }
 ];
 
-const plans = [
-  {
-    name: "Starter",
-    price: "From $1,500/mo",
-    description: "Perfect for small businesses with focused advertising needs",
-    features: [
-      { name: "Campaign Strategy", included: true },
-      { name: "Google or Meta Ads", included: true },
-      { name: "Basic Audience Targeting", included: true },
-      { name: "Ad Creative Development", included: true },
-      { name: "Monthly Reporting", included: true },
-      { name: "Landing Page Optimization", included: false },
-      { name: "A/B Testing", included: false },
-      { name: "Advanced Attribution", included: false }
-    ],
-    cta: "Get Started",
-    link: "/contact"
-  },
-  {
-    name: "Growth",
-    price: "From $2,500/mo",
-    description: "Ideal for businesses ready to expand their digital reach",
-    popular: true,
-    features: [
-      { name: "Campaign Strategy", included: true },
-      { name: "Google AND Meta Ads", included: true },
-      { name: "Advanced Audience Targeting", included: true },
-      { name: "Ad Creative Development", included: true },
-      { name: "Weekly Reporting", included: true },
-      { name: "Landing Page Optimization", included: true },
-      { name: "A/B Testing", included: true },
-      { name: "Advanced Attribution", included: false }
-    ],
-    cta: "Most Popular",
-    link: "/contact"
-  },
-  {
-    name: "Premium",
-    price: "From $5,000/mo",
-    description: "Comprehensive solution for established businesses",
-    features: [
-      { name: "Campaign Strategy", included: true },
-      { name: "All Ad Platforms", included: true },
-      { name: "Advanced Audience Targeting", included: true },
-      { name: "Ad Creative Development", included: true },
-      { name: "Real-time Reporting", included: true },
-      { name: "Landing Page Optimization", included: true },
-      { name: "A/B Testing", included: true },
-      { name: "Advanced Attribution", included: true }
-    ],
-    cta: "Contact Us",
-    link: "/contact"
-  }
-];
-
 const caseStudies = [
   {
     title: "E-commerce ROAS Improvement",
@@ -180,11 +125,6 @@ const PaidAds = () => {
           title="Our Paid Advertising Services"
           subtitle="We create and manage high-performance paid campaigns that deliver real business results."
           features={features}
-        />
-        <ServicePlans 
-          title="Paid Advertising Packages"
-          subtitle="Choose the package that best fits your business needs and goals."
-          plans={plans}
         />
         <ServiceCaseStudies
           title="Campaign Success Stories"

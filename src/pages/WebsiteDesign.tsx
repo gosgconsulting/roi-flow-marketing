@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import ServiceHero from "@/components/ServiceHero";
 import ServiceFeatures from "@/components/ServiceFeatures";
 import ServiceBenefits from "@/components/ServiceBenefits";
-import ServicePlans from "@/components/ServicePlans";
 import ServiceCaseStudies from "@/components/ServiceCaseStudies";
 import ServiceTestimonials from "@/components/ServiceTestimonials";
 import ServiceCTA from "@/components/ServiceCTA";
@@ -60,61 +59,6 @@ const benefits = [
     title: "Bulletproof Security",
     description: "Protect your business and customer data with robust security measures built into every website we create.",
     icon: <ShieldCheck className="text-brandPurple h-6 w-6" />
-  }
-];
-
-const plans = [
-  {
-    name: "Standard",
-    price: "From $2,499",
-    description: "Perfect for small businesses and startups",
-    features: [
-      { name: "Custom Design", included: true },
-      { name: "Mobile Responsive", included: true },
-      { name: "Up to 5 Pages", included: true },
-      { name: "Basic SEO Setup", included: true },
-      { name: "Contact Form", included: true },
-      { name: "CMS Integration", included: false },
-      { name: "E-commerce Functionality", included: false },
-      { name: "Custom Functionality", included: false }
-    ],
-    cta: "Get Started",
-    link: "/contact"
-  },
-  {
-    name: "Professional",
-    price: "From $4,999",
-    description: "Ideal for growing businesses with more complex needs",
-    popular: true,
-    features: [
-      { name: "Custom Design", included: true },
-      { name: "Mobile Responsive", included: true },
-      { name: "Up to 10 Pages", included: true },
-      { name: "Advanced SEO Setup", included: true },
-      { name: "Contact Form", included: true },
-      { name: "CMS Integration", included: true },
-      { name: "E-commerce Functionality", included: false },
-      { name: "Custom Functionality", included: false }
-    ],
-    cta: "Most Popular",
-    link: "/contact"
-  },
-  {
-    name: "Enterprise",
-    price: "From $7,999",
-    description: "Comprehensive solution for established businesses",
-    features: [
-      { name: "Custom Design", included: true },
-      { name: "Mobile Responsive", included: true },
-      { name: "Unlimited Pages", included: true },
-      { name: "Advanced SEO Setup", included: true },
-      { name: "Contact Form", included: true },
-      { name: "CMS Integration", included: true },
-      { name: "E-commerce Functionality", included: true },
-      { name: "Custom Functionality", included: true }
-    ],
-    cta: "Contact Us",
-    link: "/contact"
   }
 ];
 
@@ -181,11 +125,6 @@ const WebsiteDesign = () => {
           title="Our Website Design Services"
           subtitle="We create websites that not only look great but also deliver tangible business results."
           features={features}
-        />
-        <ServicePlans 
-          title="Website Design Packages"
-          subtitle="Choose the package that best fits your business needs and goals."
-          plans={plans}
         />
         <ServiceCaseStudies
           title="Our Recent Projects"

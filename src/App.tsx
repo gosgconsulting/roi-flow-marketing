@@ -10,6 +10,7 @@ import SEO from "./pages/SEO";
 import PaidAds from "./pages/PaidAds";
 import Dashboard from "./pages/Dashboard";
 import Reporting from "./pages/Reporting";
+import SocialMedia from "./pages/SocialMedia";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/services/paid-ads" element={<PaidAds />} />
           <Route path="/services/dashboard" element={<Dashboard />} />
           <Route path="/services/reporting" element={<Reporting />} />
+          <Route path="/services/social-media" element={<SocialMedia />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
