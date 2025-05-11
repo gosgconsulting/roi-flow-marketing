@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full py-4 px-4 md:px-8">
+    <header className="w-full py-4 px-4 md:px-8 bg-white shadow-sm">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold">
@@ -38,7 +38,7 @@ const Header = () => {
             <Link to="/services/reporting" className="text-foreground hover:text-coral transition-colors">
               Reporting
             </Link>
-            <Button asChild className="bg-coral hover:bg-coral/90 text-white">
+            <Button asChild variant="coral">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </nav>
@@ -123,7 +123,7 @@ const Header = () => {
               >
                 Reporting
               </Link>
-              <Button asChild className="w-full bg-coral hover:bg-coral/90 text-white mt-2">
+              <Button asChild variant="coral" className="w-full">
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
                   Contact Us
                 </Link>

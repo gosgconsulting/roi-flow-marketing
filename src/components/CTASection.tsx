@@ -35,14 +35,14 @@ const CTASection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button asChild className="relative overflow-hidden bg-coral hover:bg-coral/90 text-white px-8 py-6 text-lg group">
+            <Button asChild variant="coral" size="xl" className="group relative overflow-hidden">
               <Link to="/contact" className="flex items-center">
                 <Calendar className="mr-2 h-5 w-5" />
                 Get a Free Consultation
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+            <Button asChild variant="outline" size="xl" className="border-white text-white hover:bg-white/10">
               <Link to="/contact" className="flex items-center">
                 Contact Us
                 <ArrowRight className="ml-2 h-5 w-5" />

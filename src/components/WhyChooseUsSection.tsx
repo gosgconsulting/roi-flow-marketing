@@ -46,7 +46,7 @@ const WhyChooseUsSection = () => {
             </p>
             
             <div className="pt-4">
-              <Button asChild className="bg-coral hover:bg-coral/90 text-white">
+              <Button asChild variant="coral">
                 <Link to="/contact">
                   Contact Us
                 </Link>

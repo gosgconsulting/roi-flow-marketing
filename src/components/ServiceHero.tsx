@@ -33,7 +33,7 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild className="bg-brandPurple hover:bg-brandPurple/90 text-white cta-button">
+              <Button asChild variant="coral" size="lg">
                 <Link to="/contact" className="flex items-center">
                   Get a Quote
                 </Link>

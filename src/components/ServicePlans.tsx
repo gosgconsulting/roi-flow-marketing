@@ -89,11 +89,8 @@ const ServicePlans = ({ title, subtitle, plans }: ServicePlansProps) => {
               
               <Button
                 asChild
-                className={`w-full ${
-                  plan.popular 
-                    ? "bg-coral hover:bg-coral/90 text-white" 
-                    : "bg-brandPurple hover:bg-brandPurple/90 text-white"
-                }`}
+                variant={plan.popular ? "coral" : "branded"}
+                className="w-full"
               >
                 <Link to={plan.link}>{plan.cta}</Link>
               </Button>

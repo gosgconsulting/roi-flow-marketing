@@ -69,7 +69,7 @@ const ServiceCaseStudies = ({ title, subtitle, caseStudies }: ServiceCaseStudies
                 <div className="bg-muted/50 p-4 rounded-lg">
                   <p className="font-medium">Result: <span className="text-brandPurple">{caseStudy.result}</span></p>
                 </div>
-                <Button asChild variant="outline" className="mt-4 border-brandPurple text-brandPurple hover:bg-brandPurple/10">
+                <Button asChild variant="outline" className="border-brandPurple text-brandPurple hover:bg-brandPurple/10">
                   <Link to={caseStudy.link} className="flex items-center">
                     View Case Study
                     <ArrowRight className="ml-2 h-4 w-4" />

@@ -68,7 +68,7 @@ const ServiceBenefits = ({ title, subtitle, benefits, ctaLink = "/contact", ctaT
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Button asChild className="bg-coral hover:bg-coral/90 text-white px-8 py-6 text-lg">
+            <Button asChild variant="coral" size="lg">
               <Link to={ctaLink}>{ctaText}</Link>
             </Button>
           </motion.div>
