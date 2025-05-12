@@ -14,6 +14,23 @@ import SocialMedia from "./pages/SocialMedia";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+/**
+ * WordPress Theme Structure
+ * 
+ * This React Router setup maps to the following WordPress templates:
+ * - "/" (Index) -> front-page.php or home.php
+ * - "/services/website-design" -> single-service.php or page-website-design.php
+ * - "/services/seo" -> single-service.php or page-seo.php
+ * - "/services/paid-ads" -> single-service.php or page-paid-ads.php
+ * - "/services/dashboard" -> single-service.php or page-dashboard.php
+ * - "/services/reporting" -> single-service.php or page-reporting.php
+ * - "/services/social-media" -> single-service.php or page-social-media.php
+ * - "/contact" -> page-contact.php
+ * - "*" (NotFound) -> 404.php
+ *
+ * The React Router setup will be replaced with WordPress's template hierarchy.
+ */
+
 const queryClient = new QueryClient();
 
 const App = () => (

@@ -12,6 +12,15 @@ import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import FAQAccordion from "@/components/FAQAccordion";
 import StatsCounter from "@/components/StatsCounter";
 
+/**
+ * WordPress Theme Template: Home/Front Page
+ * 
+ * Will be converted to front-page.php or home.php
+ * Each section below will be converted to template parts that can be
+ * customized through WordPress Customizer or ACF fields
+ */
+
+// FAQ items - in WordPress these would come from a custom post type or ACF fields
 const faqItems = [
   {
     question: "What is a digital agency?",
@@ -46,21 +55,44 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* WordPress: header.php */}
       <Header />
+      
+      {/* WordPress: Page content sections - each can be a template part */}
       <main className="flex-grow">
+        {/* WordPress: Hero section - template-parts/home/hero.php */}
         <HeroSection />
+        
+        {/* WordPress: Client logos section - template-parts/home/client-logos.php */}
         <ClientLogos />
+        
+        {/* WordPress: Services section - template-parts/home/services.php */}
         <ServicesSection />
+        
+        {/* WordPress: Stats counter section - template-parts/home/stats.php */}
         <StatsCounter />
+        
+        {/* WordPress: Testimonials section - template-parts/home/testimonials.php */}
         <TestimonialsCarousel />
+        
+        {/* WordPress: Why choose us section - template-parts/home/why-choose-us.php */}
         <WhyChooseUsSection />
+        
+        {/* WordPress: FAQ section - template-parts/home/faq.php
+             FAQs would be stored as custom post type or ACF repeater field */}
         <FAQAccordion 
           title="Frequently Asked Questions"
           items={faqItems}
         />
+        
+        {/* WordPress: CTA section - template-parts/home/cta.php */}
         <CTASection />
       </main>
+      
+      {/* WordPress: footer.php */}
       <Footer />
+      
+      {/* WordPress: This could be included in footer.php or as a separate template part */}
       <WhatsAppButton />
     </div>
   );

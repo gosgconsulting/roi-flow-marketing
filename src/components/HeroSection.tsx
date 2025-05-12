@@ -1,16 +1,30 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 
+/**
+ * WordPress Theme Component: Hero Section
+ * 
+ * Dynamic Component: Will be template-parts/home/hero.php
+ * Dynamic Elements:
+ * - Heading text
+ * - Subtitle/description text
+ * - CTA button text and URL
+ * - Hero image
+ * 
+ * WordPress Implementation:
+ * - Use ACF fields or theme customizer for all text content
+ * - Use wp_get_attachment_image for the hero image
+ * - Convert animations to CSS classes for WordPress compatibility
+ */
 const HeroSection = () => {
   return (
     <section className="relative py-24 md:py-36 px-4 overflow-hidden">
-      {/* Background gradient */}
+      {/* Background gradient - keep in CSS */}
       <div className="absolute inset-0 gradient-bg -z-10"></div>
       
-      {/* Abstract shapes */}
+      {/* Abstract shapes - keep in CSS */}
       <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-brandPurple/10 blur-3xl"></div>
       <div className="absolute bottom-10 left-[5%] w-40 h-40 rounded-full bg-brandPurple/20 blur-3xl"></div>
       
@@ -18,16 +32,20 @@ const HeroSection = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
+            {/* WordPress: Replace with ACF fields */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block py-1 px-3 mb-4 bg-brandPurple/20 text-brandPurple text-sm font-medium rounded-full">
-                INTEGRATED DIGITAL MARKETING AGENCY
+                <?php echo get_field('hero_label'); ?>
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi <br /><span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">We grow your revenue</span> at the highest ROI.
+                <?php echo get_field('hero_heading_line_1'); ?> <br />
+                <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
+                  <?php echo get_field('hero_heading_line_2'); ?>
+                </span>
               </h1>
             </motion.div>
             
@@ -37,9 +55,10 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              GO SG provides integrated marketing solutions to SMEs and high-performing brands to help them achieve accelerated results via lead magnet and revenue growth solutions.
+              <?php echo get_field('hero_description'); ?>
             </motion.p>
             
+            {/* WordPress: CTA button with ACF fields */}
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 pt-4"
               initial={{ opacity: 0, y: 20 }}
@@ -49,12 +68,13 @@ const HeroSection = () => {
               <Button asChild variant="coral" size="xl" className="cta-button">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
-                  Contact Us
+                  <?php echo get_field('hero_button_text'); ?>
                 </Link>
               </Button>
             </motion.div>
           </div>
           
+          {/* WordPress: Hero Image - use wp_get_attachment_image */}
           <motion.div 
             className="relative"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -62,13 +82,17 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
-              <img 
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80" 
-                alt="Digital Marketing Dashboard" 
-                className="w-full h-full object-cover"
-              />
+              <?php 
+              $hero_image = get_field('hero_image');
+              if ($hero_image) {
+                echo wp_get_attachment_image($hero_image, 'full', false, array(
+                  'class' => 'w-full h-full object-cover',
+                  'alt' => get_field('hero_heading_line_1')
+                ));
+              }
+              ?>
               
-              {/* Animated floating elements */}
+              {/* Animated floating elements - implement with CSS animations in WordPress */}
               <motion.div 
                 className="absolute top-[15%] right-[15%] w-16 h-16 bg-brandPurple/80 rounded-full"
                 animate={{
@@ -139,7 +163,7 @@ const HeroSection = () => {
               </motion.svg>
             </div>
             
-            {/* Decorative elements */}
+            {/* Decorative elements - keep in CSS */}
             <div className="absolute -top-6 -left-6 w-12 h-12 bg-brandPurple/30 rounded-full blur-lg"></div>
             <div className="absolute -bottom-8 -right-8 w-16 h-16 bg-brandPurple/20 rounded-full blur-xl"></div>
           </motion.div>

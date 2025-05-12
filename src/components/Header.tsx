@@ -1,8 +1,15 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+/**
+ * WordPress Theme Component: Header
+ * 
+ * Static Component: Will be converted to header.php
+ * Dynamic Elements:
+ * - Navigation menu items (will be replaced with wp_nav_menu)
+ * - Logo (will be replaced with get_custom_logo or theme option)
+ */
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,11 +21,12 @@ const Header = () => {
     <header className="w-full py-4 px-4 md:px-8 bg-white shadow-sm">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
+          {/* WordPress: Replace with get_custom_logo() */}
           <Link to="/" className="text-2xl font-bold">
             <span className="text-deepBlue">GO</span> <span className="text-coral">SG</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* WordPress: Replace with wp_nav_menu() */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-foreground hover:text-coral transition-colors">
               Home
@@ -43,7 +51,7 @@ const Header = () => {
             </Button>
           </nav>
 
-          {/* Mobile Navigation Toggle */}
+          {/* WordPress: Mobile menu toggle - keep this structure */}
           <div className="flex items-center md:hidden">
             <button 
               onClick={toggleMenu}
@@ -77,10 +85,11 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* WordPress: Mobile menu - adapt to use wp_nav_menu with custom walker */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 py-4 bg-card rounded-lg shadow-lg animate-fade-in">
             <nav className="flex flex-col space-y-4 px-4">
+              {/* Replace with WordPress mobile menu */}
               <Link 
                 to="/" 
                 className="text-foreground hover:text-coral transition-colors py-2"

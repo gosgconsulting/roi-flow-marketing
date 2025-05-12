@@ -1,25 +1,38 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, Phone } from "lucide-react";
 
+/**
+ * WordPress Theme Component: Footer
+ * 
+ * Static Component: Will be converted to footer.php
+ * Dynamic Elements:
+ * - Footer widgets/menus (will use WordPress widget areas)
+ * - Copyright text (will use dynamic year and site name)
+ * - Social links (will come from theme options)
+ */
 const Footer = () => {
   return (
     <footer className="bg-deepBlue text-white py-12 px-4 md:px-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* WordPress: First footer widget area - logo, tagline, social icons */}
           <div>
             <div className="mb-4">
+              {/* WordPress: Replace with customizer logo option */}
               <img 
                 src="/lovable-uploads/d6e7a1ca-229a-4c34-83fc-e9bdf106b683.png" 
                 alt="GO SG CONSULTING Logo" 
                 className="h-12"
               />
             </div>
+            {/* WordPress: Replace with editable text from theme options */}
             <p className="text-gray-300 mb-4">
               Integrated marketing solutions for startups, entrepreneurs, and brands.
             </p>
+            {/* WordPress: Replace with social menu */}
             <div className="flex space-x-3">
+              {/* Replace with dynamic social links from theme options */}
               <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noreferrer"
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white hover:bg-gray-200 text-deepBlue transition-colors">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -41,8 +54,10 @@ const Footer = () => {
             </div>
           </div>
           
+          {/* WordPress: Second footer widget area - services menu */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
+            {/* WordPress: Replace with wp_nav_menu - "footer-services" */}
             <ul className="space-y-2">
               <li>
                 <Link to="/services/website-design" className="text-gray-300 hover:text-coral transition-colors">
@@ -67,8 +82,10 @@ const Footer = () => {
             </ul>
           </div>
           
+          {/* WordPress: Third footer widget area - quick links menu */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            {/* WordPress: Replace with wp_nav_menu - "footer-links" */}
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-gray-300 hover:text-coral transition-colors">
@@ -93,8 +110,10 @@ const Footer = () => {
             </ul>
           </div>
           
+          {/* WordPress: Fourth footer widget area - contact info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
+            {/* WordPress: Replace with contact info from theme options */}
             <div className="space-y-4">
               <div className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-coral" />
@@ -117,8 +136,9 @@ const Footer = () => {
           </div>
         </div>
         
+        {/* WordPress: Copyright area - replace with dynamic year and site title */}
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-          <p>© 2025 GO SG CONSULTING. All rights reserved.</p>
+          <p>© <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?>. All rights reserved.</p>
         </div>
       </div>
     </footer>
