@@ -44,15 +44,25 @@ const ServiceCaseStudies = ({ title, subtitle, caseStudies }: ServiceCaseStudies
         >
           {/* WordPress: Replace with ACF fields */}
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">{title}</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+          {/* WP: 
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent"><?php echo get_field('case_studies_title'); ?></span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             <?php echo get_field('case_studies_subtitle'); ?>
           </p>
+          */}
         </motion.div>
         
         <div className="space-y-16">
-          {/* WordPress: Replace with custom case studies loop
+          {/* WordPress: Replace with custom case studies loop - COMMENTED OUT FOR REACT BUILD */}
+          {/* 
+          WordPress Loop Code:
           <?php
           $args = array(
               'post_type' => 'case-study',

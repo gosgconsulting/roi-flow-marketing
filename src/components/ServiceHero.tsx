@@ -41,30 +41,36 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
             {/* WordPress: Use the_title() or ACF field */}
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
               <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
-                <?php the_title(); ?>
+                {title}
+                {/* WP: <?php the_title(); ?> */}
               </span>
             </h1>
             
             {/* WordPress: Use the_content() or ACF field */}
             <p className="text-xl text-muted-foreground">
+              {description}
+              {/* WP: 
               <?php 
               // Either use the excerpt or a custom field
               $description = get_field('service_short_description');
               echo $description ? $description : get_the_excerpt();
               ?>
+              */}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               {/* WordPress: Use get_permalink() or custom URLs from ACF */}
               <Button asChild variant="coral" size="lg">
                 <Link to="/contact" className="flex items-center">
-                  <?php echo get_field('cta_primary_text', 'option') ?: 'Get a Quote'; ?>
+                  Get a Quote
+                  {/* WP: <?php echo get_field('cta_primary_text', 'option') ?: 'Get a Quote'; ?> */}
                 </Link>
               </Button>
               <Button asChild variant="outline" className="border-brandPurple text-brandPurple hover:bg-brandPurple/10">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
-                  <?php echo get_field('cta_secondary_text', 'option') ?: 'Book a Meeting'; ?>
+                  Book a Meeting
+                  {/* WP: <?php echo get_field('cta_secondary_text', 'option') ?: 'Book a Meeting'; ?> */}
                 </Link>
               </Button>
             </div>
@@ -78,6 +84,21 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
           >
             <div className="aspect-video bg-secondary rounded-lg shadow-xl overflow-hidden">
               {/* WordPress: Use featured image or ACF field */}
+              {image ? (
+                <img src={image} alt={title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-muted flex items-center justify-center">
+                  <div className="text-center space-y-4">
+                    <div className="inline-flex items-center justify-center p-4 bg-brandPurple/20 rounded-full">
+                      <svg className="w-10 h-10 text-brandPurple" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold">{title}</h3>
+                  </div>
+                </div>
+              )}
+              {/* WP:
               <?php if (has_post_thumbnail()) : ?>
                 <?php the_post_thumbnail('large', array('class' => 'w-full h-full object-cover')); ?>
               <?php elseif (get_field('service_hero_image')) : ?>
@@ -97,6 +118,7 @@ const ServiceHero = ({ title, description, image }: ServiceHeroProps) => {
                   </div>
                 </div>
               <?php endif; ?>
+              */}
             </div>
             
             {/* Decorative elements */}

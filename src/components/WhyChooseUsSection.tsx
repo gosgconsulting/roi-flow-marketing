@@ -52,17 +52,20 @@ const WhyChooseUsSection = () => {
           {/* WordPress: Replace with ACF fields */}
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
-              <?php echo get_field('why_choose_title'); ?>
+              Why Choose Us
+              {/* WP: <?php echo get_field('why_choose_title'); ?> */}
             </span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            <?php echo get_field('why_choose_subtitle'); ?>
+            We're committed to your success with proven strategies that deliver real results.
+            {/* WP: <?php echo get_field('why_choose_subtitle'); ?> */}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-          {/* WordPress: Replace with ACF repeater field loop */}
+          {/* WordPress: Replace with ACF repeater field loop - COMMENTED OUT FOR REACT BUILD */}
           {/* 
+          WordPress Loop Code:
           <?php if (have_rows('reasons')): ?>
             <?php $index = 0; while(have_rows('reasons')): the_row(); $index++; ?>
               <div class="why-choose-item flex gap-6" data-delay="<?php echo $index * 0.1; ?>">
@@ -112,7 +115,8 @@ const WhyChooseUsSection = () => {
           transition={{ duration: 0.6 }}
         >
           <Button asChild variant="coral" size="lg">
-            <Link to="/contact"><?php echo get_field('why_choose_cta_text'); ?></Link>
+            <Link to="/contact">Start Your Journey with Us</Link>
+            {/* WP: <Link to="/contact"><?php echo get_field('why_choose_cta_text'); ?></Link> */}
           </Button>
         </motion.div>
       </div>

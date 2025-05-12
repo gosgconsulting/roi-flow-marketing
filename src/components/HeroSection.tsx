@@ -39,14 +39,21 @@ const HeroSection = () => {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block py-1 px-3 mb-4 bg-brandPurple/20 text-brandPurple text-sm font-medium rounded-full">
-                <?php echo get_field('hero_label'); ?>
+                Digital Marketing Agency
+                {/* WP: <?php echo get_field('hero_label'); ?> */}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                Grow your business with <br />
+                <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
+                  data-driven marketing
+                </span>
+              </h1>
+              {/* WP:
                 <?php echo get_field('hero_heading_line_1'); ?> <br />
                 <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
                   <?php echo get_field('hero_heading_line_2'); ?>
                 </span>
-              </h1>
+              */}
             </motion.div>
             
             <motion.p 
@@ -55,7 +62,8 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <?php echo get_field('hero_description'); ?>
+              We help businesses grow through strategic digital marketing initiatives that drive real results.
+              {/* WP: <?php echo get_field('hero_description'); ?> */}
             </motion.p>
             
             {/* WordPress: CTA button with ACF fields */}
@@ -68,7 +76,8 @@ const HeroSection = () => {
               <Button asChild variant="coral" size="xl" className="cta-button">
                 <Link to="/contact" className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
-                  <?php echo get_field('hero_button_text'); ?>
+                  Schedule a Consultation
+                  {/* WP: <?php echo get_field('hero_button_text'); ?> */}
                 </Link>
               </Button>
             </motion.div>
@@ -82,6 +91,12 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
+              {/* Placeholder for hero image - will be dynamic in WordPress */}
+              <div className="w-full h-full bg-gradient-to-br from-brandPurple/10 to-brandTeal/10 flex items-center justify-center">
+                <span className="text-xl font-medium text-muted-foreground">Hero Image</span>
+              </div>
+              
+              {/* WP:
               <?php 
               $hero_image = get_field('hero_image');
               if ($hero_image) {
@@ -91,6 +106,7 @@ const HeroSection = () => {
                 ));
               }
               ?>
+              */}
               
               {/* Animated floating elements - implement with CSS animations in WordPress */}
               <motion.div 

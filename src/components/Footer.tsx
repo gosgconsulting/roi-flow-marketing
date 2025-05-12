@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, Phone } from "lucide-react";
@@ -138,7 +139,8 @@ const Footer = () => {
         
         {/* WordPress: Copyright area - replace with dynamic year and site title */}
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-          <p>© <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?>. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} GO SG CONSULTING. All rights reserved.</p>
+          {/* WP: <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?> */}
         </div>
       </div>
     </footer>
