@@ -13,6 +13,7 @@ import Reporting from "./pages/Reporting";
 import SocialMedia from "./pages/SocialMedia";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import CustomDashboard from "./pages/CustomDashboard";
 
 /**
  * WordPress Theme Structure
@@ -26,6 +27,7 @@ import NotFound from "./pages/NotFound";
  * - "/services/reporting" -> single-service.php or page-reporting.php
  * - "/services/social-media" -> single-service.php or page-social-media.php
  * - "/contact" -> page-contact.php
+ * - "/customizer" -> page-customizer.php
  * - "*" (NotFound) -> 404.php
  *
  * The React Router setup will be replaced with WordPress's template hierarchy.
@@ -48,6 +50,7 @@ const App = () => (
           <Route path="/services/reporting" element={<Reporting />} />
           <Route path="/services/social-media" element={<SocialMedia />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/customizer" element={<CustomDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
