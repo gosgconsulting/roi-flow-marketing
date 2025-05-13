@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceHero from "@/components/ServiceHero";
@@ -11,16 +11,8 @@ import ServiceCTA from "@/components/ServiceCTA";
 import ClientLogos from "@/components/ClientLogos";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Target, LineChart, DollarSign, Users, BarChart } from "lucide-react";
-import FloatingCustomizer from "@/components/dashboard/FloatingCustomizer";
 import EditableSection from "@/components/dashboard/EditableSection";
-import { useAdminCheck } from "@/hooks/use-admin-check";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import ContentEditor from "@/components/dashboard/ContentEditor";
+import { withAdminEditing } from "@/components/dashboard/withAdminEditing";
 
 const features = [
   {
@@ -111,31 +103,16 @@ const testimonials = [
   }
 ];
 
-const PaidAds = () => {
+interface PaidAdsProps {
+  isAdmin?: boolean;
+  pageId?: string;
+  onEditSection?: (sectionId: string) => void;
+}
+
+const PaidAds = ({ isAdmin = false, pageId = "paid-ads", onEditSection = () => {} }: PaidAdsProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const { isAdmin, isLoading, toggleAdminMode } = useAdminCheck();
-  const [editDialog, setEditDialog] = useState(false);
-  const [currentSection, setCurrentSection] = useState("");
-
-  const handleEditSection = (sectionId: string) => {
-    setCurrentSection(sectionId);
-    setEditDialog(true);
-  };
-
-  // For demo purposes only - toggle admin mode button
-  const AdminToggle = () => (
-    <button
-      onClick={toggleAdminMode}
-      className="fixed left-6 bottom-6 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-50 hover:opacity-100 z-50"
-    >
-      {isAdmin ? "Disable" : "Enable"} Admin Mode
-    </button>
-  );
-
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -145,7 +122,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="hero"
           sectionName="Hero Section"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceHero 
             title="Paid Ads That Maximize ROI"
@@ -157,7 +135,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="clientLogos"
           sectionName="Client Logos"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ClientLogos />
         </EditableSection>
@@ -166,7 +145,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="benefits"
           sectionName="Service Benefits"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceBenefits 
             title="Why Use Paid Advertising?"
@@ -180,7 +160,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="features"
           sectionName="Service Features"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceFeatures 
             title="Our Paid Advertising Services"
@@ -193,7 +174,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="caseStudies"
           sectionName="Case Studies"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceCaseStudies
             title="Campaign Success Stories"
@@ -206,7 +188,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="testimonials"
           sectionName="Testimonials"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceTestimonials 
             title="Client Success Stories"
@@ -219,7 +202,8 @@ const PaidAds = () => {
           isAdmin={isAdmin}
           sectionId="cta"
           sectionName="Call to Action"
-          onEdit={handleEditSection}
+          onEdit={onEditSection}
+          pageId={pageId}
         >
           <ServiceCTA 
             title="Ready to Boost Your Ad Campaigns?"
@@ -231,22 +215,8 @@ const PaidAds = () => {
       </main>
       <Footer />
       <WhatsAppButton />
-      <FloatingCustomizer isAdmin={isAdmin} />
-      <AdminToggle />
-
-      {/* Edit Dialog */}
-      <Dialog open={editDialog} onOpenChange={setEditDialog}>
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>
-              Edit Section: {currentSection}
-            </DialogTitle>
-          </DialogHeader>
-          <ContentEditor initialSection={currentSection} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
 
-export default PaidAds;
+export default withAdminEditing(PaidAds, "paid-ads");

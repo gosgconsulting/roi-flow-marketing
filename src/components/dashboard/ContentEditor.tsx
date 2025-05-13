@@ -15,6 +15,8 @@ const PAGES = [
   { id: "home", title: "Home Page" },
   { id: "about", title: "About Us" },
   { id: "services", title: "Services" },
+  { id: "paid-ads", title: "Paid Ads" },
+  { id: "seo", title: "SEO Services" },
   { id: "contact", title: "Contact" }
 ];
 
@@ -39,6 +41,21 @@ const PAGE_SECTIONS = {
     { id: "service3", title: "Service 3", type: "service" },
     { id: "pricing", title: "Pricing Table", type: "pricing" }
   ],
+  "paid-ads": [
+    { id: "hero", title: "Hero Section", type: "hero" },
+    { id: "clientLogos", title: "Client Logos", type: "logos" },
+    { id: "benefits", title: "Service Benefits", type: "benefits" },
+    { id: "features", title: "Service Features", type: "features" },
+    { id: "caseStudies", title: "Case Studies", type: "case-studies" },
+    { id: "testimonials", title: "Testimonials", type: "testimonials" },
+    { id: "cta", title: "Call to Action", type: "cta" }
+  ],
+  "seo": [
+    { id: "hero", title: "Hero Section", type: "hero" },
+    { id: "features", title: "Service Features", type: "features" },
+    { id: "testimonials", title: "Testimonials", type: "testimonials" },
+    { id: "cta", title: "Call to Action", type: "cta" }
+  ],
   "contact": [
     { id: "info", title: "Contact Information", type: "contact-info" },
     { id: "form", title: "Contact Form", type: "form" },
@@ -58,13 +75,34 @@ const SECTION_CONTENT = {
     visible: true,
     customHtmlBefore: "",
     customHtmlAfter: ""
+  },
+  "paid-ads-hero": {
+    title: "Paid Ads That Maximize ROI",
+    subtitle: "Strategic campaigns across search and social platforms",
+    content: "Our paid advertising services focus on delivering measurable results and maximizing your return on investment.",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
+    video: "",
+    cta: "Get a Free Strategy Session",
+    visible: true,
+    customHtmlBefore: "",
+    customHtmlAfter: ""
+  },
+  "seo-hero": {
+    title: "Humanised SEO Services",
+    subtitle: "Boost your search visibility with strategies designed for both users and search engines",
+    content: "We help improve your website's visibility in search engines through technical optimization and content strategies.",
+    image: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2",
+    video: "",
+    cta: "Get a Free SEO Audit",
+    visible: true,
+    customHtmlBefore: "",
+    customHtmlAfter: ""
   }
 };
 
 // Get initial content (either from mock or empty template)
-const getInitialContent = (pageId: string, sectionId: string) => {
-  const key = `${pageId}-${sectionId}`;
-  return SECTION_CONTENT[key as keyof typeof SECTION_CONTENT] || {
+const getInitialContent = (sectionId: string) => {
+  return SECTION_CONTENT[sectionId as keyof typeof SECTION_CONTENT] || {
     title: "",
     subtitle: "",
     content: "",
@@ -77,46 +115,99 @@ const getInitialContent = (pageId: string, sectionId: string) => {
   };
 };
 
+// Parse a sectionId that might include page context (e.g., "paid-ads-hero")
+const parseSectionId = (fullSectionId: string) => {
+  // Check if there's a page prefix
+  const parts = fullSectionId.split('-');
+  if (parts.length <= 1) {
+    // Simple section ID without page context
+    return { pageId: '', sectionId: fullSectionId };
+  }
+  
+  // Check against our known page IDs
+  for (const page of PAGES) {
+    if (fullSectionId.startsWith(`${page.id}-`)) {
+      return {
+        pageId: page.id,
+        sectionId: fullSectionId.substring(page.id.length + 1) // +1 for the hyphen
+      };
+    }
+  }
+  
+  // Default: assume the first part is the page and the rest is the section
+  return {
+    pageId: parts[0],
+    sectionId: parts.slice(1).join('-')
+  };
+};
+
 interface ContentEditorProps {
   initialSection?: string;
 }
 
 const ContentEditor: React.FC<ContentEditorProps> = ({ initialSection }) => {
-  const [activePage, setActivePage] = useState(PAGES[0].id);
-  const [activeSection, setActiveSection] = useState(initialSection || "");
+  const [activePage, setActivePage] = useState('');
+  const [activeSection, setActiveSection] = useState('');
+  const [fullSectionId, setFullSectionId] = useState('');
   const [activeTab, setActiveTab] = useState<string>("text");
-  const [content, setContent] = useState(getInitialContent("home", "hero"));
+  const [content, setContent] = useState(getInitialContent(''));
 
   // If initialSection is provided, find the parent page
   useEffect(() => {
     if (initialSection) {
-      // Find which page contains this section
-      for (const [pageId, sections] of Object.entries(PAGE_SECTIONS)) {
-        if (sections.some(section => section.id === initialSection)) {
-          setActivePage(pageId);
-          setActiveSection(initialSection);
-          setContent(getInitialContent(pageId, initialSection));
-          break;
-        }
+      const { pageId, sectionId } = parseSectionId(initialSection);
+      
+      if (pageId && PAGE_SECTIONS[pageId]) {
+        setActivePage(pageId);
+        setActiveSection(sectionId);
+        setFullSectionId(initialSection);
+        setContent(getInitialContent(initialSection));
+      } else {
+        // Just use the section ID directly if we can't find a matching page
+        setActiveSection(initialSection);
+        setFullSectionId(initialSection);
+        setContent(getInitialContent(initialSection));
+      }
+      
+      // Set the appropriate tab based on section type
+      const sectionType = findSectionType(pageId, sectionId);
+      if (sectionType === "hero" || sectionType === "text") {
+        setActiveTab("text");
+      } else if (sectionType === "team" || sectionType === "services" || sectionType === "logos") {
+        setActiveTab("media");
       }
     }
   }, [initialSection]);
 
+  // Find section type helper
+  const findSectionType = (pageId: string, sectionId: string) => {
+    if (!pageId || !PAGE_SECTIONS[pageId]) return "text";
+    
+    const section = PAGE_SECTIONS[pageId].find(s => s.id === sectionId);
+    return section ? section.type : "text";
+  };
+
+  // Handle page selection
+  const handlePageChange = (pageId: string) => {
+    setActivePage(pageId);
+    setActiveSection('');
+    setFullSectionId('');
+    setContent(getInitialContent(''));
+  };
+
   // Handle section selection
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId);
-    const sections = PAGE_SECTIONS[activePage as keyof typeof PAGE_SECTIONS] || [];
-    const section = sections.find(s => s.id === sectionId);
+    const newFullSectionId = activePage ? `${activePage}-${sectionId}` : sectionId;
+    setFullSectionId(newFullSectionId);
+    setContent(getInitialContent(newFullSectionId));
     
-    if (section) {
-      setContent(getInitialContent(activePage, sectionId));
-      
-      // Set the appropriate tab based on section type
-      if (section.type === "hero" || section.type === "text") {
-        setActiveTab("text");
-      } else if (section.type === "team" || section.type === "services") {
-        setActiveTab("media");
-      }
+    // Set the appropriate tab based on section type
+    const sectionType = findSectionType(activePage, sectionId);
+    if (sectionType === "hero" || sectionType === "text") {
+      setActiveTab("text");
+    } else if (sectionType === "team" || sectionType === "services" || sectionType === "logos") {
+      setActiveTab("media");
     }
   };
 
@@ -141,58 +232,70 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialSection }) => {
     handleContentChange("video", youtubeEmbedUrl);
   };
 
+  const handleSave = () => {
+    // In a real app, this would save the content to the CMS/database
+    console.log(`Saving content for section: ${fullSectionId}`, content);
+    // For demo purposes, update our mock data
+    if (fullSectionId) {
+      SECTION_CONTENT[fullSectionId as keyof typeof SECTION_CONTENT] = content;
+    }
+    // You would typically show a success toast here
+    alert("Content saved successfully!");
+  };
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Content Editor</CardTitle>
           <CardDescription>
-            Select a page and section to edit its content.
+            {initialSection 
+              ? `Editing section: ${initialSection}` 
+              : "Select a page and section to edit its content."}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="space-y-2">
-              <Label htmlFor="page-select">Select Page</Label>
-              <Select value={activePage} onValueChange={(value) => {
-                setActivePage(value);
-                setActiveSection("");
-              }}>
-                <SelectTrigger id="page-select">
-                  <SelectValue placeholder="Select page" />
-                </SelectTrigger>
-                <SelectContent>
-                  {PAGES.map((page) => (
-                    <SelectItem key={page.id} value={page.id}>
-                      {page.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          {!initialSection && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="space-y-2">
+                <Label htmlFor="page-select">Select Page</Label>
+                <Select value={activePage} onValueChange={handlePageChange}>
+                  <SelectTrigger id="page-select">
+                    <SelectValue placeholder="Select page" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PAGES.map((page) => (
+                      <SelectItem key={page.id} value={page.id}>
+                        {page.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="section-select">Select Section</Label>
+                <Select 
+                  value={activeSection} 
+                  onValueChange={handleSectionChange}
+                  disabled={!activePage}
+                >
+                  <SelectTrigger id="section-select">
+                    <SelectValue placeholder="Select section" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PAGE_SECTIONS[activePage as keyof typeof PAGE_SECTIONS]?.map((section) => (
+                      <SelectItem key={section.id} value={section.id}>
+                        {section.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="section-select">Select Section</Label>
-              <Select 
-                value={activeSection} 
-                onValueChange={handleSectionChange}
-                disabled={!activePage}
-              >
-                <SelectTrigger id="section-select">
-                  <SelectValue placeholder="Select section" />
-                </SelectTrigger>
-                <SelectContent>
-                  {PAGE_SECTIONS[activePage as keyof typeof PAGE_SECTIONS]?.map((section) => (
-                    <SelectItem key={section.id} value={section.id}>
-                      {section.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+          )}
           
-          {activeSection && (
+          {(fullSectionId || initialSection) && (
             <>
               <div className="flex items-center space-x-2 mb-6">
                 <Switch 
@@ -376,9 +479,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ initialSection }) => {
         </CardContent>
       </Card>
       
-      {activeSection && (
+      {(fullSectionId || initialSection) && (
         <div className="flex justify-end">
-          <Button>
+          <Button onClick={handleSave}>
             Save Changes
           </Button>
         </div>
