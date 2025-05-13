@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceHero from "@/components/ServiceHero";
@@ -11,6 +11,16 @@ import ServiceCTA from "@/components/ServiceCTA";
 import ClientLogos from "@/components/ClientLogos";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Target, LineChart, DollarSign, Users, BarChart } from "lucide-react";
+import FloatingCustomizer from "@/components/dashboard/FloatingCustomizer";
+import EditableSection from "@/components/dashboard/EditableSection";
+import { useAdminCheck } from "@/hooks/use-admin-check";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import ContentEditor from "@/components/dashboard/ContentEditor";
 
 const features = [
   {
@@ -106,45 +116,135 @@ const PaidAds = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { isAdmin, isLoading, toggleAdminMode } = useAdminCheck();
+  const [editDialog, setEditDialog] = useState(false);
+  const [currentSection, setCurrentSection] = useState("");
+
+  const handleEditSection = (sectionId: string) => {
+    setCurrentSection(sectionId);
+    setEditDialog(true);
+  };
+
+  // For demo purposes only - toggle admin mode button
+  const AdminToggle = () => (
+    <button
+      onClick={toggleAdminMode}
+      className="fixed left-6 bottom-6 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-50 hover:opacity-100 z-50"
+    >
+      {isAdmin ? "Disable" : "Enable"} Admin Mode
+    </button>
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <ServiceHero 
-          title="Paid Ads That Maximize ROI"
-          description="Strategic campaigns across search and social platforms that deliver measurable returns on your investment."
-        />
-        <ClientLogos />
-        <ServiceBenefits 
-          title="Why Use Paid Advertising?"
-          subtitle="In an increasingly competitive digital landscape, paid advertising offers precise targeting and immediate results."
-          benefits={benefits}
-          ctaText="Get a Free Ad Account Audit"
-        />
-        <ServiceFeatures 
-          title="Our Paid Advertising Services"
-          subtitle="We create and manage high-performance paid campaigns that deliver real business results."
-          features={features}
-        />
-        <ServiceCaseStudies
-          title="Campaign Success Stories"
-          subtitle="See how our paid advertising strategies have delivered exceptional results."
-          caseStudies={caseStudies}
-        />
-        <ServiceTestimonials 
-          title="Client Success Stories"
-          subtitle="Learn how our paid advertising strategies have helped businesses achieve exceptional ROI."
-          testimonials={testimonials}
-        />
-        <ServiceCTA 
-          title="Ready to Boost Your Ad Campaigns?"
-          subtitle="Get started with ROI-focused paid advertising that delivers real results."
-          buttonText="Get a Free Strategy Session"
-          buttonLink="/contact"
-        />
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="hero"
+          sectionName="Hero Section"
+          onEdit={handleEditSection}
+        >
+          <ServiceHero 
+            title="Paid Ads That Maximize ROI"
+            description="Strategic campaigns across search and social platforms that deliver measurable returns on your investment."
+          />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="clientLogos"
+          sectionName="Client Logos"
+          onEdit={handleEditSection}
+        >
+          <ClientLogos />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="benefits"
+          sectionName="Service Benefits"
+          onEdit={handleEditSection}
+        >
+          <ServiceBenefits 
+            title="Why Use Paid Advertising?"
+            subtitle="In an increasingly competitive digital landscape, paid advertising offers precise targeting and immediate results."
+            benefits={benefits}
+            ctaText="Get a Free Ad Account Audit"
+          />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="features"
+          sectionName="Service Features"
+          onEdit={handleEditSection}
+        >
+          <ServiceFeatures 
+            title="Our Paid Advertising Services"
+            subtitle="We create and manage high-performance paid campaigns that deliver real business results."
+            features={features}
+          />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="caseStudies"
+          sectionName="Case Studies"
+          onEdit={handleEditSection}
+        >
+          <ServiceCaseStudies
+            title="Campaign Success Stories"
+            subtitle="See how our paid advertising strategies have delivered exceptional results."
+            caseStudies={caseStudies}
+          />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="testimonials"
+          sectionName="Testimonials"
+          onEdit={handleEditSection}
+        >
+          <ServiceTestimonials 
+            title="Client Success Stories"
+            subtitle="Learn how our paid advertising strategies have helped businesses achieve exceptional ROI."
+            testimonials={testimonials}
+          />
+        </EditableSection>
+        
+        <EditableSection
+          isAdmin={isAdmin}
+          sectionId="cta"
+          sectionName="Call to Action"
+          onEdit={handleEditSection}
+        >
+          <ServiceCTA 
+            title="Ready to Boost Your Ad Campaigns?"
+            subtitle="Get started with ROI-focused paid advertising that delivers real results."
+            buttonText="Get a Free Strategy Session"
+            buttonLink="/contact"
+          />
+        </EditableSection>
       </main>
       <Footer />
       <WhatsAppButton />
+      <FloatingCustomizer isAdmin={isAdmin} />
+      <AdminToggle />
+
+      {/* Edit Dialog */}
+      <Dialog open={editDialog} onOpenChange={setEditDialog}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              Edit Section: {currentSection}
+            </DialogTitle>
+          </DialogHeader>
+          <ContentEditor initialSection={currentSection} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

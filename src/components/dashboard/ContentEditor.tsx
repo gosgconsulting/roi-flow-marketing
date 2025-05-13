@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -77,11 +77,30 @@ const getInitialContent = (pageId: string, sectionId: string) => {
   };
 };
 
-const ContentEditor = () => {
+interface ContentEditorProps {
+  initialSection?: string;
+}
+
+const ContentEditor: React.FC<ContentEditorProps> = ({ initialSection }) => {
   const [activePage, setActivePage] = useState(PAGES[0].id);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState(initialSection || "");
   const [activeTab, setActiveTab] = useState<string>("text");
   const [content, setContent] = useState(getInitialContent("home", "hero"));
+
+  // If initialSection is provided, find the parent page
+  useEffect(() => {
+    if (initialSection) {
+      // Find which page contains this section
+      for (const [pageId, sections] of Object.entries(PAGE_SECTIONS)) {
+        if (sections.some(section => section.id === initialSection)) {
+          setActivePage(pageId);
+          setActiveSection(initialSection);
+          setContent(getInitialContent(pageId, initialSection));
+          break;
+        }
+      }
+    }
+  }, [initialSection]);
 
   // Handle section selection
   const handleSectionChange = (sectionId: string) => {
