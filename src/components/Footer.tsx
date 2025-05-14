@@ -6,11 +6,75 @@ import { Calendar, Phone } from "lucide-react";
 /**
  * WordPress Theme Component: Footer
  * 
- * Static Component: Will be converted to footer.php
+ * Component: Will be converted to footer.php
+ * Template Name: Footer
+ * 
  * Dynamic Elements:
  * - Footer widgets/menus (will use WordPress widget areas)
  * - Copyright text (will use dynamic year and site name)
  * - Social links (will come from theme options)
+ * 
+ * WordPress Implementation:
+ * <?php
+ * /**
+ *  * The footer for our theme
+ *  *
+ *  * Contains the closing of the #content div and all content after.
+ *  *
+ *  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *  *
+ *  * @package GoSG
+ *  *\/
+ * ?>
+ * 
+ * <footer class="bg-deepBlue text-white py-12 px-4 md:px-8">
+ *   <div class="container mx-auto">
+ *     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+ *       <!-- First Footer Widget Area -->
+ *       <div>
+ *         <?php dynamic_sidebar('footer-1'); ?>
+ *       </div>
+ *       
+ *       <!-- Second Footer Widget Area -->
+ *       <div>
+ *         <h3 class="text-lg font-semibold mb-4">Our Services</h3>
+ *         <?php
+ *           wp_nav_menu(array(
+ *             'theme_location' => 'footer_services',
+ *             'container' => false,
+ *             'menu_class' => 'space-y-2',
+ *             'walker' => new GoSG_Footer_Menu_Walker()
+ *           ));
+ *         ?>
+ *       </div>
+ *       
+ *       <!-- Third Footer Widget Area -->
+ *       <div>
+ *         <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+ *         <?php
+ *           wp_nav_menu(array(
+ *             'theme_location' => 'footer_links',
+ *             'container' => false,
+ *             'menu_class' => 'space-y-2',
+ *             'walker' => new GoSG_Footer_Menu_Walker()
+ *           ));
+ *         ?>
+ *       </div>
+ *       
+ *       <!-- Fourth Footer Widget Area -->
+ *       <div>
+ *         <?php dynamic_sidebar('footer-4'); ?>
+ *       </div>
+ *     </div>
+ *     
+ *     <!-- Copyright -->
+ *     <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+ *       <p>&copy; <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?>. All rights reserved.</p>
+ *     </div>
+ *   </div>
+ * </footer>
+ * 
+ * <?php wp_footer(); ?>
  */
 const Footer = () => {
   return (
