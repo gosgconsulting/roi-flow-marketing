@@ -17,11 +17,9 @@ interface FloatingCustomizerProps {
   isAdmin: boolean;
 }
 
-const FloatingCustomizer: React.FC<FloatingCustomizerProps> = ({ isAdmin }) => {
+const FloatingCustomizer: React.FC<FloatingCustomizerProps> = () => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("content");
-
-  if (!isAdmin) return null;
 
   return (
     <>

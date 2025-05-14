@@ -11,7 +11,7 @@ export function withAdminEditing<P extends object>(
   pageId: string
 ) {
   return (props: P) => {
-    const { isAdmin, isLoading, toggleAdminMode } = useAdminCheck();
+    const { isAdmin, toggleAdminMode } = useAdminCheck();
     const { editDialog, currentSection, handleEditSection, setEditDialog } = useSectionEditor();
 
     // For demo purposes only - toggle admin mode button
@@ -20,32 +20,28 @@ export function withAdminEditing<P extends object>(
         onClick={toggleAdminMode}
         className="fixed left-6 bottom-6 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-50 hover:opacity-100 z-50"
       >
-        {isAdmin ? "Disable" : "Enable"} Admin Mode
+        {isAdmin ? "Disable" : "Enable"} Editor Mode
       </button>
     );
-
-    if (isLoading) return <div>Loading...</div>;
 
     return (
       <>
         <Component
           {...props}
-          isAdmin={isAdmin}
+          isAdmin={true} // Always pass isAdmin as true
           pageId={pageId}
           onEditSection={handleEditSection}
         />
         
-        {isAdmin && (
-          <>
-            <FloatingCustomizer isAdmin={isAdmin} />
-            <AdminToggle />
-            <SectionEditDialog
-              open={editDialog}
-              onOpenChange={setEditDialog}
-              currentSection={currentSection}
-            />
-          </>
-        )}
+        <>
+          <FloatingCustomizer isAdmin={true} />
+          <AdminToggle />
+          <SectionEditDialog
+            open={editDialog}
+            onOpenChange={setEditDialog}
+            currentSection={currentSection}
+          />
+        </>
       </>
     );
   };
