@@ -89,56 +89,66 @@ const Header = () => {
             <span className="text-deepBlue">GO</span> <span className="text-coral">SG</span>
           </Link>
 
-          {/* Burger Menu - Now shown on all devices */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="flex items-center justify-center"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-screen sm:w-56 bg-white">
-              <DropdownMenuItem asChild>
-                <Link to="/" className="w-full cursor-pointer">
-                  Home
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/services/website-design" className="w-full cursor-pointer">
-                  Website Design
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/services/seo" className="w-full cursor-pointer">
-                  SEO
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/services/paid-ads" className="w-full cursor-pointer">
-                  Paid Ads
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/services/dashboard" className="w-full cursor-pointer">
-                  Social Media
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/services/reporting" className="w-full cursor-pointer">
-                  Reporting
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="bg-coral text-white hover:bg-coral/90 mt-2">
-                <Link to="/contact" className="w-full cursor-pointer">
-                  Contact Us
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-2">
+            {/* Contact Us Button - Always Visible */}
+            <Button asChild variant="coral" size="sm" className="hidden sm:flex">
+              <Link to="/contact">
+                Contact Us
+              </Link>
+            </Button>
+            
+            {/* Burger Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="flex items-center justify-center"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-screen sm:w-56 bg-white">
+                <DropdownMenuItem asChild>
+                  <Link to="/" className="w-full cursor-pointer">
+                    Home
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/website-design" className="w-full cursor-pointer">
+                    Website Design
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/seo" className="w-full cursor-pointer">
+                    SEO
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/paid-ads" className="w-full cursor-pointer">
+                    Paid Ads
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/dashboard" className="w-full cursor-pointer">
+                    Social Media
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/reporting" className="w-full cursor-pointer">
+                    Reporting
+                  </Link>
+                </DropdownMenuItem>
+                {/* Only show Contact Us in dropdown for mobile */}
+                <DropdownMenuItem asChild className="bg-coral text-white hover:bg-coral/90 mt-2 sm:hidden">
+                  <Link to="/contact" className="w-full cursor-pointer">
+                    Contact Us
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </header>
