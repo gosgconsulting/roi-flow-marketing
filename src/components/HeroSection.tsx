@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -91,10 +92,12 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
-              {/* Placeholder for hero image - will be dynamic in WordPress */}
-              <div className="w-full h-full bg-gradient-to-br from-brandPurple/10 to-brandTeal/10 flex items-center justify-center">
-                <span className="text-xl font-medium text-muted-foreground">Hero Image</span>
-              </div>
+              {/* Data growth image - will be dynamic in WordPress */}
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+                alt="Data-driven growth"
+                className="w-full h-full object-cover"
+              />
               
               {/* WP:
               <?php 
