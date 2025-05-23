@@ -92,10 +92,10 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="aspect-video bg-secondary/60 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-white/10">
-              {/* Data growth image - will be dynamic in WordPress */}
+              {/* Abstract data growth image - will be dynamic in WordPress */}
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
-                alt="Data-driven growth"
+                src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
+                alt="Data-driven growth charts"
                 className="w-full h-full object-cover"
               />
               
