@@ -2,6 +2,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 /**
  * WordPress Theme Component: Header
@@ -73,12 +81,8 @@ import { Button } from "@/components/ui/button";
  * </header>
  */
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
+  const isMobile = useIsMobile();
+  
   return (
     <header className="w-full py-4 px-4 md:px-8 bg-white shadow-sm">
       <div className="container mx-auto">
@@ -88,7 +92,7 @@ const Header = () => {
             <span className="text-deepBlue">GO</span> <span className="text-coral">SG</span>
           </Link>
 
-          {/* WordPress: Replace with wp_nav_menu() */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-foreground hover:text-coral transition-colors">
               Home
@@ -113,95 +117,59 @@ const Header = () => {
             </Button>
           </nav>
 
-          {/* WordPress: Mobile menu toggle - keep this structure */}
-          <div className="flex items-center md:hidden">
-            <button 
-              onClick={toggleMenu}
-              className="text-foreground focus:outline-none"
-              aria-label="Toggle Menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
+          {/* Mobile Navigation - Modern Burger Menu Dropdown */}
+          {isMobile && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="md:hidden flex items-center justify-center"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-screen sm:w-56 bg-white">
+                <DropdownMenuItem asChild>
+                  <Link to="/" className="w-full cursor-pointer">
+                    Home
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/website-design" className="w-full cursor-pointer">
+                    Website Design
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/seo" className="w-full cursor-pointer">
+                    SEO
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/paid-ads" className="w-full cursor-pointer">
+                    Paid Ads
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/dashboard" className="w-full cursor-pointer">
+                    Social Media
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/services/reporting" className="w-full cursor-pointer">
+                    Reporting
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="bg-coral text-white hover:bg-coral/90 mt-2">
+                  <Link to="/contact" className="w-full cursor-pointer">
+                    Contact Us
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
-
-        {/* WordPress: Mobile menu - adapt to use wp_nav_menu with custom walker */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 bg-card rounded-lg shadow-lg animate-fade-in">
-            <nav className="flex flex-col space-y-4 px-4">
-              {/* Replace with WordPress mobile menu */}
-              <Link 
-                to="/" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/services/website-design" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Website Design
-              </Link>
-              <Link 
-                to="/services/seo" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                SEO
-              </Link>
-              <Link 
-                to="/services/paid-ads" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Paid Ads
-              </Link>
-              <Link 
-                to="/services/dashboard" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Social Media
-              </Link>
-              <Link 
-                to="/services/reporting" 
-                className="text-foreground hover:text-coral transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Reporting
-              </Link>
-              <Button asChild variant="coral" className="w-full">
-                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                  Contact Us
-                </Link>
-              </Button>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );
