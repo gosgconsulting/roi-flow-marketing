@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -49,8 +48,8 @@ const ContactForm = () => {
             <div className="space-y-6 mb-8">
               <div className="flex items-center">
                 <Phone className="h-5 w-5 mr-3 text-coral" />
-                <a href="tel:+12345678901" className="text-lg hover:text-coral transition-colors">
-                  +1 (234) 567-8901
+                <a href="tel:+6580246850" className="text-lg hover:text-coral transition-colors">
+                  +65 8024 6850
                 </a>
               </div>
               <div className="flex items-center">
@@ -66,14 +65,10 @@ const ContactForm = () => {
               <div className="space-y-2">
                 <p className="flex justify-between">
                   <span>Monday - Friday:</span>
-                  <span>9:00 AM - 6:00 PM</span>
+                  <span>10 AM - 6 PM</span>
                 </p>
                 <p className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span>10:00 AM - 2:00 PM</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>Sunday:</span>
+                  <span>Saturday - Sunday:</span>
                   <span>Closed</span>
                 </p>
               </div>
