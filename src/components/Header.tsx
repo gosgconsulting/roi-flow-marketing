@@ -62,7 +62,7 @@ const Header = () => {
               </Link>
               
               <Link 
-                to="/services/dashboard" 
+                to="/services/social-media" 
                 className="relative text-gray-700 hover:text-coral font-medium transition-all duration-300 group"
               >
                 <span className="relative z-10">Social Media</span>
@@ -134,7 +134,7 @@ const Header = () => {
             Paid Ads
           </Link>
           <Link 
-            to="/services/dashboard" 
+            to="/services/social-media" 
             className="text-gray-700 hover:text-coral font-medium transition-colors duration-300 px-3 py-1"
           >
             Social
