@@ -37,7 +37,7 @@ const services = [
     title: "Social Media",
     description: "We make engaging content and plan for your channels.",
     icon: <MessageSquare className="h-10 w-10 text-coral" />,
-    link: "/services/dashboard",
+    link: "/services/social-media",
     cta: "Learn More"
   },
   {

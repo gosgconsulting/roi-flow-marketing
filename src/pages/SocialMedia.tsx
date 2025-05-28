@@ -13,71 +13,71 @@ import { Calendar, Image, Clock, Target, TrendingUp, Users } from "lucide-react"
 
 const features = [
   {
-    title: "Content Calendar Creation",
-    description: "We schedule posts on social media by creating a comprehensive content calendar tailored to your brand's goals."
+    title: "Instagram & Facebook Posting",
+    description: "We schedule and post content on your Instagram and Facebook accounts to maintain consistent brand presence."
   },
   {
-    title: "Visual Content Editing",
-    description: "We edit pictures and videos following the brand style of clients to ensure consistent and engaging social media presence."
+    title: "Video Editing",
+    description: "Professional video editing services to create engaging content that captures your audience's attention."
   },
   {
-    title: "Community Management",
-    description: "Daily monitoring and engagement with your audience to build relationships and increase brand loyalty."
+    title: "Image Editing",
+    description: "High-quality image editing and graphic design to ensure your visual content stands out."
+  },
+  {
+    title: "Content Calendar Management",
+    description: "Strategic planning and scheduling of your social media content for optimal engagement."
+  },
+  {
+    title: "Brand Consistency",
+    description: "Maintaining your brand voice and visual identity across all social media platforms."
   },
   {
     title: "Performance Analytics",
-    description: "Regular reports on social media performance with actionable insights to continually improve your strategy."
-  },
-  {
-    title: "Audience Growth Strategies",
-    description: "Targeted techniques to expand your following with genuine potential customers interested in your brand."
-  },
-  {
-    title: "Campaign Management",
-    description: "Strategic planning and execution of social media campaigns designed to achieve specific business objectives."
+    description: "Regular reports on social media performance with insights to improve your strategy."
   }
 ];
 
 const benefits = [
   {
     title: "Consistent Brand Presence",
-    description: "Maintain a professional and cohesive brand image across all social platforms with regular, quality content.",
+    description: "Maintain a professional and cohesive brand image across Instagram and Facebook with regular posting.",
     icon: <Image className="text-brandPurple h-6 w-6" />
   },
   {
     title: "Time Efficiency",
-    description: "Free up your valuable time by letting experts handle your social media presence while you focus on your core business.",
+    description: "Save valuable time by letting our experts handle your social media scheduling and content creation.",
     icon: <Clock className="text-brandPurple h-6 w-6" />
   },
   {
-    title: "Targeted Audience Engagement",
-    description: "Connect with potential customers through strategic content that resonates with your specific target audience.",
+    title: "Professional Content",
+    description: "High-quality video and image editing that makes your content stand out from the competition.",
     icon: <Target className="text-brandPurple h-6 w-6" />
   },
   {
-    title: "Brand Growth and Loyalty",
-    description: "Build a loyal community around your brand through consistent engagement and valuable content.",
+    title: "Increased Engagement",
+    description: "Strategic posting schedules and professionally edited content drive higher engagement rates.",
     icon: <TrendingUp className="text-brandPurple h-6 w-6" />
   }
 ];
 
 const testimonials = [
   {
-    quote: "Their social media team transformed our online presence. The content calendar they created ensures we're always posting relevant content that resonates with our audience.",
+    quote: "Their social media management transformed our Instagram presence. The video editing quality is exceptional and our engagement has increased by 180%.",
     name: "Jessica Chen",
     role: "Marketing Director",
     company: "Fusion Brands",
     rating: 5
   },
   {
-    quote: "The visual content they create for our social channels is stunning. Every image and video perfectly aligns with our brand style while capturing audience attention.",
+    quote: "The content they create for our Facebook and Instagram is stunning. Every post looks professional and perfectly matches our brand style.",
     name: "Marcus Johnson",
     role: "Brand Manager",
     company: "Urban Lifestyle Co.",
     rating: 5
   },
   {
-    quote: "Since working with them, our social media engagement has increased by 215%. Their strategic approach to content and community management has been game-changing.",
+    quote: "Since they started managing our social media posting schedule, we've seen consistent growth in followers and engagement. Highly recommended!",
     name: "Sophia Williams",
     role: "CEO",
     company: "NextGen Solutions",
@@ -95,19 +95,19 @@ const SocialMedia = () => {
       <Header />
       <main className="flex-grow">
         <ServiceHero 
-          title="Social Media Management That Builds Brands"
-          description="Strategic social media solutions that strengthen your brand presence and drive meaningful engagement."
+          title="Social Media Management & Content Creation"
+          description="Professional Instagram and Facebook management with expert video and image editing services."
         />
         <ClientLogos />
         <ServiceBenefits 
-          title="Why Invest in Social Media Management?"
-          subtitle="Effective social media marketing builds brand awareness, fosters community, and drives business growth."
+          title="Why Choose Our Social Media Services?"
+          subtitle="Expert content creation and strategic posting for Instagram and Facebook that drives real results."
           benefits={benefits}
-          ctaText="See Our Social Media Portfolio"
+          ctaText="See Our Portfolio"
         />
         <ServiceFeatures 
           title="Our Social Media Services"
-          subtitle="We create and manage engaging social media content that resonates with your target audience."
+          subtitle="We handle everything from content creation to posting schedules for your Instagram and Facebook accounts."
           features={features}
         />
         <div className="py-16 px-4 bg-muted/30">
@@ -128,12 +128,12 @@ const SocialMedia = () => {
         </div>
         <ServiceTestimonials 
           title="Client Success Stories"
-          subtitle="Hear how our social media management has helped businesses build stronger online communities."
+          subtitle="See how our social media management and content creation has helped businesses grow their online presence."
           testimonials={testimonials}
         />
         <ServiceCTA 
           title="Ready to Elevate Your Social Media Presence?"
-          subtitle="Let our expert team create and manage content that resonates with your audience."
+          subtitle="Let our expert team handle your Instagram and Facebook posting with professional content creation."
           buttonText="Get a Free Social Media Audit"
           buttonLink="/contact"
         />
