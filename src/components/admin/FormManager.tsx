@@ -1,9 +1,9 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Eye, Download, Search } from "lucide-react";
+import { Mail, Eye, Download, Search, RefreshCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -20,49 +20,57 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+
+interface FormSubmission {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  form_type: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const FormManager = () => {
-  const [submissions, setSubmissions] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      message: "I'm interested in your SEO services. Can you provide more information about your packages?",
-      formType: "Contact Form",
-      submittedAt: "2024-01-15 14:30",
-      status: "new"
-    },
-    {
-      id: 2,
-      name: "Sarah Chen",
-      email: "sarah.chen@company.com",
-      message: "We need a complete website redesign for our e-commerce business. Please contact us to discuss.",
-      formType: "Contact Form",
-      submittedAt: "2024-01-15 11:45",
-      status: "replied"
-    },
-    {
-      id: 3,
-      name: "Mike Johnson",
-      email: "mike.j@startup.sg",
-      message: "Looking for digital marketing services for our startup. Can we schedule a consultation?",
-      formType: "Contact Form",
-      submittedAt: "2024-01-14 16:20",
-      status: "new"
-    },
-    {
-      id: 4,
-      name: "Lisa Wong",
-      email: "lisa.wong@business.com",
-      message: "Interested in your paid advertising services. What platforms do you work with?",
-      formType: "Contact Form",
-      submittedAt: "2024-01-14 09:15",
-      status: "in-progress"
-    }
-  ]);
-
-  const [selectedSubmission, setSelectedSubmission] = useState<any>(null);
+  const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
+  const [selectedSubmission, setSelectedSubmission] = useState<FormSubmission | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  const fetchSubmissions = async () => {
+    try {
+      console.log("Fetching form submissions...");
+      const { data, error } = await supabase
+        .from('form_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error fetching submissions:", error);
+        throw error;
+      }
+
+      console.log("Fetched submissions:", data);
+      setSubmissions(data || []);
+    } catch (error) {
+      console.error("Failed to fetch submissions:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch form submissions",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubmissions();
+  }, []);
 
   const filteredSubmissions = submissions.filter(submission =>
     submission.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,11 +91,53 @@ const FormManager = () => {
     }
   };
 
-  const handleStatusChange = (id: number, newStatus: string) => {
-    setSubmissions(submissions.map(sub =>
-      sub.id === id ? { ...sub, status: newStatus } : sub
-    ));
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      console.log("Updating submission status:", { id, newStatus });
+      const { error } = await supabase
+        .from('form_submissions')
+        .update({ status: newStatus })
+        .eq('id', id);
+
+      if (error) {
+        console.error("Error updating status:", error);
+        throw error;
+      }
+
+      // Update local state
+      setSubmissions(submissions.map(sub =>
+        sub.id === id ? { ...sub, status: newStatus } : sub
+      ));
+
+      if (selectedSubmission && selectedSubmission.id === id) {
+        setSelectedSubmission({ ...selectedSubmission, status: newStatus });
+      }
+
+      toast({
+        title: "Status Updated",
+        description: "Form submission status has been updated successfully.",
+      });
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update submission status",
+        variant: "destructive",
+      });
+    }
   };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <RefreshCw className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -96,10 +146,16 @@ const FormManager = () => {
           <h1 className="text-3xl font-bold text-gray-900">Form Manager</h1>
           <p className="text-gray-600 mt-2">Manage form submissions and inquiries</p>
         </div>
-        <Button>
-          <Download className="h-4 w-4 mr-2" />
-          Export CSV
-        </Button>
+        <div className="flex space-x-2">
+          <Button onClick={fetchSubmissions} variant="outline">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+          <Button>
+            <Download className="h-4 w-4 mr-2" />
+            Export CSV
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -180,112 +236,118 @@ const FormManager = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Form Type</TableHead>
-                <TableHead>Submitted</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredSubmissions.map((submission) => (
-                <TableRow key={submission.id}>
-                  <TableCell className="font-medium">{submission.name}</TableCell>
-                  <TableCell>{submission.email}</TableCell>
-                  <TableCell>{submission.formType}</TableCell>
-                  <TableCell>{submission.submittedAt}</TableCell>
-                  <TableCell>
-                    <Badge 
-                      className={`${getStatusColor(submission.status)} text-white`}
-                    >
-                      {submission.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => setSelectedSubmission(submission)}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-2xl">
-                        <DialogHeader>
-                          <DialogTitle>Form Submission Details</DialogTitle>
-                        </DialogHeader>
-                        {selectedSubmission && (
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium mb-1">Name</label>
-                                <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.name}</p>
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium mb-1">Email</label>
-                                <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.email}</p>
-                              </div>
-                            </div>
-                            
-                            <div>
-                              <label className="block text-sm font-medium mb-1">Message</label>
-                              <p className="text-sm bg-gray-50 p-3 rounded h-32 overflow-y-auto">
-                                {selectedSubmission.message}
-                              </p>
-                            </div>
-                            
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-sm font-medium mb-1">Form Type</label>
-                                <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.formType}</p>
-                              </div>
-                              <div>
-                                <label className="block text-sm font-medium mb-1">Submitted At</label>
-                                <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.submittedAt}</p>
-                              </div>
-                            </div>
-                            
-                            <div>
-                              <label className="block text-sm font-medium mb-2">Update Status</label>
-                              <div className="flex space-x-2">
-                                <Button 
-                                  size="sm" 
-                                  variant={selectedSubmission.status === 'new' ? 'default' : 'outline'}
-                                  onClick={() => handleStatusChange(selectedSubmission.id, 'new')}
-                                >
-                                  New
-                                </Button>
-                                <Button 
-                                  size="sm" 
-                                  variant={selectedSubmission.status === 'in-progress' ? 'default' : 'outline'}
-                                  onClick={() => handleStatusChange(selectedSubmission.id, 'in-progress')}
-                                >
-                                  In Progress
-                                </Button>
-                                <Button 
-                                  size="sm" 
-                                  variant={selectedSubmission.status === 'replied' ? 'default' : 'outline'}
-                                  onClick={() => handleStatusChange(selectedSubmission.id, 'replied')}
-                                >
-                                  Replied
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </DialogContent>
-                    </Dialog>
-                  </TableCell>
+          {filteredSubmissions.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">No form submissions found.</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Form Type</TableHead>
+                  <TableHead>Submitted</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredSubmissions.map((submission) => (
+                  <TableRow key={submission.id}>
+                    <TableCell className="font-medium">{submission.name}</TableCell>
+                    <TableCell>{submission.email}</TableCell>
+                    <TableCell>{submission.form_type}</TableCell>
+                    <TableCell>{formatDate(submission.created_at)}</TableCell>
+                    <TableCell>
+                      <Badge 
+                        className={`${getStatusColor(submission.status)} text-white`}
+                      >
+                        {submission.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => setSelectedSubmission(submission)}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-2xl">
+                          <DialogHeader>
+                            <DialogTitle>Form Submission Details</DialogTitle>
+                          </DialogHeader>
+                          {selectedSubmission && (
+                            <div className="space-y-4">
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-medium mb-1">Name</label>
+                                  <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.name}</p>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-medium mb-1">Email</label>
+                                  <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.email}</p>
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <label className="block text-sm font-medium mb-1">Message</label>
+                                <p className="text-sm bg-gray-50 p-3 rounded h-32 overflow-y-auto">
+                                  {selectedSubmission.message}
+                                </p>
+                              </div>
+                              
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-medium mb-1">Form Type</label>
+                                  <p className="text-sm bg-gray-50 p-2 rounded">{selectedSubmission.form_type}</p>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-medium mb-1">Submitted At</label>
+                                  <p className="text-sm bg-gray-50 p-2 rounded">{formatDate(selectedSubmission.created_at)}</p>
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <label className="block text-sm font-medium mb-2">Update Status</label>
+                                <div className="flex space-x-2">
+                                  <Button 
+                                    size="sm" 
+                                    variant={selectedSubmission.status === 'new' ? 'default' : 'outline'}
+                                    onClick={() => handleStatusChange(selectedSubmission.id, 'new')}
+                                  >
+                                    New
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant={selectedSubmission.status === 'in-progress' ? 'default' : 'outline'}
+                                    onClick={() => handleStatusChange(selectedSubmission.id, 'in-progress')}
+                                  >
+                                    In Progress
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant={selectedSubmission.status === 'replied' ? 'default' : 'outline'}
+                                    onClick={() => handleStatusChange(selectedSubmission.id, 'replied')}
+                                  >
+                                    Replied
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </DialogContent>
+                      </Dialog>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>
