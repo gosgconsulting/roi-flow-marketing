@@ -6,7 +6,6 @@ import {
   FileText, 
   Mail, 
   Settings,
-  BarChart3,
   Plug,
   BookOpen
 } from "lucide-react";
@@ -39,13 +38,8 @@ const AdminSidebar = ({ activeSection, onSectionChange }: AdminSidebarProps) => 
       icon: Mail,
     },
     {
-      id: "tracking",
-      label: "Tracking",
-      icon: BarChart3,
-    },
-    {
       id: "integrations",
-      label: "Integrations",
+      label: "Integrations & Tracking",
       icon: Plug,
     },
     {

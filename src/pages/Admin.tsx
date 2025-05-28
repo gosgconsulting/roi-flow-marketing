@@ -5,7 +5,6 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import PageManager from "@/components/admin/PageManager";
 import BlogManager from "@/components/admin/BlogManager";
 import FormManager from "@/components/admin/FormManager";
-import TrackingManager from "@/components/admin/TrackingManager";
 import IntegrationsManager from "@/components/admin/IntegrationsManager";
 import DashboardOverview from "@/components/admin/DashboardOverview";
 
@@ -34,8 +33,6 @@ const Admin = () => {
         return <BlogManager />;
       case "forms":
         return <FormManager />;
-      case "tracking":
-        return <TrackingManager />;
       case "integrations":
         return <IntegrationsManager />;
       default:
