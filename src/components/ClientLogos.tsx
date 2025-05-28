@@ -4,14 +4,14 @@ import { useEffect, useRef, useState } from "react";
 
 const ClientLogos = () => {
   const clients = [
-    { name: "Microsoft", logo: "https://images.unsplash.com/photo-1642793758877-545b2e700d41?q=80&w=100&auto=format&fit=crop" },
-    { name: "Google", logo: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=100&auto=format&fit=crop" },
-    { name: "Amazon", logo: "https://images.unsplash.com/photo-1614854262340-ab1ca7d079c7?q=80&w=100&auto=format&fit=crop" },
-    { name: "Apple", logo: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=100&auto=format&fit=crop" },
-    { name: "Meta", logo: "https://images.unsplash.com/photo-1633675254053-d96c7668c3b8?q=80&w=100&auto=format&fit=crop" },
-    { name: "IBM", logo: "https://images.unsplash.com/photo-1642980054950-7f486e241f3b?q=80&w=100&auto=format&fit=crop" },
-    { name: "Oracle", logo: "https://images.unsplash.com/photo-1642155129703-869cf2a13e29?q=80&w=100&auto=format&fit=crop" },
-    { name: "Intel", logo: "https://images.unsplash.com/photo-1645429903862-f5f69532abbd?q=80&w=100&auto=format&fit=crop" },
+    { name: "Microsoft" },
+    { name: "Google" },
+    { name: "Amazon" },
+    { name: "Apple" },
+    { name: "Meta" },
+    { name: "IBM" },
+    { name: "Oracle" },
+    { name: "Intel" },
   ];
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -99,27 +99,27 @@ const ClientLogos = () => {
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: "grabbing" }}
         >
-          {/* First set of logos - display images directly without containers */}
+          {/* First set of client names */}
           {clients.map((client, index) => (
             <div
               key={index}
-              className="flex-shrink-0"
+              className="flex-shrink-0 px-6 py-3 bg-gray-100 rounded-lg border border-gray-200"
             >
-              {client.logo && (
-                <img src={client.logo} alt={client.name} className="h-12 md:h-16 object-contain" />
-              )}
+              <span className="text-gray-700 font-medium text-sm md:text-base whitespace-nowrap">
+                {client.name}
+              </span>
             </div>
           ))}
 
-          {/* Duplicate set for seamless looping - display images directly without containers */}
+          {/* Duplicate set for seamless looping */}
           {clients.map((client, index) => (
             <div
               key={`duplicate-${index}`}
-              className="flex-shrink-0"
+              className="flex-shrink-0 px-6 py-3 bg-gray-100 rounded-lg border border-gray-200"
             >
-              {client.logo && (
-                <img src={client.logo} alt={client.name} className="h-12 md:h-16 object-contain" />
-              )}
+              <span className="text-gray-700 font-medium text-sm md:text-base whitespace-nowrap">
+                {client.name}
+              </span>
             </div>
           ))}
         </motion.div>
