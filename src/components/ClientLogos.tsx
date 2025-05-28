@@ -3,14 +3,13 @@ import { useEffect, useRef, useState } from "react";
 
 const ClientLogos = () => {
   const clients = [
-    { name: "Microsoft" },
     { name: "Google" },
-    { name: "Amazon" },
-    { name: "Apple" },
-    { name: "Meta" },
-    { name: "IBM" },
-    { name: "Oracle" },
-    { name: "Intel" },
+    { name: "Facebook" },
+    { name: "Instagram" },
+    { name: "TikTok" },
+    { name: "Looker Studio" },
+    { name: "ChatGPT" },
+    { name: "Claude AI" },
   ];
   
   const containerRef = useRef<HTMLDivElement>(null);
