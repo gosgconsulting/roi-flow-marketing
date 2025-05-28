@@ -48,6 +48,8 @@ interface BlogPost {
   updated_at: string;
 }
 
+type BlogPostStatus = 'draft' | 'published' | 'archived';
+
 const BlogManager = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -58,7 +60,7 @@ const BlogManager = () => {
     content: "",
     excerpt: "",
     featured_image: "",
-    status: "draft" as const,
+    status: "draft" as BlogPostStatus,
   });
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -165,7 +167,7 @@ const BlogManager = () => {
       content: "",
       excerpt: "",
       featured_image: "",
-      status: "draft",
+      status: "draft" as BlogPostStatus,
     });
   };
 
@@ -289,7 +291,7 @@ const BlogManager = () => {
               </div>
               <div>
                 <Label htmlFor="status">Status</Label>
-                <Select value={formData.status} onValueChange={(value: any) => setFormData(prev => ({ ...prev, status: value }))}>
+                <Select value={formData.status} onValueChange={(value: BlogPostStatus) => setFormData(prev => ({ ...prev, status: value }))}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -436,7 +438,7 @@ const BlogManager = () => {
             </div>
             <div>
               <Label htmlFor="edit-status">Status</Label>
-              <Select value={formData.status} onValueChange={(value: any) => setFormData(prev => ({ ...prev, status: value }))}>
+              <Select value={formData.status} onValueChange={(value: BlogPostStatus) => setFormData(prev => ({ ...prev, status: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
