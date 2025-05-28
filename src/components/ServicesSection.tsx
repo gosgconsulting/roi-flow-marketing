@@ -55,47 +55,21 @@ const ServicesSection = () => {
       <div className="container mx-auto">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <motion.span 
-            className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <span className="inline-block py-1 px-3 mb-4 bg-coral/20 text-coral text-sm font-medium rounded-full">
             OUR SERVICES
-          </motion.span>
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            Comprehensive Marketing Solutions
-          </motion.h2>
-          <motion.p 
-            className="text-muted-foreground text-lg max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Marketing Solutions</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Designed to deliver measurable results and accelerate your business growth.
-          </motion.p>
+          </p>
         </motion.div>
         
-        <motion.div 
-          className="relative"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <div className="relative">
           <Carousel
             opts={{
               align: "start",
@@ -107,73 +81,31 @@ const ServicesSection = () => {
               {services.map((service, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/3">
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ 
-                      y: -10,
-                      transition: { duration: 0.3 }
-                    }}
-                    className="service-card group"
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="service-card"
                   >
-                    <motion.div 
-                      className="h-full bg-card border border-border hover:border-coral/50 rounded-xl overflow-hidden transition-all duration-300 relative"
-                      whileHover={{
-                        boxShadow: "0 10px 40px rgba(249, 78, 64, 0.15), 0 0 30px rgba(249, 78, 64, 0.1)"
-                      }}
-                    >
-                      <div className="p-8 relative z-10">
-                        <motion.div 
-                          className="inline-flex items-center justify-center p-3 bg-coral/10 rounded-xl mb-6 group-hover:bg-coral/20 transition-all duration-300"
-                          whileHover={{ 
-                            scale: 1.1,
-                            rotate: 5
-                          }}
-                        >
+                    <div className="h-full bg-card border border-border hover:border-coral/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-coral/5">
+                      <div className="p-8">
+                        <div className="inline-flex items-center justify-center p-3 bg-coral/10 rounded-xl mb-6">
                           {service.icon}
-                        </motion.div>
-                        <motion.h3 
-                          className="text-xl font-semibold mb-4"
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.6, delay: 0.2 }}
-                        >
-                          {service.title}
-                        </motion.h3>
-                        <motion.p 
-                          className="text-muted-foreground mb-6"
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.6, delay: 0.3 }}
-                        >
+                        </div>
+                        <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                        <p className="text-muted-foreground mb-6">
                           {service.description}
-                        </motion.p>
-                        <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10 pl-0 group">
+                        </p>
+                        <Button asChild variant="ghost" className="text-coral hover:text-coral hover:bg-coral/10 pl-0">
                           <Link to={service.link} className="flex items-center">
                             {service.cta}
-                            <motion.svg 
-                              className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" 
-                              viewBox="0 0 16 16" 
-                              fill="none" 
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </motion.svg>
+                            </svg>
                           </Link>
                         </Button>
                       </div>
-                      
-                      {/* Animated background gradient on hover */}
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-br from-coral/5 to-brandPurple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        initial={{ scale: 0 }}
-                        whileHover={{ scale: 1 }}
-                        transition={{ duration: 0.4 }}
-                      />
-                    </motion.div>
+                    </div>
                   </motion.div>
                 </CarouselItem>
               ))}
@@ -181,7 +113,7 @@ const ServicesSection = () => {
             <CarouselPrevious className="absolute -left-12 top-1/2" />
             <CarouselNext className="absolute -right-12 top-1/2" />
           </Carousel>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
