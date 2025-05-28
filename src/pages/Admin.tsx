@@ -4,6 +4,7 @@ import { useAdminCheck } from "@/hooks/use-admin-check";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import PageManager from "@/components/admin/PageManager";
 import FormManager from "@/components/admin/FormManager";
+import TrackingManager from "@/components/admin/TrackingManager";
 import DashboardOverview from "@/components/admin/DashboardOverview";
 
 const Admin = () => {
@@ -29,6 +30,8 @@ const Admin = () => {
         return <PageManager />;
       case "forms":
         return <FormManager />;
+      case "tracking":
+        return <TrackingManager />;
       default:
         return <DashboardOverview />;
     }
