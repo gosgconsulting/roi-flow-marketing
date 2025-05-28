@@ -1,5 +1,6 @@
+
 import { useEffect, useRef, useState } from "react";
-import { motion, useAnimation, useDragControls, PanInfo } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -73,50 +74,42 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialsCarousel = () => {
+  const leftControls = useAnimation();
+  const rightControls = useAnimation();
   const [isPaused, setIsPaused] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
-  const dragControls = useDragControls();
-  const [currentPosition, setCurrentPosition] = useState(0);
-  const [scrollWidth, setScrollWidth] = useState(0);
 
-  // Calculate scroll width when component mounts
-  useEffect(() => {
-    if (containerRef.current) {
-      setScrollWidth(containerRef.current.scrollWidth - containerRef.current.clientWidth);
-    }
-  }, []);
+  // Split testimonials into two groups for left and right columns
+  const leftTestimonials = testimonials.slice(0, 4);
+  const rightTestimonials = testimonials.slice(3, 7);
 
-  // Handle animation based on isPaused state and scrollWidth
   useEffect(() => {
-    if (!isPaused && scrollWidth > 0) {
-      controls.start({
-        x: -scrollWidth,
+    if (!isPaused) {
+      // Left column scrolls up
+      leftControls.start({
+        y: [-400, 0],
         transition: {
-          duration: 15, // Reduced from 25 to 15 seconds for faster scrolling
+          duration: 20,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop"
+        }
+      });
+
+      // Right column scrolls down
+      rightControls.start({
+        y: [0, -400],
+        transition: {
+          duration: 20,
           ease: "linear",
           repeat: Infinity,
           repeatType: "loop"
         }
       });
     } else {
-      // Stop the animation completely at its current position
-      controls.stop();
+      leftControls.stop();
+      rightControls.stop();
     }
-  }, [isPaused, controls, scrollWidth]);
-
-  const handleDragStart = () => {
-    setIsPaused(true);
-  };
-
-  const handleDragEnd = (_: any, info: PanInfo) => {
-    const newPosition = currentPosition + info.offset.x;
-    setCurrentPosition(newPosition);
-    controls.start({
-      x: newPosition,
-      transition: { duration: 0.5, ease: "easeInOut" }
-    });
-  };
+  }, [isPaused, leftControls, rightControls]);
 
   return (
     <section className="py-20 relative overflow-hidden bg-deepBlue">
@@ -128,7 +121,7 @@ const TestimonialsCarousel = () => {
       
       <div className="container mx-auto mb-8 px-4">
         <motion.div 
-          className="text-center mb-10"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -142,33 +135,47 @@ const TestimonialsCarousel = () => {
         </motion.div>
       </div>
 
-      <div className="relative w-full">
-        <div 
-          className="overflow-x-hidden w-full"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          aria-label="Customer testimonials carousel"
-        >
-          <div ref={containerRef} className="relative cursor-grab">
+      <div 
+        className="relative w-full max-w-6xl mx-auto px-4"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        aria-label="Customer testimonials"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[600px]">
+          {/* Left Column - Scrolling Up */}
+          <div className="relative overflow-hidden">
             <motion.div 
-              className="flex gap-6 py-6 px-8 min-w-max"
-              animate={controls}
-              initial={{ x: 0 }}
-              drag="x"
-              dragControls={dragControls}
-              dragConstraints={{ left: -2000, right: 100 }}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              whileDrag={{ cursor: "grabbing" }}
+              className="flex flex-col gap-6"
+              animate={leftControls}
+              initial={{ y: 0 }}
             >
-              {/* First set of testimonials */}
-              {testimonials.map((testimonial) => (
+              {/* First set */}
+              {leftTestimonials.map((testimonial) => (
                 <TestimonialCard key={testimonial.id} testimonial={testimonial} />
               ))}
               
               {/* Duplicate set for seamless loop */}
-              {testimonials.map((testimonial) => (
-                <TestimonialCard key={`duplicate-${testimonial.id}`} testimonial={testimonial} />
+              {leftTestimonials.map((testimonial) => (
+                <TestimonialCard key={`left-duplicate-${testimonial.id}`} testimonial={testimonial} />
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right Column - Scrolling Down */}
+          <div className="relative overflow-hidden">
+            <motion.div 
+              className="flex flex-col gap-6"
+              animate={rightControls}
+              initial={{ y: 0 }}
+            >
+              {/* First set */}
+              {rightTestimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              ))}
+              
+              {/* Duplicate set for seamless loop */}
+              {rightTestimonials.map((testimonial) => (
+                <TestimonialCard key={`right-duplicate-${testimonial.id}`} testimonial={testimonial} />
               ))}
             </motion.div>
           </div>
@@ -184,7 +191,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   return (
-    <div className="bg-card/10 hover:bg-card/20 backdrop-blur-md border border-white/10 rounded-xl p-6 w-80 lg:w-96 flex flex-col">
+    <div className="bg-card/10 hover:bg-card/20 backdrop-blur-md border border-white/10 rounded-xl p-6 w-full flex flex-col min-h-[200px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           <Avatar className="h-12 w-12 border-2 border-coral/30">
