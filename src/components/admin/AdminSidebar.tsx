@@ -6,7 +6,8 @@ import {
   FileText, 
   Mail, 
   Settings,
-  BarChart3
+  BarChart3,
+  Plug
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -35,6 +36,11 @@ const AdminSidebar = ({ activeSection, onSectionChange }: AdminSidebarProps) => 
       id: "tracking",
       label: "Tracking",
       icon: BarChart3,
+    },
+    {
+      id: "integrations",
+      label: "Integrations",
+      icon: Plug,
     },
     {
       id: "settings",
