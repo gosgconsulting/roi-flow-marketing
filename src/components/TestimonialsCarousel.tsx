@@ -76,40 +76,34 @@ const testimonials: Testimonial[] = [
 const TestimonialsCarousel = () => {
   const leftControls = useAnimation();
   const rightControls = useAnimation();
-  const [isPaused, setIsPaused] = useState(false);
 
   // Split testimonials into two groups for left and right columns
   const leftTestimonials = testimonials.slice(0, 4);
   const rightTestimonials = testimonials.slice(3, 7);
 
   useEffect(() => {
-    if (!isPaused) {
-      // Left column scrolls up
-      leftControls.start({
-        y: [-400, 0],
-        transition: {
-          duration: 20,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop"
-        }
-      });
+    // Left column scrolls up
+    leftControls.start({
+      y: [-400, 0],
+      transition: {
+        duration: 20,
+        ease: "linear",
+        repeat: Infinity,
+        repeatType: "loop"
+      }
+    });
 
-      // Right column scrolls down
-      rightControls.start({
-        y: [0, -400],
-        transition: {
-          duration: 20,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop"
-        }
-      });
-    } else {
-      leftControls.stop();
-      rightControls.stop();
-    }
-  }, [isPaused, leftControls, rightControls]);
+    // Right column scrolls down
+    rightControls.start({
+      y: [0, -400],
+      transition: {
+        duration: 20,
+        ease: "linear",
+        repeat: Infinity,
+        repeatType: "loop"
+      }
+    });
+  }, [leftControls, rightControls]);
 
   return (
     <section className="py-20 relative overflow-hidden bg-deepBlue">
@@ -137,8 +131,6 @@ const TestimonialsCarousel = () => {
 
       <div 
         className="relative w-full max-w-6xl mx-auto px-4"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
         aria-label="Customer testimonials"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[600px]">
