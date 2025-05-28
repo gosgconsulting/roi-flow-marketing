@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import CustomDashboard from "./pages/CustomDashboard";
 import Admin from "./pages/Admin";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import HomepageTemplate from "./pages/templates/HomepageTemplate";
 import LandingPageTemplate from "./pages/templates/LandingPageTemplate";
 import ContactTemplate from "./pages/templates/ContactTemplate";
@@ -30,6 +32,8 @@ import ContactTemplate from "./pages/templates/ContactTemplate";
  * - "/services/social-media" -> single-service.php or page-social-media.php
  * - "/services/reporting" -> single-service.php or page-reporting.php
  * - "/contact" -> page-contact.php
+ * - "/blog" -> archive.php or index.php
+ * - "/blog/:slug" -> single.php
  * - "/customizer" -> page-customizer.php
  * - "/admin" -> page-admin.php (admin dashboard)
  * - "/templates/*" -> template preview pages
@@ -55,6 +59,8 @@ const App = () => (
           <Route path="/services/social-media" element={<SocialMedia />} />
           <Route path="/services/reporting" element={<Reporting />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/customizer" element={<CustomDashboard />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/templates/homepage" element={<HomepageTemplate />} />

@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, Phone, Instagram, Linkedin } from "lucide-react";
@@ -144,6 +145,11 @@ const Footer = () => {
               <li>
                 <Link to="/" className="text-gray-300 hover:text-coral transition-colors">
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="text-gray-300 hover:text-coral transition-colors">
+                  Blog
                 </Link>
               </li>
               <li>

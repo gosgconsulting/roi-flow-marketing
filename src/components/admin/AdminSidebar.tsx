@@ -7,7 +7,8 @@ import {
   Mail, 
   Settings,
   BarChart3,
-  Plug
+  Plug,
+  BookOpen
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -26,6 +27,11 @@ const AdminSidebar = ({ activeSection, onSectionChange }: AdminSidebarProps) => 
       id: "pages",
       label: "Page Manager",
       icon: FileText,
+    },
+    {
+      id: "blog",
+      label: "Blog Manager",
+      icon: BookOpen,
     },
     {
       id: "forms",
