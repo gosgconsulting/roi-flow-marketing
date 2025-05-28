@@ -15,6 +15,9 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import CustomDashboard from "./pages/CustomDashboard";
 import Admin from "./pages/Admin";
+import HomepageTemplate from "./pages/templates/HomepageTemplate";
+import LandingPageTemplate from "./pages/templates/LandingPageTemplate";
+import ContactTemplate from "./pages/templates/ContactTemplate";
 
 /**
  * WordPress Theme Structure
@@ -29,6 +32,7 @@ import Admin from "./pages/Admin";
  * - "/contact" -> page-contact.php
  * - "/customizer" -> page-customizer.php
  * - "/admin" -> page-admin.php (admin dashboard)
+ * - "/templates/*" -> template preview pages
  * - "*" (NotFound) -> 404.php
  *
  * The React Router setup will be replaced with WordPress's template hierarchy.
@@ -53,6 +57,9 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/customizer" element={<CustomDashboard />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/templates/homepage" element={<HomepageTemplate />} />
+          <Route path="/templates/landing-page" element={<LandingPageTemplate />} />
+          <Route path="/templates/contact" element={<ContactTemplate />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

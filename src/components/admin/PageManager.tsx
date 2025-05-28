@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,6 +61,7 @@ const PageManager = () => {
       id: "homepage",
       name: "Homepage Template",
       description: "Complete homepage with hero section, services carousel, testimonials, and CTA",
+      viewUrl: "/templates/homepage",
       preview: {
         hero: "Your Main Headline Here",
         services: ["Service 1", "Service 2", "Service 3", "Service 4"],
@@ -73,6 +73,7 @@ const PageManager = () => {
       id: "landing",
       name: "Landing Page Template", 
       description: "Focused landing page with hero, benefits, testimonials, and conversion CTA",
+      viewUrl: "/templates/landing-page",
       preview: {
         hero: "Landing Page Headline",
         benefits: ["Key Benefit 1", "Key Benefit 2", "Key Benefit 3"],
@@ -84,6 +85,7 @@ const PageManager = () => {
       id: "contact",
       name: "Contact Page Template",
       description: "Contact page with form, location info, and contact details",
+      viewUrl: "/templates/contact",
       preview: {
         hero: "Get In Touch",
         sections: ["Contact Form", "Office Location", "Contact Information"],
@@ -108,6 +110,10 @@ const PageManager = () => {
   const handleCreateFromTemplate = (templateId: string) => {
     console.log(`Creating page from template: ${templateId}`);
     // In a real implementation, this would create a new page based on the template
+  };
+
+  const handleViewTemplate = (viewUrl: string) => {
+    window.open(viewUrl, '_blank');
   };
 
   return (
@@ -286,14 +292,24 @@ const PageManager = () => {
                       </div>
                     </div>
                     
-                    <Button 
-                      className="w-full" 
-                      variant="outline"
-                      onClick={() => handleCreateFromTemplate(template.id)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Page
-                    </Button>
+                    <div className="flex space-x-2">
+                      <Button 
+                        className="flex-1" 
+                        variant="outline"
+                        onClick={() => handleViewTemplate(template.viewUrl)}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        View
+                      </Button>
+                      <Button 
+                        className="flex-1" 
+                        variant="outline"
+                        onClick={() => handleCreateFromTemplate(template.id)}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Page
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
