@@ -11,6 +11,21 @@ import BlogPostForm from "./BlogPostForm";
 
 type BlogPostStatus = 'draft' | 'published' | 'archived';
 
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  color: string;
+}
+
+interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+  color: string;
+}
+
 interface FormData {
   title: string;
   slug: string;
@@ -18,6 +33,11 @@ interface FormData {
   excerpt: string;
   featured_image: string;
   status: BlogPostStatus;
+  meta_title: string;
+  meta_description: string;
+  meta_keywords: string;
+  categories: string[];
+  tags: string[];
 }
 
 interface BlogPostDialogProps {
@@ -30,6 +50,8 @@ interface BlogPostDialogProps {
   onSubmit: (e: React.FormEvent) => void;
   isSubmitting: boolean;
   submitLabel: string;
+  categories: Category[];
+  tags: Tag[];
 }
 
 const BlogPostDialog: React.FC<BlogPostDialogProps> = ({
@@ -42,10 +64,12 @@ const BlogPostDialog: React.FC<BlogPostDialogProps> = ({
   onSubmit,
   isSubmitting,
   submitLabel,
+  categories,
+  tags,
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
@@ -57,6 +81,8 @@ const BlogPostDialog: React.FC<BlogPostDialogProps> = ({
           onCancel={() => onOpenChange(false)}
           isSubmitting={isSubmitting}
           submitLabel={submitLabel}
+          categories={categories}
+          tags={tags}
         />
       </DialogContent>
     </Dialog>

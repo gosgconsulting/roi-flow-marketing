@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import BlogPostTable from "./blog/BlogPostTable";
 import BlogPostDialog from "./blog/BlogPostDialog";
+import CategoryManager from "./blog/CategoryManager";
+import TagManager from "./blog/TagManager";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface BlogPost {
   id: string;
@@ -25,6 +27,24 @@ interface BlogPost {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  meta_keywords: string | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  color: string;
+}
+
+interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+  color: string;
 }
 
 type BlogPostStatus = 'draft' | 'published' | 'archived';
@@ -40,6 +60,11 @@ const BlogManager = () => {
     excerpt: "",
     featured_image: "",
     status: "draft" as BlogPostStatus,
+    meta_title: "",
+    meta_description: "",
+    meta_keywords: "",
+    categories: [] as string[],
+    tags: [] as string[],
   });
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -57,18 +82,82 @@ const BlogManager = () => {
     },
   });
 
+  const { data: categories } = useQuery({
+    queryKey: ['blog-categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_categories')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      return data as Category[];
+    },
+  });
+
+  const { data: tags } = useQuery({
+    queryKey: ['blog-tags'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_tags')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      return data as Tag[];
+    },
+  });
+
   const createPostMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       const postData = {
-        ...data,
+        title: data.title,
+        slug: data.slug,
+        content: data.content,
+        excerpt: data.excerpt,
+        featured_image: data.featured_image,
+        status: data.status,
+        meta_title: data.meta_title,
+        meta_description: data.meta_description,
+        meta_keywords: data.meta_keywords,
         published_at: data.status === 'published' ? new Date().toISOString() : null,
       };
       
-      const { error } = await supabase
+      const { data: newPost, error } = await supabase
         .from('blog_posts')
-        .insert(postData);
+        .insert(postData)
+        .select()
+        .single();
       
       if (error) throw error;
+
+      // Handle categories
+      if (data.categories.length > 0) {
+        const categoryRelations = data.categories.map(categoryId => ({
+          post_id: newPost.id,
+          category_id: categoryId
+        }));
+        
+        const { error: categoryError } = await supabase
+          .from('blog_post_categories')
+          .insert(categoryRelations);
+        
+        if (categoryError) throw categoryError;
+      }
+
+      // Handle tags
+      if (data.tags.length > 0) {
+        const tagRelations = data.tags.map(tagId => ({
+          post_id: newPost.id,
+          tag_id: tagId
+        }));
+        
+        const { error: tagError } = await supabase
+          .from('blog_post_tags')
+          .insert(tagRelations);
+        
+        if (tagError) throw tagError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
@@ -88,7 +177,15 @@ const BlogManager = () => {
   const updatePostMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: typeof formData }) => {
       const postData = {
-        ...data,
+        title: data.title,
+        slug: data.slug,
+        content: data.content,
+        excerpt: data.excerpt,
+        featured_image: data.featured_image,
+        status: data.status,
+        meta_title: data.meta_title,
+        meta_description: data.meta_description,
+        meta_keywords: data.meta_keywords,
         published_at: data.status === 'published' && !editingPost?.published_at 
           ? new Date().toISOString() 
           : editingPost?.published_at,
@@ -100,6 +197,36 @@ const BlogManager = () => {
         .eq('id', id);
       
       if (error) throw error;
+
+      // Update categories
+      await supabase.from('blog_post_categories').delete().eq('post_id', id);
+      if (data.categories.length > 0) {
+        const categoryRelations = data.categories.map(categoryId => ({
+          post_id: id,
+          category_id: categoryId
+        }));
+        
+        const { error: categoryError } = await supabase
+          .from('blog_post_categories')
+          .insert(categoryRelations);
+        
+        if (categoryError) throw categoryError;
+      }
+
+      // Update tags
+      await supabase.from('blog_post_tags').delete().eq('post_id', id);
+      if (data.tags.length > 0) {
+        const tagRelations = data.tags.map(tagId => ({
+          post_id: id,
+          tag_id: tagId
+        }));
+        
+        const { error: tagError } = await supabase
+          .from('blog_post_tags')
+          .insert(tagRelations);
+        
+        if (tagError) throw tagError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
@@ -147,11 +274,29 @@ const BlogManager = () => {
       excerpt: "",
       featured_image: "",
       status: "draft" as BlogPostStatus,
+      meta_title: "",
+      meta_description: "",
+      meta_keywords: "",
+      categories: [],
+      tags: [],
     });
   };
 
-  const handleEdit = (post: BlogPost) => {
+  const handleEdit = async (post: BlogPost) => {
     setEditingPost(post);
+    
+    // Fetch post categories and tags
+    const [categoriesRes, tagsRes] = await Promise.all([
+      supabase
+        .from('blog_post_categories')
+        .select('category_id')
+        .eq('post_id', post.id),
+      supabase
+        .from('blog_post_tags')
+        .select('tag_id')
+        .eq('post_id', post.id)
+    ]);
+
     setFormData({
       title: post.title,
       slug: post.slug,
@@ -159,6 +304,11 @@ const BlogManager = () => {
       excerpt: post.excerpt || "",
       featured_image: post.featured_image || "",
       status: post.status,
+      meta_title: post.meta_title || "",
+      meta_description: post.meta_description || "",
+      meta_keywords: post.meta_keywords || "",
+      categories: categoriesRes.data?.map(c => c.category_id) || [],
+      tags: tagsRes.data?.map(t => t.tag_id) || [],
     });
     setIsEditDialogOpen(true);
   };
@@ -179,34 +329,55 @@ const BlogManager = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Blog Manager</h1>
-          <p className="text-muted-foreground">Create and manage your blog posts</p>
+          <p className="text-muted-foreground">Create and manage your blog posts, categories, and tags</p>
         </div>
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={resetForm}>
-              <Plus className="h-4 w-4 mr-2" />
-              New Post
-            </Button>
-          </DialogTrigger>
-        </Dialog>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Posts</CardTitle>
-          <CardDescription>
-            Manage your blog posts, edit content, and change publication status.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <BlogPostTable
-            posts={posts}
-            onEdit={handleEdit}
-            onDelete={(id) => deletePostMutation.mutate(id)}
-            isDeleting={deletePostMutation.isPending}
-          />
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="posts" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="posts">Posts</TabsTrigger>
+          <TabsTrigger value="categories">Categories</TabsTrigger>
+          <TabsTrigger value="tags">Tags</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="posts" className="space-y-4">
+          <div className="flex justify-end">
+            <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={resetForm}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Post
+                </Button>
+              </DialogTrigger>
+            </Dialog>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>All Posts</CardTitle>
+              <CardDescription>
+                Manage your blog posts, edit content, and change publication status.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <BlogPostTable
+                posts={posts}
+                onEdit={handleEdit}
+                onDelete={(id) => deletePostMutation.mutate(id)}
+                isDeleting={deletePostMutation.isPending}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="categories">
+          <CategoryManager />
+        </TabsContent>
+
+        <TabsContent value="tags">
+          <TagManager />
+        </TabsContent>
+      </Tabs>
 
       {/* Create Dialog */}
       <BlogPostDialog
@@ -219,6 +390,8 @@ const BlogManager = () => {
         onSubmit={handleSubmit}
         isSubmitting={createPostMutation.isPending}
         submitLabel="Create Post"
+        categories={categories || []}
+        tags={tags || []}
       />
 
       {/* Edit Dialog */}
@@ -232,6 +405,8 @@ const BlogManager = () => {
         onSubmit={handleSubmit}
         isSubmitting={updatePostMutation.isPending}
         submitLabel="Update Post"
+        categories={categories || []}
+        tags={tags || []}
       />
     </div>
   );
