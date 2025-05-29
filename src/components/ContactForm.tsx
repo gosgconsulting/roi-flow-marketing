@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -80,7 +81,12 @@ const ContactForm = () => {
               </div>
               <div className="flex items-center">
                 <Calendar className="h-5 w-5 mr-3 text-coral" />
-                <a href="#" className="text-lg hover:text-coral transition-colors">
+                <a 
+                  href="https://calendly.com/gosgconsulting/oliver-shih" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-lg hover:text-coral transition-colors"
+                >
                   Schedule a meeting
                 </a>
               </div>
