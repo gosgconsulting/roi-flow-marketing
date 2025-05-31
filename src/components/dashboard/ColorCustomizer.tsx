@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { saveToLocalStorage, loadFromLocalStorage } from "@/lib/utils-dashboard";
 
-// Theme color preset options
+// Enhanced theme color preset options
 const COLOR_PRESETS = [
   {
     name: "Default",
@@ -15,7 +15,11 @@ const COLOR_PRESETS = [
     secondary: "#7E69AB",
     accent: "#F94E40",
     background: "#FFFFFF",
-    text: "#333333"
+    text: "#333333",
+    gradientStart: "#9b87f5",
+    gradientEnd: "#7E69AB",
+    labelColor: "#666666",
+    footerDarkText: "#FFFFFF"
   },
   {
     name: "Ocean",
@@ -23,7 +27,11 @@ const COLOR_PRESETS = [
     secondary: "#0284C7",
     accent: "#F59E0B",
     background: "#F0F9FF",
-    text: "#0F172A"
+    text: "#0F172A",
+    gradientStart: "#0EA5E9",
+    gradientEnd: "#10B981",
+    labelColor: "#475569",
+    footerDarkText: "#F8FAFC"
   },
   {
     name: "Forest",
@@ -31,7 +39,11 @@ const COLOR_PRESETS = [
     secondary: "#059669",
     accent: "#F43F5E",
     background: "#F0FDF4",
-    text: "#064E3B"
+    text: "#064E3B",
+    gradientStart: "#10B981",
+    gradientEnd: "#059669",
+    labelColor: "#374151",
+    footerDarkText: "#F9FAFB"
   },
   {
     name: "Sunset",
@@ -39,7 +51,11 @@ const COLOR_PRESETS = [
     secondary: "#EA580C",
     accent: "#8B5CF6",
     background: "#FFEDD5",
-    text: "#431407"
+    text: "#431407",
+    gradientStart: "#F97316",
+    gradientEnd: "#8B5CF6",
+    labelColor: "#92400E",
+    footerDarkText: "#FEF3C7"
   }
 ];
 
@@ -50,7 +66,11 @@ const ColorCustomizer = () => {
     secondary: "#7E69AB",
     accent: "#F94E40",
     background: "#FFFFFF",
-    text: "#333333"
+    text: "#333333",
+    gradientStart: "#9b87f5",
+    gradientEnd: "#7E69AB",
+    labelColor: "#666666",
+    footerDarkText: "#FFFFFF"
   });
 
   // Load saved colors on component mount
@@ -71,6 +91,14 @@ const ColorCustomizer = () => {
     root.style.setProperty('--brand-accent', colorConfig.accent);
     root.style.setProperty('--brand-background', colorConfig.background);
     root.style.setProperty('--brand-text', colorConfig.text);
+    
+    // Apply gradient colors
+    root.style.setProperty('--gradient-start', colorConfig.gradientStart);
+    root.style.setProperty('--gradient-end', colorConfig.gradientEnd);
+    
+    // Apply label and footer colors
+    root.style.setProperty('--label-color', colorConfig.labelColor);
+    root.style.setProperty('--footer-dark-text', colorConfig.footerDarkText);
     
     // Apply to existing Tailwind CSS variables for compatibility
     root.style.setProperty('--primary', colorConfig.primary);
@@ -103,7 +131,11 @@ const ColorCustomizer = () => {
       secondary: preset.secondary,
       accent: preset.accent,
       background: preset.background,
-      text: preset.text
+      text: preset.text,
+      gradientStart: preset.gradientStart,
+      gradientEnd: preset.gradientEnd,
+      labelColor: preset.labelColor,
+      footerDarkText: preset.footerDarkText
     };
     setColors(newColors);
     applyColorsGlobally(newColors);
@@ -115,14 +147,15 @@ const ColorCustomizer = () => {
         <CardHeader>
           <CardTitle>Color Customization</CardTitle>
           <CardDescription>
-            Customize the colors of your website. Changes will be applied globally across all pages.
+            Customize the colors of your website including gradients, labels, and footer text. Changes will be applied globally across all pages.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-4">
               <TabsTrigger value="presets">Presets</TabsTrigger>
-              <TabsTrigger value="custom">Custom Colors</TabsTrigger>
+              <TabsTrigger value="basic">Basic Colors</TabsTrigger>
+              <TabsTrigger value="advanced">Advanced Colors</TabsTrigger>
             </TabsList>
             
             <TabsContent value="presets" className="space-y-4">
@@ -134,7 +167,7 @@ const ColorCustomizer = () => {
                     onClick={() => applyColorPreset(preset)}
                   >
                     <div className="font-medium mb-2">{preset.name}</div>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 mb-2">
                       <div 
                         className="w-8 h-8 rounded-full" 
                         style={{ backgroundColor: preset.primary }}
@@ -148,12 +181,18 @@ const ColorCustomizer = () => {
                         style={{ backgroundColor: preset.accent }}
                       />
                     </div>
+                    <div 
+                      className="w-full h-4 rounded"
+                      style={{ 
+                        background: `linear-gradient(to right, ${preset.gradientStart}, ${preset.gradientEnd})` 
+                      }}
+                    />
                   </div>
                 ))}
               </div>
             </TabsContent>
             
-            <TabsContent value="custom" className="space-y-4">
+            <TabsContent value="basic" className="space-y-4">
               <div className="grid gap-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -275,6 +314,124 @@ const ColorCustomizer = () => {
                 </div>
               </div>
             </TabsContent>
+
+            <TabsContent value="advanced" className="space-y-4">
+              <div className="grid gap-4">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Gradient Colors</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="gradientStart">Gradient Start Color</Label>
+                      <div className="flex space-x-2 items-center">
+                        <div 
+                          className="w-8 h-8 rounded-full border" 
+                          style={{ backgroundColor: colors.gradientStart }}
+                        />
+                        <Input
+                          id="gradientStart"
+                          type="text"
+                          value={colors.gradientStart}
+                          onChange={(e) => handleColorChange("gradientStart", e.target.value)}
+                          className="font-mono"
+                        />
+                        <input
+                          type="color"
+                          value={colors.gradientStart}
+                          onChange={(e) => handleColorChange("gradientStart", e.target.value)}
+                          className="w-10 h-10 p-0 border-0"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="gradientEnd">Gradient End Color</Label>
+                      <div className="flex space-x-2 items-center">
+                        <div 
+                          className="w-8 h-8 rounded-full border" 
+                          style={{ backgroundColor: colors.gradientEnd }}
+                        />
+                        <Input
+                          id="gradientEnd"
+                          type="text"
+                          value={colors.gradientEnd}
+                          onChange={(e) => handleColorChange("gradientEnd", e.target.value)}
+                          className="font-mono"
+                        />
+                        <input
+                          type="color"
+                          value={colors.gradientEnd}
+                          onChange={(e) => handleColorChange("gradientEnd", e.target.value)}
+                          className="w-10 h-10 p-0 border-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label>Gradient Preview</Label>
+                    <div 
+                      className="w-full h-12 rounded border"
+                      style={{ 
+                        background: `linear-gradient(to right, ${colors.gradientStart}, ${colors.gradientEnd})` 
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Specialized Colors</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="labelColor">Label Color</Label>
+                      <div className="flex space-x-2 items-center">
+                        <div 
+                          className="w-8 h-8 rounded-full border" 
+                          style={{ backgroundColor: colors.labelColor }}
+                        />
+                        <Input
+                          id="labelColor"
+                          type="text"
+                          value={colors.labelColor}
+                          onChange={(e) => handleColorChange("labelColor", e.target.value)}
+                          className="font-mono"
+                        />
+                        <input
+                          type="color"
+                          value={colors.labelColor}
+                          onChange={(e) => handleColorChange("labelColor", e.target.value)}
+                          className="w-10 h-10 p-0 border-0"
+                        />
+                      </div>
+                      <p className="text-sm text-muted-foreground">Used for "Digital marketing agency" labels</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="footerDarkText">Footer Text (Dark Background)</Label>
+                      <div className="flex space-x-2 items-center">
+                        <div 
+                          className="w-8 h-8 rounded-full border" 
+                          style={{ backgroundColor: colors.footerDarkText }}
+                        />
+                        <Input
+                          id="footerDarkText"
+                          type="text"
+                          value={colors.footerDarkText}
+                          onChange={(e) => handleColorChange("footerDarkText", e.target.value)}
+                          className="font-mono"
+                        />
+                        <input
+                          type="color"
+                          value={colors.footerDarkText}
+                          onChange={(e) => handleColorChange("footerDarkText", e.target.value)}
+                          className="w-10 h-10 p-0 border-0"
+                        />
+                      </div>
+                      <p className="text-sm text-muted-foreground">Text color for footer on dark backgrounds</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
@@ -286,6 +443,26 @@ const ColorCustomizer = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium">Gradient Headlines</h3>
+              <div className="space-y-2">
+                <h1 
+                  className="text-3xl font-bold"
+                  style={{ 
+                    background: `linear-gradient(to right, ${colors.gradientStart}, ${colors.gradientEnd})`,
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent'
+                  }}
+                >
+                  Your Compelling Headline Here
+                </h1>
+                <p style={{ color: colors.labelColor }} className="text-sm font-medium">
+                  Digital marketing agency
+                </p>
+              </div>
+            </div>
+
             <div className="space-y-2">
               <h3 className="text-sm font-medium">Buttons</h3>
               <div className="flex flex-wrap gap-2">
@@ -305,11 +482,11 @@ const ColorCustomizer = () => {
             </div>
             
             <div className="space-y-2">
-              <h3 className="text-sm font-medium">Text</h3>
-              <div className="p-4 rounded" style={{backgroundColor: colors.background, color: colors.text}}>
-                <h2 className="text-2xl font-bold mb-2" style={{color: colors.primary}}>Heading Text</h2>
-                <p className="mb-2">This is how your regular body text will look with the selected colors.</p>
-                <a href="#" style={{color: colors.secondary}}>This is how links will appear</a>
+              <h3 className="text-sm font-medium">Footer Preview (Dark Background)</h3>
+              <div className="p-4 rounded bg-gray-900" style={{color: colors.footerDarkText}}>
+                <h3 className="font-medium mb-2">Footer Content</h3>
+                <p className="text-sm opacity-90">This is how footer text will appear on dark backgrounds.</p>
+                <p className="text-xs opacity-75 mt-2">© 2024 Your Company. All rights reserved.</p>
               </div>
             </div>
             
@@ -319,6 +496,7 @@ const ColorCustomizer = () => {
                 <div className="border rounded-lg p-4" style={{borderColor: colors.primary}}>
                   <h3 className="font-medium mb-2" style={{color: colors.primary}}>Card Title</h3>
                   <p style={{color: colors.text}}>Card content with your selected text color.</p>
+                  <p style={{color: colors.labelColor}} className="text-sm mt-2">Label text example</p>
                 </div>
                 <div className="rounded-lg p-4" style={{backgroundColor: colors.primary, color: "#fff"}}>
                   <h3 className="font-medium mb-2">Card Title</h3>

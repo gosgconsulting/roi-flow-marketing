@@ -66,6 +66,20 @@ export const initializeGlobalTheme = () => {
     root.style.setProperty('--brand-purple', savedColors.primary);
     root.style.setProperty('--brand-teal', savedColors.secondary);
     root.style.setProperty('--coral', savedColors.accent);
+    
+    // Apply enhanced color settings if they exist
+    if (savedColors.gradientStart) {
+      root.style.setProperty('--gradient-start', savedColors.gradientStart);
+    }
+    if (savedColors.gradientEnd) {
+      root.style.setProperty('--gradient-end', savedColors.gradientEnd);
+    }
+    if (savedColors.labelColor) {
+      root.style.setProperty('--label-color', savedColors.labelColor);
+    }
+    if (savedColors.footerDarkText) {
+      root.style.setProperty('--footer-dark-text', savedColors.footerDarkText);
+    }
   }
 
   // Load and apply saved typography
@@ -96,6 +110,11 @@ export const generateThemeCss = (colors: Record<string, string>, fonts: Record<s
   --brand-background: ${colors.background};
   --brand-text: ${colors.text};
   
+  --gradient-start: ${colors.gradientStart || colors.primary};
+  --gradient-end: ${colors.gradientEnd || colors.secondary};
+  --label-color: ${colors.labelColor || '#666666'};
+  --footer-dark-text: ${colors.footerDarkText || '#FFFFFF'};
+  
   --font-heading: "${fonts.heading}", sans-serif;
   --font-body: "${fonts.body}", sans-serif;
 }
@@ -125,6 +144,24 @@ h1, h2, h3, h4, h5, h6 {
 .button-accent {
   background-color: var(--brand-accent);
   color: white;
+}
+
+/* Gradient text styles */
+.gradient-headline {
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Label styles */
+.digital-agency-label {
+  color: var(--label-color);
+}
+
+/* Footer styles */
+.footer-dark-text {
+  color: var(--footer-dark-text);
 }
 `;
 };

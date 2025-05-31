@@ -47,6 +47,12 @@
     --brand-background: #FFFFFF;
     --brand-text: #333333;
     
+    /* Enhanced color variables for advanced styling */
+    --gradient-start: #9b87f5;
+    --gradient-end: #7E69AB;
+    --label-color: #666666;
+    --footer-dark-text: #FFFFFF;
+    
     /* Global typography variables */
     --font-heading: "Inter", sans-serif;
     --font-body: "Inter", sans-serif;
@@ -147,6 +153,16 @@
   .border-coral {
     border-color: var(--brand-accent) !important;
   }
+
+  /* Label styling using global label color */
+  .digital-agency-label, .label-text {
+    color: var(--label-color) !important;
+  }
+
+  /* Footer text styling for dark backgrounds */
+  .footer-dark-text {
+    color: var(--footer-dark-text) !important;
+  }
 }
 
 /* Glass morphism effects */
@@ -205,9 +221,9 @@
   background: linear-gradient(to right, var(--brand-primary), var(--brand-accent));
 }
 
-/* Text gradient styles using global variables */
+/* Enhanced gradient text styles using global gradient variables */
 .gradient-text {
-  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -215,12 +231,20 @@
 }
 
 .gradient-text-animated {
-  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary), var(--brand-primary));
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end), var(--gradient-start));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   background-size: 200% auto;
   animation: gradient 3s linear infinite;
+}
+
+/* Gradient headlines for homepage */
+.gradient-headline {
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 @keyframes gradient {
@@ -373,7 +397,7 @@
 
 /* Service headings with gradient using global variables */
 .service-heading {
-  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
