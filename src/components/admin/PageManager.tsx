@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Edit, Eye, Plus, Copy } from "lucide-react";
+import { Edit, Eye, Plus, Copy, FileText } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import PageContentEditor from "./PageContentEditor";
 
 const PageManager = () => {
   const [pages, setPages] = useState([
@@ -55,6 +56,7 @@ const PageManager = () => {
   ]);
 
   const [editingPage, setEditingPage] = useState<any>(null);
+  const [contentEditingPage, setContentEditingPage] = useState<any>(null);
 
   const templates = [
     {
@@ -114,6 +116,10 @@ const PageManager = () => {
 
   const handleViewTemplate = (viewUrl: string) => {
     window.open(viewUrl, '_blank');
+  };
+
+  const handleEditContent = (page: any) => {
+    setContentEditingPage(page);
   };
 
   return (
@@ -176,6 +182,31 @@ const PageManager = () => {
                             <Button 
                               variant="outline" 
                               size="sm"
+                              onClick={() => handleEditContent(page)}
+                            >
+                              <FileText className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden">
+                            <DialogHeader>
+                              <DialogTitle>Edit Page Content: {page.title}</DialogTitle>
+                            </DialogHeader>
+                            <div className="overflow-y-auto max-h-[80vh]">
+                              {contentEditingPage && (
+                                <PageContentEditor 
+                                  pageTitle={contentEditingPage.title}
+                                  pageId={contentEditingPage.id.toString()}
+                                />
+                              )}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                        
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
                               onClick={() => handleEditPage(page)}
                             >
                               <Edit className="h-4 w-4" />
@@ -183,7 +214,7 @@ const PageManager = () => {
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl">
                             <DialogHeader>
-                              <DialogTitle>Edit Page: {page.title}</DialogTitle>
+                              <DialogTitle>Edit Page Settings: {page.title}</DialogTitle>
                             </DialogHeader>
                             {editingPage && (
                               <div className="space-y-4">
