@@ -111,7 +111,7 @@ const Footer = () => {
           
           {/* WordPress: Second footer widget area - services menu */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Our Services</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Our Services</h3>
             {/* WordPress: Replace with wp_nav_menu - "footer-services" */}
             <ul className="space-y-2">
               <li>
@@ -139,7 +139,7 @@ const Footer = () => {
           
           {/* WordPress: Third footer widget area - quick links menu */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
             {/* WordPress: Replace with wp_nav_menu - "footer-links" */}
             <ul className="space-y-2">
               <li>
@@ -172,7 +172,7 @@ const Footer = () => {
           
           {/* WordPress: Fourth footer widget area - contact info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Get In Touch</h3>
             {/* WordPress: Replace with contact info from theme options */}
             <div className="space-y-4">
               <div className="flex items-center">
