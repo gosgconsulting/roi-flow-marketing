@@ -1,10 +1,11 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { saveToLocalStorage, loadFromLocalStorage } from "@/lib/utils-dashboard";
 
 // Theme color preset options
 const COLOR_PRESETS = [
@@ -52,25 +53,60 @@ const ColorCustomizer = () => {
     text: "#333333"
   });
 
-  const handleColorChange = (colorKey: string, value: string) => {
-    setColors(prev => ({
-      ...prev,
-      [colorKey]: value
-    }));
+  // Load saved colors on component mount
+  useEffect(() => {
+    const savedColors = loadFromLocalStorage('website-colors');
+    if (savedColors) {
+      setColors(savedColors);
+      applyColorsGlobally(savedColors);
+    }
+  }, []);
 
-    // In a real implementation, this would update CSS variables
-    document.documentElement.style.setProperty(`--brand-${colorKey}`, value);
+  const applyColorsGlobally = (colorConfig: typeof colors) => {
+    const root = document.documentElement;
+    
+    // Apply to CSS custom properties for global usage
+    root.style.setProperty('--brand-primary', colorConfig.primary);
+    root.style.setProperty('--brand-secondary', colorConfig.secondary);
+    root.style.setProperty('--brand-accent', colorConfig.accent);
+    root.style.setProperty('--brand-background', colorConfig.background);
+    root.style.setProperty('--brand-text', colorConfig.text);
+    
+    // Apply to existing Tailwind CSS variables for compatibility
+    root.style.setProperty('--primary', colorConfig.primary);
+    root.style.setProperty('--secondary', colorConfig.secondary);
+    root.style.setProperty('--accent', colorConfig.accent);
+    root.style.setProperty('--background', colorConfig.background);
+    root.style.setProperty('--foreground', colorConfig.text);
+    
+    // Apply to specific brand colors used throughout the site
+    root.style.setProperty('--brand-purple', colorConfig.primary);
+    root.style.setProperty('--brand-teal', colorConfig.secondary);
+    root.style.setProperty('--coral', colorConfig.accent);
+    
+    // Save to localStorage for persistence
+    saveToLocalStorage('website-colors', colorConfig);
+  };
+
+  const handleColorChange = (colorKey: string, value: string) => {
+    const newColors = {
+      ...colors,
+      [colorKey]: value
+    };
+    setColors(newColors);
+    applyColorsGlobally(newColors);
   };
 
   const applyColorPreset = (preset: typeof COLOR_PRESETS[0]) => {
-    setColors(preset);
-    
-    // Apply all colors from the preset
-    Object.entries(preset).forEach(([key, value]) => {
-      if (key !== 'name') {
-        document.documentElement.style.setProperty(`--brand-${key}`, value);
-      }
-    });
+    const newColors = {
+      primary: preset.primary,
+      secondary: preset.secondary,
+      accent: preset.accent,
+      background: preset.background,
+      text: preset.text
+    };
+    setColors(newColors);
+    applyColorsGlobally(newColors);
   };
 
   return (
@@ -79,7 +115,7 @@ const ColorCustomizer = () => {
         <CardHeader>
           <CardTitle>Color Customization</CardTitle>
           <CardDescription>
-            Customize the colors of your website. Changes will be reflected in the preview.
+            Customize the colors of your website. Changes will be applied globally across all pages.
           </CardDescription>
         </CardHeader>
         <CardContent>

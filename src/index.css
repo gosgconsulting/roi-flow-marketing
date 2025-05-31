@@ -40,6 +40,20 @@
     --brand-purple: 270 70% 60%;
     --coral: 5 88% 62%;
 
+    /* Global theme variables (customizable) */
+    --brand-primary: #9b87f5;
+    --brand-secondary: #7E69AB;
+    --brand-accent: #F94E40;
+    --brand-background: #FFFFFF;
+    --brand-text: #333333;
+    
+    /* Global typography variables */
+    --font-heading: "Inter", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-base-size: 16px;
+    --font-heading-weight: 700;
+    --font-body-weight: 400;
+
     --radius: 0.5rem;
   }
 
@@ -82,6 +96,56 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Apply global typography variables */
+    font-family: var(--font-body);
+    font-size: var(--font-base-size);
+    font-weight: var(--font-body-weight);
+    color: var(--brand-text);
+    background-color: var(--brand-background);
+  }
+
+  /* Apply global typography to headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    color: var(--brand-text);
+  }
+
+  /* Global button styles using brand colors */
+  .btn-primary, button[data-variant="default"] {
+    background-color: var(--brand-primary);
+    color: white;
+  }
+
+  .btn-secondary, button[data-variant="secondary"] {
+    background-color: var(--brand-secondary);
+    color: white;
+  }
+
+  .btn-accent {
+    background-color: var(--brand-accent);
+    color: white;
+  }
+
+  /* Override existing brand color utilities with global variables */
+  .text-brandPurple {
+    color: var(--brand-primary) !important;
+  }
+
+  .bg-brandPurple {
+    background-color: var(--brand-primary) !important;
+  }
+
+  .text-coral {
+    color: var(--brand-accent) !important;
+  }
+
+  .bg-coral {
+    background-color: var(--brand-accent) !important;
+  }
+
+  .border-coral {
+    border-color: var(--brand-accent) !important;
   }
 }
 
@@ -131,24 +195,30 @@
   left: 100%;
 }
 
-/* CTA gradient buttons */
+/* CTA gradient buttons using global variables */
 .cta-gradient {
-  background: linear-gradient(to right, #F94E40, #F97316);
+  background: linear-gradient(to right, var(--brand-accent), var(--brand-primary));
   transition: all 0.3s ease;
 }
 
 .cta-gradient:hover {
-  background: linear-gradient(to right, #F97316, #F94E40);
+  background: linear-gradient(to right, var(--brand-primary), var(--brand-accent));
 }
 
-/* Text gradient styles */
+/* Text gradient styles using global variables */
 .gradient-text {
-  @apply bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent;
+  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   background-size: 200% 200%;
 }
 
 .gradient-text-animated {
-  @apply bg-gradient-to-r from-brandPurple via-brandTeal to-brandPurple bg-clip-text text-transparent;
+  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary), var(--brand-primary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   background-size: 200% auto;
   animation: gradient 3s linear infinite;
 }
@@ -179,21 +249,23 @@
   animation: shimmer 1.5s infinite;
 }
 
-/* Card hover effects */
+/* Card hover effects using global accent color */
 .hover-card-effect {
   transition: all 0.3s ease-in-out;
 }
 
 .hover-card-effect:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(249, 78, 64, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(var(--brand-accent), 0.1);
 }
 
-/* Section dividers */
+/* Section dividers using global accent color */
 .divider {
   height: 4px;
   width: 60px;
-  @apply bg-gradient-to-r from-coral to-coral/50 rounded-full my-6;
+  background: linear-gradient(to right, var(--brand-accent), rgba(var(--brand-accent), 0.5));
+  border-radius: 9999px;
+  margin: 1.5rem 0;
 }
 
 /* Testimonial card effects */
@@ -202,7 +274,8 @@
 }
 
 .testimonial-card:hover {
-  @apply bg-white dark:bg-white/10 border-slate-300 dark:border-white/20 shadow-lg shadow-coral/10;
+  @apply bg-white dark:bg-white/10 border-slate-300 dark:border-white/20 shadow-lg;
+  box-shadow: 0 10px 25px -5px rgba(var(--brand-accent), 0.1);
   transform: translateY(-4px);
 }
 
@@ -211,47 +284,97 @@
   @apply py-2 px-4 bg-white/90 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 rounded-lg flex items-center justify-center text-gray-600 dark:text-white/60 hover:text-gray-800 dark:hover:text-white/90 transition-all duration-300 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20;
 }
 
-/* Button variations */
+/* Button variations using global variables */
 .btn-teal {
-  @apply bg-[#00c2cb] hover:bg-[#00adb5] text-white;
+  background-color: var(--brand-secondary);
+  color: white;
+}
+
+.btn-teal:hover {
+  background-color: var(--brand-secondary);
+  opacity: 0.9;
 }
 
 .btn-blue {
-  @apply bg-[#0080b9] hover:bg-[#006a99] text-white;
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: var(--brand-primary);
+  opacity: 0.9;
 }
 
 .btn-gold {
-  @apply bg-[#ffb347] hover:bg-[#ffa31a] text-gray-800;
+  background-color: var(--brand-accent);
+  color: white;
+}
+
+.btn-gold:hover {
+  background-color: var(--brand-accent);
+  opacity: 0.9;
 }
 
 .btn-purple {
-  @apply bg-[#9370DB] hover:bg-[#8A2BE2] text-white;
+  background-color: var(--brand-primary);
+  color: white;
 }
 
-/* Service benefit icon styles */
+.btn-purple:hover {
+  background-color: var(--brand-primary);
+  opacity: 0.9;
+}
+
+/* Service benefit icon styles using global primary color */
 .benefit-icon {
-  @apply p-3 rounded-full bg-brandPurple/10 text-brandPurple;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(var(--brand-primary), 0.1);
+  color: var(--brand-primary);
 }
 
-/* Service plans highlighting */
+/* Service plans highlighting using global accent color */
 .popular-plan {
-  @apply relative border-coral/50 dark:border-coral/50 shadow-xl shadow-coral/10;
+  position: relative;
+  border-color: rgba(var(--brand-accent), 0.5);
+  box-shadow: 0 25px 50px -12px rgba(var(--brand-accent), 0.1);
 }
 
 .popular-badge {
-  @apply absolute -top-3 left-1/2 transform -translate-x-1/2 bg-coral text-white text-sm font-medium px-3 py-1 rounded-full;
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--brand-accent);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
 }
 
 /* Case study card styles */
 .case-study-card {
-  @apply rounded-xl overflow-hidden border border-border hover:border-coral/30 transition-all duration-300;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.case-study-card:hover {
+  border-color: rgba(var(--brand-accent), 0.3);
 }
 
 .case-study-result {
-  @apply text-lg font-semibold text-brandPurple;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--brand-primary);
 }
 
-/* Service headings with gradient */
+/* Service headings with gradient using global variables */
 .service-heading {
-  @apply bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent;
+  background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }

@@ -6,11 +6,14 @@ export const updateCssVariable = (name: string, value: string) => {
   document.documentElement.style.setProperty(name, value);
 };
 
-// Load Google Font
+// Load Google Font with better management
 export const loadGoogleFont = (fontFamily: string) => {
+  const existingLink = document.querySelector(`link[href*="${fontFamily.replace(' ', '+')}"]`);
+  if (existingLink) return existingLink as HTMLLinkElement;
+  
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(' ', '+')}:wght@400;500;600;700&display=swap`;
+  link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(' ', '+')}:wght@300;400;500;600;700&display=swap`;
   document.head.appendChild(link);
   return link;
 };
@@ -45,6 +48,41 @@ export const loadFromLocalStorage = (key: string) => {
   } catch (error) {
     console.error("Error loading from localStorage:", error);
     return null;
+  }
+};
+
+// Initialize global theme settings on app start
+export const initializeGlobalTheme = () => {
+  // Load and apply saved colors
+  const savedColors = loadFromLocalStorage('website-colors');
+  if (savedColors) {
+    const root = document.documentElement;
+    root.style.setProperty('--brand-primary', savedColors.primary);
+    root.style.setProperty('--brand-secondary', savedColors.secondary);
+    root.style.setProperty('--brand-accent', savedColors.accent);
+    root.style.setProperty('--brand-background', savedColors.background);
+    root.style.setProperty('--brand-text', savedColors.text);
+    root.style.setProperty('--primary', savedColors.primary);
+    root.style.setProperty('--brand-purple', savedColors.primary);
+    root.style.setProperty('--brand-teal', savedColors.secondary);
+    root.style.setProperty('--coral', savedColors.accent);
+  }
+
+  // Load and apply saved typography
+  const savedTypography = loadFromLocalStorage('website-typography');
+  if (savedTypography) {
+    loadGoogleFont(savedTypography.headingFont);
+    if (savedTypography.bodyFont !== savedTypography.headingFont) {
+      loadGoogleFont(savedTypography.bodyFont);
+    }
+    
+    const root = document.documentElement;
+    root.style.setProperty('--font-heading', `"${savedTypography.headingFont}", sans-serif`);
+    root.style.setProperty('--font-body', `"${savedTypography.bodyFont}", sans-serif`);
+    root.style.setProperty('--font-base-size', `${savedTypography.baseSize}px`);
+    
+    document.body.style.fontFamily = `"${savedTypography.bodyFont}", sans-serif`;
+    document.body.style.fontSize = `${savedTypography.baseSize}px`;
   }
 };
 

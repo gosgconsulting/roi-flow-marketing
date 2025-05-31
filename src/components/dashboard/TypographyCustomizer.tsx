@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { saveToLocalStorage, loadFromLocalStorage, loadGoogleFont } from "@/lib/utils-dashboard";
 
 // Font presets
 const TYPOGRAPHY_PRESETS = [
@@ -53,43 +54,57 @@ const TypographyCustomizer = () => {
     bodyWeight: 400
   });
   
-  // Load fonts on component mount
+  // Load saved typography on component mount
   useEffect(() => {
-    // Add selected fonts to head
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    const fonts = [typography.headingFont, typography.bodyFont].filter((value, index, self) => self.indexOf(value) === index);
-    link.href = `https://fonts.googleapis.com/css2?family=${fonts.map(font => `${font.replace(' ', '+')}:wght@400;500;600;700&display=swap`).join('&')}`;
-    document.head.appendChild(link);
-    
-    return () => {
-      // Clean up
-      document.head.removeChild(link);
-    };
-  }, [typography.headingFont, typography.bodyFont]);
+    const savedTypography = loadFromLocalStorage('website-typography');
+    if (savedTypography) {
+      setTypography(savedTypography);
+      applyTypographyGlobally(savedTypography);
+    }
+  }, []);
 
-  // Apply typography changes
-  useEffect(() => {
-    // This would normally update CSS variables in the root
-    document.documentElement.style.setProperty('--font-heading', `"${typography.headingFont}", sans-serif`);
-    document.documentElement.style.setProperty('--font-body', `"${typography.bodyFont}", sans-serif`);
-    document.documentElement.style.setProperty('--font-base-size', `${typography.baseSize}px`);
-  }, [typography]);
+  const applyTypographyGlobally = (typographyConfig: typeof typography) => {
+    // Load Google Fonts
+    loadGoogleFont(typographyConfig.headingFont);
+    if (typographyConfig.bodyFont !== typographyConfig.headingFont) {
+      loadGoogleFont(typographyConfig.bodyFont);
+    }
+
+    // Apply to CSS custom properties
+    const root = document.documentElement;
+    root.style.setProperty('--font-heading', `"${typographyConfig.headingFont}", sans-serif`);
+    root.style.setProperty('--font-body', `"${typographyConfig.bodyFont}", sans-serif`);
+    root.style.setProperty('--font-base-size', `${typographyConfig.baseSize}px`);
+    root.style.setProperty('--font-heading-weight', typographyConfig.headingWeight.toString());
+    root.style.setProperty('--font-body-weight', typographyConfig.bodyWeight.toString());
+
+    // Apply to body element for global effect
+    document.body.style.fontFamily = `"${typographyConfig.bodyFont}", sans-serif`;
+    document.body.style.fontSize = `${typographyConfig.baseSize}px`;
+    document.body.style.fontWeight = typographyConfig.bodyWeight.toString();
+
+    // Save to localStorage for persistence
+    saveToLocalStorage('website-typography', typographyConfig);
+  };
 
   const handleTypographyChange = (key: string, value: string | number) => {
-    setTypography(prev => ({
-      ...prev,
+    const newTypography = {
+      ...typography,
       [key]: value
-    }));
+    };
+    setTypography(newTypography);
+    applyTypographyGlobally(newTypography);
   };
 
   const applyPreset = (preset: typeof TYPOGRAPHY_PRESETS[0]) => {
-    setTypography(prev => ({
-      ...prev,
+    const newTypography = {
+      ...typography,
       headingFont: preset.headingFont,
       bodyFont: preset.bodyFont,
       baseSize: preset.baseSize
-    }));
+    };
+    setTypography(newTypography);
+    applyTypographyGlobally(newTypography);
   };
 
   return (
@@ -98,7 +113,7 @@ const TypographyCustomizer = () => {
         <CardHeader>
           <CardTitle>Typography Customization</CardTitle>
           <CardDescription>
-            Customize the fonts and typography of your website. Changes will be reflected in the preview.
+            Customize the fonts and typography of your website. Changes will be applied globally across all pages.
           </CardDescription>
         </CardHeader>
         <CardContent>
