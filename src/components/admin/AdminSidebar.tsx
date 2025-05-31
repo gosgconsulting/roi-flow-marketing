@@ -7,7 +7,8 @@ import {
   Mail, 
   Settings,
   Plug,
-  BookOpen
+  BookOpen,
+  Palette
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -36,6 +37,11 @@ const AdminSidebar = ({ activeSection, onSectionChange }: AdminSidebarProps) => 
       id: "forms",
       label: "Form Manager",
       icon: Mail,
+    },
+    {
+      id: "customizer",
+      label: "Website Customizer",
+      icon: Palette,
     },
     {
       id: "integrations",
