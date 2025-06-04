@@ -1,48 +1,11 @@
 
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut } from "lucide-react";
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from "@/hooks/use-toast";
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to sign out",
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Signed out successfully",
-      });
-      navigate('/');
-    }
-  };
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -78,33 +41,6 @@ const Header = () => {
               Blog
             </Link>
           </nav>
-
-          {/* Auth Section */}
-          <div className="hidden md:flex items-center space-x-4">
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">
-                  {user.email}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSignOut}
-                  className="flex items-center gap-2"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Sign In
-                </Button>
-              </Link>
-            )}
-          </div>
 
           {/* Mobile menu button */}
           <button
@@ -169,33 +105,6 @@ const Header = () => {
               >
                 Blog
               </Link>
-              
-              {/* Mobile Auth */}
-              <div className="pt-4 border-t border-gray-200">
-                {user ? (
-                  <div className="space-y-2">
-                    <div className="text-sm text-gray-600">
-                      {user.email}
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleSignOut}
-                      className="flex items-center gap-2 w-full justify-start"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Sign Out
-                    </Button>
-                  </div>
-                ) : (
-                  <Link to="/auth" onClick={() => setIsOpen(false)}>
-                    <Button variant="outline" className="flex items-center gap-2 w-full justify-start">
-                      <User className="h-4 w-4" />
-                      Sign In
-                    </Button>
-                  </Link>
-                )}
-              </div>
             </div>
           </nav>
         )}
