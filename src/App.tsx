@@ -17,6 +17,8 @@ import CustomDashboard from "./pages/CustomDashboard";
 import Admin from "./pages/Admin";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Auth from "./pages/Auth";
+import CreateAdmin from "./pages/CreateAdmin";
 import HomepageTemplate from "./pages/templates/HomepageTemplate";
 import LandingPageTemplate from "./pages/templates/LandingPageTemplate";
 import ContactTemplate from "./pages/templates/ContactTemplate";
@@ -36,6 +38,7 @@ import ContactTemplate from "./pages/templates/ContactTemplate";
  * - "/blog/:slug" -> single.php
  * - "/customizer" -> page-customizer.php
  * - "/admin" -> page-admin.php (admin dashboard)
+ * - "/auth" -> page-auth.php (authentication)
  * - "/templates/*" -> template preview pages
  * - "*" (NotFound) -> 404.php
  *
@@ -63,6 +66,8 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/customizer" element={<CustomDashboard />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/create-admin" element={<CreateAdmin />} />
           <Route path="/templates/homepage" element={<HomepageTemplate />} />
           <Route path="/templates/landing-page" element={<LandingPageTemplate />} />
           <Route path="/templates/contact" element={<ContactTemplate />} />
