@@ -45,13 +45,13 @@ const HeroSection = () => {
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Grow your business with <br />
-                <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
+                <span className="text-red-500">
                   data-driven marketing
                 </span>
               </h1>
               {/* WP:
                 <?php echo get_field('hero_heading_line_1'); ?> <br />
-                <span className="bg-gradient-to-r from-brandPurple to-brandTeal bg-clip-text text-transparent">
+                <span className="text-red-500">
                   <?php echo get_field('hero_heading_line_2'); ?>
                 </span>
               */}
