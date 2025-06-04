@@ -189,6 +189,42 @@ export type Database = {
         }
         Relationships: []
       }
+      cms_content: {
+        Row: {
+          content: Json
+          created_at: string | null
+          element_id: string
+          element_type: string
+          id: string
+          page_id: string
+          updated_at: string | null
+          updated_by: string | null
+          version: number | null
+        }
+        Insert: {
+          content: Json
+          created_at?: string | null
+          element_id: string
+          element_type: string
+          id?: string
+          page_id: string
+          updated_at?: string | null
+          updated_by?: string | null
+          version?: number | null
+        }
+        Update: {
+          content?: Json
+          created_at?: string | null
+          element_id?: string
+          element_type?: string
+          id?: string
+          page_id?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          version?: number | null
+        }
+        Relationships: []
+      }
       form_submissions: {
         Row: {
           created_at: string
@@ -219,6 +255,30 @@ export type Database = {
           name?: string
           status?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          role: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id: string
+          role?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          role?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

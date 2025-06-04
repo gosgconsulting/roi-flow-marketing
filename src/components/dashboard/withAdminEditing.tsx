@@ -1,9 +1,10 @@
 
 import React from "react";
-import { useAdminCheck } from "@/hooks/use-admin-check";
+import { useCMSAuth } from "@/hooks/use-cms-auth";
 import FloatingCustomizer from "@/components/dashboard/FloatingCustomizer";
 import { useSectionEditor } from "@/hooks/use-section-editor";
 import SectionEditDialog from "@/components/dashboard/SectionEditDialog";
+import VisualCMSEditor from "@/components/cms/VisualCMSEditor";
 
 /**
  * WordPress Theme Component: Admin Editing Higher Order Component
@@ -14,35 +15,6 @@ import SectionEditDialog from "@/components/dashboard/SectionEditDialog";
  * - This would be converted to PHP functions in inc/editor.php
  * - Would use WordPress user role capabilities to check for admin status
  * - Would integrate with either Gutenberg blocks or ACF fields for section editing
- * 
- * <?php
- * /**
- *  * Check if current user has editor capabilities
- *  *
- *  * @return bool Whether the current user can edit content
- *  *\/
- * function gosg_can_edit_content() {
- *   return current_user_can('edit_posts') || current_user_can('edit_pages');
- * }
- * 
- * /**
- *  * Add edit button to editable sections
- *  *
- *  * @param string $section_id The ID of the section to edit
- *  * @param string $section_title The title of the section
- *  * @return void
- *  *\/
- * function gosg_add_edit_button($section_id, $section_title = '') {
- *   if (!gosg_can_edit_content()) return;
- *   
- *   ?>
- *   <div class="gosg-edit-button" data-section="<?php echo esc_attr($section_id); ?>" data-title="<?php echo esc_attr($section_title); ?>">
- *     <button class="gosg-edit-trigger">
- *       <span class="dashicons dashicons-edit"></span> Edit
- *     </button>
- *   </div>
- *   <?php
- * }
  */
 
 // Higher Order Component to add admin editing capabilities to any page
@@ -51,37 +23,51 @@ export function withAdminEditing<P extends object>(
   pageId: string
 ) {
   return (props: P) => {
-    const { isAdmin, toggleAdminMode } = useAdminCheck();
+    const { isAdmin, user } = useCMSAuth();
     const { editDialog, currentSection, handleEditSection, setEditDialog } = useSectionEditor();
 
-    // For demo purposes only - toggle admin mode button
+    // For demo purposes - show admin toggle for development
     const AdminToggle = () => (
-      <button
-        onClick={toggleAdminMode}
-        className="fixed left-6 bottom-6 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-50 hover:opacity-100 z-50"
-      >
-        {isAdmin ? "Disable" : "Enable"} Editor Mode
-      </button>
+      <div className="fixed left-6 bottom-20 text-xs text-gray-500 z-40">
+        {user ? (
+          <div className="bg-white p-2 rounded shadow">
+            <div>User: {user.email}</div>
+            <div>Role: {user.role}</div>
+            <div>Admin: {isAdmin ? 'Yes' : 'No'}</div>
+          </div>
+        ) : (
+          <div className="bg-white p-2 rounded shadow">
+            Not authenticated
+          </div>
+        )}
+      </div>
     );
 
     return (
       <>
         <Component
           {...props}
-          isAdmin={true} // Always pass isAdmin as true
+          isAdmin={isAdmin}
           pageId={pageId}
           onEditSection={handleEditSection}
         />
         
-        <>
-          <FloatingCustomizer isAdmin={true} />
-          <AdminToggle />
-          <SectionEditDialog
-            open={editDialog}
-            onOpenChange={setEditDialog}
-            currentSection={currentSection}
-          />
-        </>
+        {/* Show admin controls only if user is admin */}
+        {isAdmin && (
+          <>
+            <FloatingCustomizer isAdmin={isAdmin} />
+            <VisualCMSEditor pageId={pageId} />
+          </>
+        )}
+        
+        {/* Development info */}
+        <AdminToggle />
+        
+        <SectionEditDialog
+          open={editDialog}
+          onOpenChange={setEditDialog}
+          currentSection={currentSection}
+        />
       </>
     );
   };
