@@ -1,11 +1,11 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, Edit, FileDown, Package } from "lucide-react";
+import { Eye, Edit, FileDown, Package, ExternalLink } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Service {
   id: string;
@@ -325,10 +325,25 @@ const servicesData: Service[] = [
 const ServicesManager = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleViewDetails = (service: Service) => {
     setSelectedService(service);
     setIsDetailModalOpen(true);
+  };
+
+  const handleViewTermsPage = (serviceId: string) => {
+    const routeMap: { [key: string]: string } = {
+      "website-design": "/terms/website-design",
+      "seo-recovery": "/terms/seo",
+      "paid-advertising": "/terms/paid-advertising",
+      "cloud-hosting": "/terms/cloud-hosting"
+    };
+    
+    const route = routeMap[serviceId];
+    if (route) {
+      navigate(route);
+    }
   };
 
   const handleExportProposal = (service: Service) => {
@@ -375,6 +390,14 @@ const ServicesManager = () => {
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     View Details
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => handleViewTermsPage(service.id)}
+                    title="View detailed terms page"
+                  >
+                    <ExternalLink className="h-4 w-4" />
                   </Button>
                   <Button 
                     size="sm" 
@@ -508,6 +531,10 @@ const ServicesManager = () => {
               </Tabs>
               
               <div className="flex gap-2 pt-4 border-t">
+                <Button onClick={() => handleViewTermsPage(selectedService.id)}>
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  View Terms Page
+                </Button>
                 <Button onClick={() => handleExportProposal(selectedService)}>
                   <FileDown className="h-4 w-4 mr-2" />
                   Export Proposal

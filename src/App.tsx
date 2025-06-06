@@ -21,6 +21,10 @@ import Auth from "./pages/Auth";
 import HomepageTemplate from "./pages/templates/HomepageTemplate";
 import LandingPageTemplate from "./pages/templates/LandingPageTemplate";
 import ContactTemplate from "./pages/templates/ContactTemplate";
+import WebsiteDesignServices from "./pages/services/WebsiteDesignServices";
+import SEOServices from "./pages/services/SEOServices";
+import PaidAdvertisingServices from "./pages/services/PaidAdvertisingServices";
+import CloudHostingServices from "./pages/services/CloudHostingServices";
 
 /**
  * WordPress Theme Structure
@@ -39,6 +43,7 @@ import ContactTemplate from "./pages/templates/ContactTemplate";
  * - "/admin" -> page-admin.php (admin dashboard)
  * - "/auth" -> authentication page
  * - "/templates/*" -> template preview pages
+ * - "/terms/*" -> service detail pages (admin only)
  * - "*" (NotFound) -> 404.php
  *
  * The React Router setup will be replaced with WordPress's template hierarchy.
@@ -69,6 +74,10 @@ const App = () => (
           <Route path="/templates/homepage" element={<HomepageTemplate />} />
           <Route path="/templates/landing-page" element={<LandingPageTemplate />} />
           <Route path="/templates/contact" element={<ContactTemplate />} />
+          <Route path="/terms/website-design" element={<WebsiteDesignServices />} />
+          <Route path="/terms/seo" element={<SEOServices />} />
+          <Route path="/terms/paid-advertising" element={<PaidAdvertisingServices />} />
+          <Route path="/terms/cloud-hosting" element={<CloudHostingServices />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
