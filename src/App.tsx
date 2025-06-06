@@ -25,6 +25,7 @@ import WebsiteDesignServices from "./pages/services/WebsiteDesignServices";
 import SEOServices from "./pages/services/SEOServices";
 import PaidAdvertisingServices from "./pages/services/PaidAdvertisingServices";
 import CloudHostingServices from "./pages/services/CloudHostingServices";
+import ServicePresentationPage from "./pages/ServicePresentation";
 
 /**
  * WordPress Theme Structure
@@ -44,6 +45,7 @@ import CloudHostingServices from "./pages/services/CloudHostingServices";
  * - "/auth" -> authentication page
  * - "/templates/*" -> template preview pages
  * - "/terms/*" -> service detail pages (admin only)
+ * - "/present/*" -> service presentation pages (admin only)
  * - "*" (NotFound) -> 404.php
  *
  * The React Router setup will be replaced with WordPress's template hierarchy.
@@ -78,6 +80,7 @@ const App = () => (
           <Route path="/terms/seo" element={<SEOServices />} />
           <Route path="/terms/paid-advertising" element={<PaidAdvertisingServices />} />
           <Route path="/terms/cloud-hosting" element={<CloudHostingServices />} />
+          <Route path="/present/:serviceType" element={<ServicePresentationPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
