@@ -21,10 +21,10 @@ import {
 
 interface Category {
   id: string;
+  tenant_id: string;
   name: string;
   slug: string;
   description: string | null;
-  color: string;
   created_at: string;
 }
 
@@ -56,9 +56,25 @@ const CategoryManager = () => {
 
   const createMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
+      // Get the default tenant ID for now
+      const { data: tenantData } = await supabase
+        .from('tenants')
+        .select('id')
+        .eq('subdomain', 'default')
+        .single();
+
+      if (!tenantData) {
+        throw new Error('Default tenant not found');
+      }
+
       const { error } = await supabase
         .from('blog_categories')
-        .insert(data);
+        .insert({
+          tenant_id: tenantData.id,
+          name: data.name,
+          slug: data.slug,
+          description: data.description
+        });
       
       if (error) throw error;
     },
@@ -81,7 +97,11 @@ const CategoryManager = () => {
     mutationFn: async ({ id, data }: { id: string; data: typeof formData }) => {
       const { error } = await supabase
         .from('blog_categories')
-        .update(data)
+        .update({
+          name: data.name,
+          slug: data.slug,
+          description: data.description
+        })
         .eq('id', id);
       
       if (error) throw error;
@@ -154,7 +174,7 @@ const CategoryManager = () => {
       name: category.name,
       slug: category.slug,
       description: category.description || "",
-      color: category.color,
+      color: "#3b82f6",
     });
     setIsEditOpen(true);
   };
@@ -193,8 +213,7 @@ const CategoryManager = () => {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <Badge 
-                  className="w-fit"
-                  style={{ backgroundColor: category.color, color: 'white' }}
+                  className="w-fit bg-blue-500 text-white"
                 >
                   {category.name}
                 </Badge>
