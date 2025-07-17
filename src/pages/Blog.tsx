@@ -11,15 +11,20 @@ import { Calendar, User } from "lucide-react";
 
 interface BlogPost {
   id: string;
+  tenant_id: string;
+  author_id: string | null;
   title: string;
   slug: string;
   content: string;
   excerpt: string | null;
   featured_image: string | null;
-  author: string;
   status: 'published';
   published_at: string;
   created_at: string;
+  updated_at: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  meta_keywords: string | null;
 }
 
 const Blog = () => {
@@ -100,10 +105,10 @@ const Blog = () => {
                               day: 'numeric'
                             })}
                           </div>
-                          <div className="flex items-center">
-                            <User className="h-4 w-4 mr-1" />
-                            {post.author}
-                          </div>
+                           <div className="flex items-center">
+                             <User className="h-4 w-4 mr-1" />
+                             {post.author_id || 'Unknown Author'}
+                           </div>
                         </div>
                         <CardTitle className="text-2xl hover:text-coral transition-colors">
                           <Link to={`/blog/${post.slug}`}>

@@ -22,13 +22,25 @@ const ContactForm = () => {
     try {
       console.log("Submitting form with data:", { name, email, message });
       
+      // Get the default tenant ID for now
+      const { data: tenantData } = await supabase
+        .from('tenants')
+        .select('id')
+        .eq('subdomain', 'default')
+        .single();
+
+      if (!tenantData) {
+        throw new Error('Default tenant not found');
+      }
+
       const { error } = await supabase
-        .from('form_submissions')
+        .from('contact_forms')
         .insert({
+          tenant_id: tenantData.id,
           name,
           email,
           message,
-          form_type: 'Contact Form'
+          form_type: 'contact'
         });
 
       if (error) {

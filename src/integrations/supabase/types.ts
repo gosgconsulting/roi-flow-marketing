@@ -7,54 +7,61 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instanciate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "12.2.3 (519615d)"
+  }
   public: {
     Tables: {
       blog_categories: {
         Row: {
-          color: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
           id: string
           name: string
           slug: string
-          updated_at: string
+          tenant_id: string
         }
         Insert: {
-          color?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
           id?: string
           name: string
           slug: string
-          updated_at?: string
+          tenant_id: string
         }
         Update: {
-          color?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
           id?: string
           name?: string
           slug?: string
-          updated_at?: string
+          tenant_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_categories_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       blog_post_categories: {
         Row: {
           category_id: string
-          created_at: string
           id: string
           post_id: string
         }
         Insert: {
           category_id: string
-          created_at?: string
           id?: string
           post_id: string
         }
         Update: {
           category_id?: string
-          created_at?: string
           id?: string
           post_id?: string
         }
@@ -77,19 +84,16 @@ export type Database = {
       }
       blog_post_tags: {
         Row: {
-          created_at: string
           id: string
           post_id: string
           tag_id: string
         }
         Insert: {
-          created_at?: string
           id?: string
           post_id: string
           tag_id: string
         }
         Update: {
-          created_at?: string
           id?: string
           post_id?: string
           tag_id?: string
@@ -113,9 +117,9 @@ export type Database = {
       }
       blog_posts: {
         Row: {
-          author: string
-          content: string
-          created_at: string
+          author_id: string | null
+          content: string | null
+          created_at: string | null
           excerpt: string | null
           featured_image: string | null
           id: string
@@ -124,14 +128,15 @@ export type Database = {
           meta_title: string | null
           published_at: string | null
           slug: string
-          status: string
+          status: string | null
+          tenant_id: string
           title: string
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
-          author?: string
-          content: string
-          created_at?: string
+          author_id?: string | null
+          content?: string | null
+          created_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
@@ -140,14 +145,15 @@ export type Database = {
           meta_title?: string | null
           published_at?: string | null
           slug: string
-          status?: string
+          status?: string | null
+          tenant_id: string
           title: string
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
-          author?: string
-          content?: string
-          created_at?: string
+          author_id?: string | null
+          content?: string | null
+          created_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
@@ -156,138 +162,194 @@ export type Database = {
           meta_title?: string | null
           published_at?: string | null
           slug?: string
-          status?: string
+          status?: string | null
+          tenant_id?: string
           title?: string
-          updated_at?: string
+          updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       blog_tags: {
         Row: {
-          color: string | null
-          created_at: string
+          created_at: string | null
           id: string
           name: string
           slug: string
-          updated_at: string
+          tenant_id: string
         }
         Insert: {
-          color?: string | null
-          created_at?: string
+          created_at?: string | null
           id?: string
           name: string
           slug: string
-          updated_at?: string
+          tenant_id: string
         }
         Update: {
-          color?: string | null
-          created_at?: string
+          created_at?: string | null
           id?: string
           name?: string
           slug?: string
-          updated_at?: string
+          tenant_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_tags_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      cms_content: {
+      contact_forms: {
         Row: {
-          content: Json
           created_at: string | null
-          element_id: string
-          element_type: string
-          id: string
-          page_id: string
-          updated_at: string | null
-          updated_by: string | null
-          version: number | null
-        }
-        Insert: {
-          content: Json
-          created_at?: string | null
-          element_id: string
-          element_type: string
-          id?: string
-          page_id: string
-          updated_at?: string | null
-          updated_by?: string | null
-          version?: number | null
-        }
-        Update: {
-          content?: Json
-          created_at?: string | null
-          element_id?: string
-          element_type?: string
-          id?: string
-          page_id?: string
-          updated_at?: string | null
-          updated_by?: string | null
-          version?: number | null
-        }
-        Relationships: []
-      }
-      form_submissions: {
-        Row: {
-          created_at: string
           email: string
           form_type: string | null
           id: string
           message: string
           name: string
           status: string | null
-          updated_at: string
+          tenant_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           email: string
           form_type?: string | null
           id?: string
           message: string
           name: string
           status?: string | null
-          updated_at?: string
+          tenant_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           email?: string
           form_type?: string | null
           id?: string
           message?: string
           name?: string
           status?: string | null
-          updated_at?: string
+          tenant_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "contact_forms_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      users: {
+      tenants: {
         Row: {
           created_at: string | null
-          email: string | null
+          domain: string
           id: string
-          role: string | null
+          name: string
+          settings: Json | null
+          status: string | null
+          subdomain: string | null
           updated_at: string | null
         }
         Insert: {
           created_at?: string | null
-          email?: string | null
-          id: string
-          role?: string | null
+          domain: string
+          id?: string
+          name: string
+          settings?: Json | null
+          status?: string | null
+          subdomain?: string | null
           updated_at?: string | null
         }
         Update: {
           created_at?: string | null
-          email?: string | null
+          domain?: string
           id?: string
-          role?: string | null
+          name?: string
+          settings?: Json | null
+          status?: string | null
+          subdomain?: string | null
           updated_at?: string | null
         }
         Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          role: string | null
+          tenant_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          role?: string | null
+          tenant_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          role?: string | null
+          tenant_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_profiles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_tenant_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      user_has_role: {
+        Args: { required_role: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
@@ -298,21 +360,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -330,14 +396,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -353,14 +421,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -376,14 +446,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -391,14 +463,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
